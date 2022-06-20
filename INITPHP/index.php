@@ -5,9 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <title>Aflokkat INIT PHP</title>
 </head>
 <body>
+<?php
+    session_start();
+    setcookie('user_login', '', time()+3600*24, '', '', false, true);        
+?>
 
 <!-- ======================================== -->
 
@@ -163,35 +167,35 @@
 
     <!-- <?php
 
-    $manCity = [
-        'Gardien' =>[
-            '31' => 'Ederson'
-        ],
-        'Defenseurs' => [ 
-            '16' => 'Rodrigo', '17' => 'De Bruyne', 
-            '21' => 'Silva', '25' => 'Fernandinho'
-        ],
-        'Milieux' => [
-            '8' => 'Gündogan', '16' => 'Rodrigo', 
-            '2' => 'Walker',
-        ],
-        'Attaquants' => [
-            '26' => 'Mahrez', '9' => 'Jesus', 
-            '7' => 'Sterling'
-        ]
-    ];
+    // $manCity = [
+    //     'Gardien' =>[
+    //         '31' => 'Ederson'
+    //     ],
+    //     'Defenseurs' => [ 
+    //         '16' => 'Rodrigo', '17' => 'De Bruyne', 
+    //         '21' => 'Silva', '25' => 'Fernandinho'
+    //     ],
+    //     'Milieux' => [
+    //         '8' => 'Gündogan', '16' => 'Rodrigo', 
+    //         '2' => 'Walker',
+    //     ],
+    //     'Attaquants' => [
+    //         '26' => 'Mahrez', '9' => 'Jesus', 
+    //         '7' => 'Sterling'
+    //     ]
+    // ];
 
-    echo "<table align='center' ><tr>";
+    // echo "<table align='center' ><tr>";
 
-    foreach($manCity as $poste => $joueurs){
+    // foreach($manCity as $poste => $joueurs){
 
-        foreach($joueurs as $numero => $joueur){
+    //     foreach($joueurs as $numero => $joueur){
 
-            echo "<tr>
-                    <td>$numero $joueur</td>
-                </tr>";
-        }
-    }
+    //         echo "<tr>
+    //                 <td>$numero $joueur</td>
+    //             </tr>";
+    //     }
+    // }
 
     ?> -->
 
@@ -201,36 +205,36 @@
     
     <!-- <?php
 
-    echo "<h1>Liste des cours</h1>";
+    // echo "<h1>Liste des cours</h1>";
 
-    function display_lesson($int, $duration){
+    // function display_lesson($int, $duration){
 
-        echo "le cours concerne ".$int.". Au total, il va durer ".$duration." heures.<br>"; 
+    //     echo "le cours concerne ".$int.". Au total, il va durer ".$duration." heures.<br>"; 
 
-    }
+    // }
 
-    display_lesson("PHP", 35);
-    display_lesson("JS", 20);
-    display_lesson("HTML", 20);
-    display_lesson("Algo", 40);
+    // display_lesson("PHP", 35);
+    // display_lesson("JS", 20);
+    // display_lesson("HTML", 20);
+    // display_lesson("Algo", 40);
 
 
-    // Avec une boucle foreach
+    // // Avec une boucle foreach
 
-    $lessons = [
-        'PHP' => 35,
-        'JS' => 20,
-        'HTML' => 20,
-        'Algo' => 40
-    ];
+    // $lessons = [
+    //     'PHP' => 35,
+    //     'JS' => 20,
+    //     'HTML' => 20,
+    //     'Algo' => 40
+    // ];
 
-    echo "<h1>Avec une boucle foreach</h1>";
+    // echo "<h1>Avec une boucle foreach</h1>";
 
-    foreach ($lessons as $lesson => $duration){
+    // foreach ($lessons as $lesson => $duration){
 
-        display_lesson($lesson, $duration);
+    //     display_lesson($lesson, $duration);
 
-    }
+    // }
 
     ?> -->
 
@@ -268,10 +272,105 @@
 
     ?> -->
 
+    <!-- Exo 9 -->
+
     <?php
 
-    ?>
+    function is_logged(){
+
+        return isset($_SESSION['login']);
+
+    }
+
+    function get_login(){
+
+        if (is_logged()){
             
+            return $_SESSION['login'];
+
+        }
+
+    }
+
+    ?>
+
+    <?php
+
+    $login = "sekiro";
+    $pwd = "zaire";
+    
+    if (isset($_POST['login']) && isset($_POST['pwd'])) {
+        
+        if ($_POST['login'] == $login && $_POST['pwd'] == $pwd){
+
+            $_SESSION['login'] = $login;
+            $hash = password_hash($pwd, PASSWORD_BCRYPT);
+            $value = $_SESSION['login']."|".$hash;
+            $_COOKIE['user_login'] = $value;
+        }
+
+        else{
+
+            $error = "<div style='justify-content-center'><b>Erreur login / mot de passe !</b></div>";
+
+        }
+
+    }
+
+    elseif (isset($_GET['action']) && $_GET['action'] == 'logout'){
+
+        unset($_COOKIE);     
+        session_destroy();
+        unset($_SESSION);
+
+    }
+
+    ?>  
+
+    <?php
+
+    if (!is_logged()){
+
+        if (!empty($error)){
+            echo $error.'<br><br>';
+        }
+
+    ?>
+
+        <form class='container' action='index.php' method='POST'>
+            <div class='login'>
+                <label for='login'></label>
+                <input type='text' name='login' placeholder='Login'>
+            </div>
+            <div class='pwd'>
+                <label for='pwd'></label>
+                <input type='password' name='pwd' id='pwd' placeholder='Password'>
+            </div>
+            <button type='submit'>Envoyer</button>
+        </form> 
+
+    <?php       
+        
+    } 
+    else {
+
+    ?>
+
+        Bienvenue <b>
+    <?php 
+        if (isset($_COOKIE['user_login']) && password_verify($pwd, $hash)){
+    
+            $user_login = explode("|", $_COOKIE['user_login']);
+            echo $user_login[0];
+        }
+    ?>
+        </b> !
+        <br>
+        <br>
+        <a href="?action=logout"><button>Logout</button></a>
+
+    <?php }  ?>
+
 
 </body>
 </html>
