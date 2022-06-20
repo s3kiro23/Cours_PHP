@@ -1,0 +1,14 @@
+.start {
+    height: 25px;
+    width: 200px;
+}
+
+.f1{
+    height: 25px;
+    width: 25px;
+}
+
+div {
+    display: flex;
+    justify-content: center;
+}
