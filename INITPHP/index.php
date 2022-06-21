@@ -19,25 +19,25 @@
 
     <!-- <?php
      
-    $nom = "JM";
-    $age = 17;
-    $histoire = 9;
-    $math = 9;
-    $anglais = 9;
-    $somme = $histoire + $math + $anglais;
-    $dec = "mineur!<br><br>";
-    $année = "Essai l'année prochaine!<br><br>";
+    // $nom = "JM";
+    // $age = 17;
+    // $histoire = 9;
+    // $math = 9;
+    // $anglais = 9;
+    // $somme = $histoire + $math + $anglais;
+    // $dec = "mineur!<br><br>";
+    // $année = "Essai l'année prochaine!<br><br>";
 
     
-    if ($age >= 18 && $somme >= 30){
-        $dec = "majeur<br><br>";
-    }
+    // if ($age >= 18 && $somme >= 30){
+    //     $dec = "majeur<br><br>";
+    // }
     
-    if ($somme >= 30){
-        $année = "J'ai mon année!<br><br>";
-    }
+    // if ($somme >= 30){
+    //     $année = "J'ai mon année!<br><br>";
+    // }
 
-    echo "Bonjour ".$nom."! <br><br> Tu as ".$age." ans, tu es connecté et ".$dec.$année."Moyenne G = ".$somme/3;
+    // echo "Bonjour ".$nom."! <br><br> Tu as ".$age." ans, tu es connecté et ".$dec.$année."Moyenne G = ".$somme/3;
 
     ?> -->
 
@@ -46,31 +46,31 @@
     <!-- Exo 3 -->
     <!-- <?php
 
-    $lait = 10;
-    $sucre = 20;
-    $comp = "Quantité de lait supérieur au sucre";
-    $vide = "Un des deux variables est vide !<br><br>";
+    // $lait = 10;
+    // $sucre = 20;
+    // $comp = "Quantité de lait supérieur au sucre";
+    // $vide = "Un des deux variables est vide !<br><br>";
     
-    if (!empty($lait) && !empty($sucre)){  
-        if ($lait > $sucre){
-            echo $comp;
-        }       
-        elseif ($lait < $sucre){
-            echo $comp = "Quantité de lait inférieur au sucre";
-        }
-        else {
-            echo $comp = "Quantité de lait égale au sucre";
-        }     
-        if ($lait + $sucre > 0){
-            $total = $lait + $sucre;
-        }    
-        if (isset($total)){
-            echo "<br><br>".$total." ingrédients";
-        }
-    }
-    else{
-        echo $vide;
-    }
+    // if (!empty($lait) && !empty($sucre)){  
+    //     if ($lait > $sucre){
+    //         echo $comp;
+    //     }       
+    //     elseif ($lait < $sucre){
+    //         echo $comp = "Quantité de lait inférieur au sucre";
+    //     }
+    //     else {
+    //         echo $comp = "Quantité de lait égale au sucre";
+    //     }     
+    //     if ($lait + $sucre > 0){
+    //         $total = $lait + $sucre;
+    //     }    
+    //     if (isset($total)){
+    //         echo "<br><br>".$total." ingrédients";
+    //     }
+    // }
+    // else{
+    //     echo $vide;
+    // }
 
     ?> -->
 
@@ -86,42 +86,42 @@
         </thead>
         <tbody >
 
-    <!-- <?php
+    <!- <?php
 
-    $pilotes = 0;
+    // $pilotes = 0;
 
-    while ($pilotes < 4){
+    // while ($pilotes < 4){
 
-        $pilotes+=1;
-        if ($pilotes%2 != 0){
-            echo "<tr> 
-                    <td style='color:blue'>pilote".$pilotes."</td>
-                    <td></td>
-                </tr>";
-        }
-        else{
-            echo "<tr> 
-                    <td></td>
-                    <td style='color:red'>pilote".$pilotes."</td>
-                </tr>";
-        }
-    }
+    //     $pilotes+=1;
+    //     if ($pilotes%2 != 0){
+    //         echo "<tr> 
+    //                 <td style='color:blue'>pilote".$pilotes."</td>
+    //                 <td></td>
+    //             </tr>";
+    //     }
+    //     else{
+    //         echo "<tr> 
+    //                 <td></td>
+    //                 <td style='color:red'>pilote".$pilotes."</td>
+    //             </tr>";
+    //     }
+    // }
 
-    for ($pilotes = 5; $pilotes <= 8; $pilotes++){
+    // for ($pilotes = 5; $pilotes <= 8; $pilotes++){
 
-        if ($pilotes%2 != 0){
-            echo "<tr>
-                    <td style='color:blue'>pilote $pilotes</td>
-                    <td></td>
-                </tr>";            
-        }
-        else{
-            echo "<tr>
-                    <td></td>
-                    <td style='color:red'>pilote $pilotes</td>
-                </tr>";            
-        }
-    }  
+    //     if ($pilotes%2 != 0){
+    //         echo "<tr>
+    //                 <td style='color:blue'>pilote $pilotes</td>
+    //                 <td></td>
+    //             </tr>";            
+    //     }
+    //     else{
+    //         echo "<tr>
+    //                 <td></td>
+    //                 <td style='color:red'>pilote $pilotes</td>
+    //             </tr>";            
+    //     }
+    // }  
       
     ?> -->
 
@@ -134,30 +134,30 @@
     
     <!-- <?php
 
-    echo "<div><img class='start' src='img/start.png' alt='zeze'></div>".
-    "<table align='center'>
-    <tbody >";
+    // echo "<div><img class='start' src='img/start.png' alt='zeze'></div>".
+    // "<table align='center'>
+    // <tbody >";
 
-    $all_pilotes = array('LECLERC','ALONZO','VERSTAPPEN','GASLI','HAMILTON','RUSSELL','PEREZ','NORRIS');
-    $count = 0;
+    // $all_pilotes = array('LECLERC','ALONZO','VERSTAPPEN','GASLI','HAMILTON','RUSSELL','PEREZ','NORRIS');
+    // $count = 0;
 
-    foreach ($all_pilotes as $pilote){
-        if ($count%2 != 0){
-            echo "<tr align='center'>
-                    <td><img class='f1' src='img/F1.webp' alt='f1'></td>
-                    <td style='color:blue'>$pilote</td>
-                </tr>";            
-        }
-        else{
-            echo "<tr align='center'>
-                    <td style='color:red'>$pilote</td>
-                    <td><img class='f1' src='img/F1.webp' alt='f1'></td>
-                </tr>";            
-        }
-        $count++;
-    }
+    // foreach ($all_pilotes as $pilote){
+    //     if ($count%2 != 0){
+    //         echo "<tr align='center'>
+    //                 <td><img class='f1' src='img/F1.webp' alt='f1'></td>
+    //                 <td style='color:blue'>$pilote</td>
+    //             </tr>";            
+    //     }
+    //     else{
+    //         echo "<tr align='center'>
+    //                 <td style='color:red'>$pilote</td>
+    //                 <td><img class='f1' src='img/F1.webp' alt='f1'></td>
+    //             </tr>";            
+    //     }
+    //     $count++;
+    // }
 
-    echo "</tbody></table>"
+    // echo "</tbody></table>"
 
     ?> -->
 
@@ -244,31 +244,31 @@
 
     <!-- <?php
 
-    function compare($var1, $var2){
-        $sup = $var2;
+    // function compare($var1, $var2){
+    //     $sup = $var2;
         
-        if ($var1 > $var2){       
-            $sup = $var1;
-        }
-        else if ($var1 == $var2){
-            $sup = "<b>'valeurs égales'</b>";
-        }
+    //     if ($var1 > $var2){       
+    //         $sup = $var1;
+    //     }
+    //     else if ($var1 == $var2){
+    //         $sup = "<b>'valeurs égales'</b>";
+    //     }
         
-        return $sup;
-    }
+    //     return $sup;
+    // }
 
-    $max = 0;
-    for ($i = 0; $i < 10; $i++){   
-        $var1 = rand(0,100);
-        $var2 = rand(0,100);
+    // $max = 0;
+    // for ($i = 0; $i < 10; $i++){   
+    //     $var1 = rand(0,100);
+    //     $var2 = rand(0,100);
 
-        $biggest = compare($var1, $var2);
-        $max = compare($biggest, $max);
+    //     $biggest = compare($var1, $var2);
+    //     $max = compare($biggest, $max);
 
-        echo $biggest."<br>";
-    }
+    //     echo $biggest."<br>";
+    // }
 
-    echo "<br>La valeur max des itérations est : ".$max; 
+    // echo "<br>La valeur max des itérations est : ".$max; 
 
     ?> -->
 
@@ -307,6 +307,7 @@
             $hash = password_hash($pwd, PASSWORD_BCRYPT);
             $value = $_SESSION['login']."|".$hash;
             $_COOKIE['user_login'] = $value;
+
         }
 
         else{
@@ -319,7 +320,7 @@
 
     elseif (isset($_GET['action']) && $_GET['action'] == 'logout'){
 
-        unset($_COOKIE);     
+        unset($_COOKIE);
         session_destroy();
         unset($_SESSION);
 
@@ -332,12 +333,15 @@
     if (!is_logged()){
 
         if (!empty($error)){
+
             echo $error.'<br><br>';
+
         }
 
     ?>
 
         <form class='container' action='index.php' method='POST'>
+            <h2>Login</h2>
             <div class='login'>
                 <label for='login'></label>
                 <input type='text' name='login' placeholder='Login'>
@@ -346,31 +350,36 @@
                 <label for='pwd'></label>
                 <input type='password' name='pwd' id='pwd' placeholder='Password'>
             </div>
-            <button type='submit'>Envoyer</button>
+            <button type='submit'>Connexion</button>
         </form> 
 
     <?php       
         
     } 
+
     else {
 
     ?>
 
         Bienvenue <b>
+
     <?php 
+
         if (isset($_COOKIE['user_login']) && password_verify($pwd, $hash)){
     
             $user_login = explode("|", $_COOKIE['user_login']);
             echo $user_login[0];
+
         }
+
     ?>
+
         </b> !
         <br>
         <br>
         <a href="?action=logout"><button>Logout</button></a>
 
     <?php }  ?>
-
 
 </body>
 </html>
