@@ -108,7 +108,12 @@
 
 <script>
 
-function connect(){
+$(document).ready(function() {
+
+
+});
+
+var connect = function(){
 
 let login = $('#login').val();
 console.log("login = " + login);
@@ -131,27 +136,27 @@ console.log("pwd = " + passwd);
 
                 iziToast.error({
 
-                    timeout: 3000,
-                    progressBar: true,
-                    message: response['msg'],
-                    position: 'topRight',
+                  timeout: 3000,
+                  progressBar: true,
+                  message: response['msg'],
+                  position: 'topRight',
 
                 });
-                window.location.href("home.php")
 
             }
             else{
 
                 iziToast.success({
 
-                    timeout: 3000,
-                    progressBar: true,
-                    message: response['msg'],
-                    position: 'topRight',
+                  timeout: 3000,
+                  progressBar: true,
+                  message: response['msg'],
+                  position: 'topRight',
 
                 });
-
                 console.log('Success');
+
+                window.location.replace("home.php");
 
             }
 

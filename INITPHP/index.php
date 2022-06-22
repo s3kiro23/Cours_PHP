@@ -272,6 +272,51 @@
 
     ?> -->
 
+        <!-- Exo CG -->
+
+        <!-- <?php
+
+// function capital($pays){
+
+//     switch ($pays){
+//         case "France":
+//             echo "Paris";
+//             break;
+        
+//         case "Allemagne":
+//             echo "Berlin";
+//             break;
+        
+//         case "Maroc":
+//             echo "Rabat";
+//             break;
+        
+//         case "Espagne":
+//             echo "Madrid";
+//             break;
+        
+//         case "Portugal":
+//             echo "Lisbonne";
+//             break;
+        
+//         case "France":
+//             echo "Paris";
+//             break;
+        
+//         case "Angleterre":
+//             echo "Londres";
+//             break;
+        
+//         case "":
+//             echo "Inconnu";
+//             break;
+        
+//     }
+// }
+
+?> -->
+
+
     <!-- Exo 9 -->
 
     <?php

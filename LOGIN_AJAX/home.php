@@ -1,3 +1,5 @@
+<!-- <?php session_start(); ?> -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,6 +13,81 @@
     <title>Home</title>
 </head>
 <body>
-    <h1></h1>
+
+    <nav class="bg-indigo-600 px-12 py-3 flex text-lg">
+        <div class="flex flex-grow gap-5">
+                <a href="#" class="text-white hover:text-green-500">Home</a>
+                <a id='logout' href="?action=logout" class="text-white hover:text-green-500">Logout</a>
+        </div>
+        <div
+            class="text-white transition ease-in delay-75 hover:uppercase hover:font-bold hover:text-orange-500 duration-200"
+        >
+            <span id='user_login'></span>
+        </div>
+    </nav>
+
+    <div id='console'></div>
+
+<script>
+
+$(document).ready(function() {
+
+	$("#user_login").html(get_login());
+    $("#logout").on('click', logout);
+
+});
+
+var get_login = function(){
+
+    $.ajax({
+
+        url: 'connect.php',
+        dataType: 'JSON',
+        type: 'GET',
+        data: {
+            login: 'get_login',
+        },
+        success: function(response) {
+
+        },
+        error: function() {
+            
+        }
+    });
+}
+
+var logout = function(){
+
+    $.ajax({
+
+        url: 'connect.php',
+        dataType: 'JSON',
+        type: 'POST',
+        data: {
+            request: 'logout',
+        },
+        success: function(response) {
+
+            iziToast.error({
+
+                timeout: 3000,
+                progressBar: true,
+                message: response['msg'],
+                position: 'topRight',
+
+            });
+
+            window.location.href = "index.php";
+
+        },
+        error: function() {
+            
+        }
+    });
+}
+
+
+
+</script>
 </body>
 </html>

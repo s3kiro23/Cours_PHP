@@ -14,22 +14,27 @@
 
 <script>
 
-function connect(){
+$(document).ready(function (){
+  
+  
+});
 
-	let login = $('#login').val();
-	console.log("login = " + login);
+var register = function(){
 
-	let passwd = $('#passwd').val();
-	console.log("pwd = " + passwd);
-
-    $.ajax({
+  let login = $('#login').val();
+  console.log("login = " + login);
+  
+  let passwd = $('#password').val();
+  console.log("pwd = " + passwd);
+  
+	$.ajax({
 		url: 'connect.php',
 		dataType: 'JSON',
 		type: 'POST',
 		data: {
 			request: 'connexion',
-			password: passwd,
 			login: login,
+			password: passwd,
 		},
 		success: function(response) {
 
@@ -41,8 +46,9 @@ function connect(){
 					progressBar: true,
 					message: response['msg'],
 					position: 'topRight',
-
+					
 				});
+				
 
 			}
 			else{
@@ -53,9 +59,15 @@ function connect(){
 					progressBar: true,
 					message: response['msg'],
 					position: 'topRight',
-
+					
 				});
 
+				if (iziToast.success({timeout}) == 0){
+
+				window.location.replace("home.php");
+
+				}
+				
 				console.log('Success');
 
 			}
@@ -65,6 +77,6 @@ function connect(){
 			
 		}
 	});
-    }
+} 
 
 </script>
