@@ -136,7 +136,7 @@ console.log("pwd = " + passwd);
 
                 iziToast.error({
 
-                  timeout: 3000,
+                  timeout: 2000,
                   progressBar: true,
                   message: response['msg'],
                   position: 'topRight',
@@ -148,7 +148,7 @@ console.log("pwd = " + passwd);
 
                 iziToast.success({
 
-                  timeout: 3000,
+                  timeout: 2000,
                   progressBar: true,
                   message: response['msg'],
                   position: 'topRight',
@@ -156,7 +156,9 @@ console.log("pwd = " + passwd);
                 });
                 console.log('Success');
 
-                window.location.replace("home.php");
+                setTimeout(() => {
+                  window.location.replace("home.php");
+                }, 2300);
 
             }
 

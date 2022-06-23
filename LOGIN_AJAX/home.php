@@ -1,5 +1,3 @@
-<!-- <?php session_start(); ?> -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +15,7 @@
     <nav class="bg-indigo-600 px-12 py-3 flex text-lg">
         <div class="flex flex-grow gap-5">
                 <a href="#" class="text-white hover:text-green-500">Home</a>
-                <a id='logout' href="?action=logout" class="text-white hover:text-green-500">Logout</a>
+                <button id='logout' class="text-white hover:text-green-500">Logout</button>
         </div>
         <div
             class="text-white transition ease-in delay-75 hover:uppercase hover:font-bold hover:text-orange-500 duration-200"
@@ -26,38 +24,18 @@
         </div>
     </nav>
 
-    <div id='console'></div>
-
 <script>
 
 $(document).ready(function() {
 
-	$("#user_login").html(get_login());
+    load();
     $("#logout").on('click', logout);
 
 });
 
-var get_login = function(){
-
-    $.ajax({
-
-        url: 'connect.php',
-        dataType: 'JSON',
-        type: 'GET',
-        data: {
-            login: 'get_login',
-        },
-        success: function(response) {
-
-        },
-        error: function() {
-            
-        }
-    });
-}
-
 var logout = function(){
 
+    console.log(1);
     $.ajax({
 
         url: 'connect.php',
@@ -68,16 +46,18 @@ var logout = function(){
         },
         success: function(response) {
 
-            iziToast.error({
+            iziToast.success({
 
-                timeout: 3000,
+                timeout: 2000,
                 progressBar: true,
                 message: response['msg'],
                 position: 'topRight',
 
             });
 
-            window.location.href = "index.php";
+            setTimeout(() => {
+                window.location.href = "index.php";
+            }, 2300);
 
         },
         error: function() {
@@ -86,8 +66,29 @@ var logout = function(){
     });
 }
 
+function load(){
 
+    // console.log(1);
+    $.ajax({
+
+        url: 'connect.php',
+        dataType: 'JSON',
+        type: 'POST',
+        data: {
+            request: 'user_login',
+        },
+        success: function(response) {
+            // console.log(2);
+            $("#user_login").html(response['html']);
+
+        },
+        error: function() {
+            
+        }
+    });
+}
 
 </script>
+
 </body>
 </html>

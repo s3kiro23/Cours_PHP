@@ -1,4 +1,5 @@
-<?php session_start();
+<?php session_start(); 
+require_once 'function.php';
 
 switch ($_POST['request']){
 
@@ -6,47 +7,59 @@ switch ($_POST['request']){
 
         $status = 1;
         $msg = "Connexion réussi!";
-        $_SESSION['login'] = $_POST['login'];
-
+        $logs = 'log.txt';
+    
         if ($_POST['login'] != "a@g.c"){
 
             $status = 0;
             $msg = "Utilisateur incorrect!";
+            file_put_contents($logs, "\n ".dateJour()." ".get_login()." mauvaise saisie du login", FILE_APPEND);
 
         }
 
-        if ($_POST['password'] != "123"){
+        else if ($_POST['password'] != "123"){
 
             $status = 0;
             $msg = "Mot de passe incorrect!";
+            file_put_contents($logs, "\n ".dateJour()." ".get_login()." mauvaise saisie du mot de passe!", FILE_APPEND);
 
         }
 
+        if($status == 1){
+            
+            $_SESSION['login'] = $_POST['login'];
+            file_put_contents($logs, "\n ".dateJour()." ".get_login()." l'utilisateur s'est connecté!", FILE_APPEND);
+        
+        }
+
         echo json_encode(array("status" => $status, "msg" => $msg));
+
 
     break;  
 
     case 'logout':
 
-        if (isset($_GET['action']) && $_GET['action'] == 'logout'){
+        $status = 1;
+        $msg = "Déconnexion réussi!";
 
-            $status = 1;
-            $msg = "Déconnexion réussi!";
-
-            session_destroy();
-            unset($_SESSION);
-
-        }
+        session_destroy();
+        unset($_SESSION);
 
         echo json_encode(array("status" => $status, "msg" => $msg));
 
     break;
 
-    case 'login' :
+    case 'user_login' :
 
-        $login = $_SESSION ['login'];
+        $html = "Vous n'êtes pas connecté ! ";
 
-        echo json_encode(array("login" => $login));
+        if (is_logged()){
+
+            $html = "Bienvenue ".get_login();
+
+        }
+
+        echo json_encode(array("html" => $html));
 
     break;
 
@@ -57,5 +70,3 @@ switch ($_POST['request']){
     break;
 
 }
-
-?>
