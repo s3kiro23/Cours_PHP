@@ -1,5 +1,6 @@
 <?php session_start(); 
 require_once 'function.php';
+require_once 'Users.php';
 
 switch ($_POST['request']){
 
@@ -44,6 +45,7 @@ switch ($_POST['request']){
 
         session_destroy();
         unset($_SESSION);
+        file_put_contents($logs, "\n ".dateJour()." ".get_login()." l'utilisateur s'est déconnecté!", FILE_APPEND);
 
         echo json_encode(array("status" => $status, "msg" => $msg));
 
@@ -62,6 +64,22 @@ switch ($_POST['request']){
         echo json_encode(array("html" => $html));
 
     break;
+
+    case 'signIn' :
+
+        $status = 1;
+        $msg = "Inscription réussi!";
+
+        if ($_POST['prenom'] === 'aze'){
+
+            $status = 0;
+            $msg = "Erreur";
+
+        }
+
+        echo json_encode(array("status" => $status, "msg" => $msg));
+
+    break;    
 
     default :
 
