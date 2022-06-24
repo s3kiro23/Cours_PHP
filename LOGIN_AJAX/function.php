@@ -40,3 +40,20 @@ function dateJour(){
 
 }
 
+// function changeField(){
+
+//     return checkData();
+
+// }
+
+// function checkData(){
+
+//     if ($_POST['prenom'] == '' || $_POST['nom'] == '' || $_POST['login'] == '' || $_POST['passwd'] == '' || $_POST['passwd2'] == ''){
+
+//         return false;
+
+//     }
+
+// }
+
+
