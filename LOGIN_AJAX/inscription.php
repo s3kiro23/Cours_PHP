@@ -28,20 +28,8 @@
                 </h2>
             </div>
 
-            <form class="mt-8 space-y-6" action="javascript:signIn();" method="POST">
+            <form class="mt-8 space-y-6" method="POST">
                 <div class="rounded-md shadow-sm -space-y-px">
-                    <div>
-                        <label for="prenom" class="sr-only">Prénom</label>
-
-                        <input
-                                id="prenom"
-                                name="prenom"
-                                type="prenom"
-                                class="field appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                placeholder="Prénom"
-                        />
-                    </div>
-
                     <div>
                         <label for="nom" class="sr-only">Nom</label>
 
@@ -49,20 +37,51 @@
                                 id="nom"
                                 name="nom"
                                 type="nom"
-                                class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                required
+                                class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                                 placeholder="Nom"
                         />
                     </div>
 
                     <div>
-                        <label for="login" class="sr-only">Login</label>
+                        <label for="email-address" class="sr-only">Email address</label>
 
                         <input
-                                id="login"
-                                name="login"
+                                id="email-address"
+                                name="email"
                                 type="email"
-                                class="field appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                placeholder="Login (Adresse Email)"
+                                required
+                                class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                placeholder="Adresse Email"
+                        />
+                    </div>
+
+                    <div>
+                        <label for="secret_question" class="sr-only">Question secrète</label>
+
+                        <select id="secret_question"
+                                name="secret_question"
+                                required
+                                class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
+
+                            <option> -- Choisissez une question --</option>
+                            <option>Ville de naissance</option>
+                            <option>Premier chien</option>
+                            <option>Manga préféré</option>
+
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="secret_response" class="sr-only">Réponse secrète</label>
+
+                        <input
+                                id="secret_response"
+                                name="secret_response"
+                                type="text"
+                                required
+                                class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                placeholder="Réponse secrète"
                         />
                     </div>
 
@@ -73,7 +92,8 @@
                                 id="password"
                                 name="password"
                                 type="password"
-                                class="field appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                required
+                                class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                                 placeholder="Mot de passe"
                         />
                     </div>
@@ -85,7 +105,8 @@
                                 id="password2"
                                 name="password2"
                                 type="password"
-                                class="field appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                required
+                                class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                                 placeholder="Confirmez mot de passe"
                         />
                     </div>
@@ -93,7 +114,7 @@
 
                 <div>
                     <button
-                            id='signIn'
+                            type="submit"
                             class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
             <span class="absolute left-0 inset-y-0 flex items-center pl-3">
@@ -114,93 +135,12 @@
                 </svg>
             </span>
 
-                        S'incrire !
+                        Sign up
                     </button>
                 </div>
             </form>
         </div>
     </div>
-
-<script>
-
-$(document).ready(function() {
-
-    
-});
-        
-var signIn = function(){
-
-    let prenom = $('#prenom').val();
-    console.log("prenom = " + prenom);
-
-    let nom = $('#nom').val();
-    console.log("nom = " + nom);
-
-    let login = $('#login').val();
-    console.log("login = " + login);
-
-    let passwd = $('#password').val();
-    console.log("passwd = " + passwd);
-
-    let passwd2 = $('#password2').val();
-    console.log("passwd2 = " + passwd2);
-
-    console.log(1);
-    $.ajax({
-
-        url: 'connect.php',
-        dataType: 'JSON',
-        type: 'POST',
-        data: {
-            request: 'signIn',
-            prenom: 'prenom',
-            nom: 'nom',
-            login: 'login',
-            passwd: 'password',
-            passwd2: 'password2',
-        },
-
-        success: function(response) {
-
-            if (response['status'] == 0){
-
-                iziToast.error({
-
-                    timeout: 2000,
-                    progressBar: true,
-                    message: response['msg'],
-                    position: 'topRight',
-
-                });
-
-            }
-            else{
-
-                iziToast.success({
-
-                    timeout: 2000,
-                    progressBar: true,
-                    message: response['msg'],
-                    position: 'topRight',
-
-                });
-                console.log('Success');
-
-                // setTimeout(() => {
-                // window.location.replace("home.php");
-                // }, 2300);
-
-            }
-
-        },
-        error: function() {
-        
-        }
-    });
-}
-
-</script>
-
 
 </body>
 </html>
