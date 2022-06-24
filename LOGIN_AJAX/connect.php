@@ -28,7 +28,7 @@ switch ($_POST['request']){
         if($status == 1){
             
             $_SESSION['login'] = $_POST['login'];
-            file_put_contents($logs, "\n ".dateJour()." ".get_login()." l'utilisateur s'est connecté!", FILE_APPEND);
+            file_put_contents($logs, "\n ".dateJour()." ".get_login()." s'est connecté!", FILE_APPEND);
         
         }
 
@@ -41,7 +41,9 @@ switch ($_POST['request']){
 
         $status = 1;
         $msg = "Déconnexion réussi!";
+        $logs = 'log.txt';
 
+        file_put_contents($logs, "\n ".dateJour()." ".get_login()." s'est déconnecté!", FILE_APPEND);
         session_destroy();
         unset($_SESSION);
 
