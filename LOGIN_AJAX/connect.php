@@ -1,6 +1,9 @@
 <?php session_start(); 
 require_once 'function.php';
+<<<<<<< HEAD
 require_once 'User.php';
+=======
+>>>>>>> bfc3565c45f2f05a40dede75ae6acc6a0a6fe65e
 
 switch ($_POST['request']){
 
@@ -29,7 +32,11 @@ switch ($_POST['request']){
         if($status == 1){
             
             $_SESSION['login'] = $_POST['login'];
+<<<<<<< HEAD
             file_put_contents($log_path, "\n ".dateJour()." ".get_login()." s'est connecté", FILE_APPEND);
+=======
+            file_put_contents($logs, "\n ".dateJour()." ".get_login()." s'est connecté!", FILE_APPEND);
+>>>>>>> bfc3565c45f2f05a40dede75ae6acc6a0a6fe65e
         
         }
 
@@ -42,9 +49,15 @@ switch ($_POST['request']){
 
         $status = 1;
         $msg = "Déconnexion réussi!";
+<<<<<<< HEAD
         $log_path = 'log.txt';
 
         file_put_contents($log_path, "\n ".dateJour()." ".get_login()." s'est déconnecté", FILE_APPEND);
+=======
+        $logs = 'log.txt';
+
+        file_put_contents($logs, "\n ".dateJour()." ".get_login()." s'est déconnecté!", FILE_APPEND);
+>>>>>>> bfc3565c45f2f05a40dede75ae6acc6a0a6fe65e
         session_destroy();
         unset($_SESSION);
 
@@ -66,6 +79,7 @@ switch ($_POST['request']){
 
     break;
 
+<<<<<<< HEAD
     case 'password' :
 
         $msg = "Les mots de passe ne correspondent pas!";
@@ -105,6 +119,8 @@ switch ($_POST['request']){
 
     break;   
     
+=======
+>>>>>>> bfc3565c45f2f05a40dede75ae6acc6a0a6fe65e
     default :
 
     echo json_encode(1);

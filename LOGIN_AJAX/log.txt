@@ -26,6 +26,7 @@
  June 23, 2022, 2:39 pm a@g.c l'utilisateur s'est connecté!
  June 23, 2022, 2:45 pm a@g.c l'utilisateur s'est connecté!
  June 23, 2022, 2:45 pm a@g.c l'utilisateur s'est connecté!
+<<<<<<< HEAD
  26-06-2022 12:29:26 a@g.c s'est connecté
  26-06-2022 12:31:03  s'est déconnecté
  26-06-2022 12:31:05  s'est déconnecté
@@ -34,3 +35,12 @@
  26-06-2022 12:31:15  s'est déconnecté
  26-06-2022 12:31:40 a@g.c s'est connecté
  26-06-2022 12:31:44 a@g.c s'est déconnecté
+=======
+ June 24, 2022, 8:20 am a@g.c l'utilisateur s'est connecté!
+ June 24, 2022, 8:21 am a@g.c l'utilisateur s'est connecté!
+ June 24, 2022, 8:23 am a@g.c l'utilisateur s'est connecté!
+ June 24, 2022, 8:32 am a@g.c l'utilisateur s'est connecté!
+ June 24, 2022, 8:32 am a@g.c l'utilisateur s'est déconnecté!
+ June 24, 2022, 8:34 am a@g.c l'utilisateur s'est connecté!
+ June 24, 2022, 8:34 am a@g.c l'utilisateur s'est déconnecté!
+>>>>>>> bfc3565c45f2f05a40dede75ae6acc6a0a6fe65e

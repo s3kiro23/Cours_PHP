@@ -40,6 +40,7 @@ function dateJour(){
 
 }
 
+<<<<<<< HEAD
 function checkField(){
 
     if (empty($_POST['prenom'])) {
@@ -118,3 +119,5 @@ function checkCaptcha($postCap){
 }
 
 
+=======
+>>>>>>> bfc3565c45f2f05a40dede75ae6acc6a0a6fe65e
