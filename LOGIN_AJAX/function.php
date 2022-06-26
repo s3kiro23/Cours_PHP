@@ -36,24 +36,85 @@ function dateJour(){
 
     $date = new dateTime();
 
-    return $date->format("F j, Y, g:i a");
+    return $date->format("d-m-Y H:i:s");
 
 }
 
-// function changeField(){
+function checkField(){
 
-//     return checkData();
+    if (empty($_POST['prenom'])) {
 
-// }
+        return true; 
 
-// function checkData(){
+    } 
+    else if (empty($_POST['nom'])) {
 
-//     if ($_POST['prenom'] == '' || $_POST['nom'] == '' || $_POST['login'] == '' || $_POST['passwd'] == '' || $_POST['passwd2'] == ''){
+        return true; 
 
-//         return false;
+    } 
+    else if (empty($_POST['login'])) {
 
-//     }
+        return true; 
 
-// }
+    }
+    else if (empty($_POST['password'])) {
+
+        return true; 
+
+    }
+    else if (empty($_POST['password2'])) {
+
+        return true; 
+    
+    }
+    return false;
+
+}
+
+function checkPassword($passwd, $passwd2){
+
+    if (isset($passwd) && isset($passwd2)){
+        
+        if ($passwd == $passwd2){
+
+            return true;
+
+        }
+
+    }
+
+}
+
+function checkPasswdLenght($passwd){
+
+    $pattern = '/[A-Z][a-z][0-9]{8}/';
+
+    if (preg_match_all($pattern, $passwd)){
+
+        return true;
+
+    }
+    return false;
+
+}
+
+function captcha(){
+
+    $nb_verif = random_int(0, 999);
+
+    return $nb_verif;
+
+}
+
+function checkCaptcha($postCap){
+
+    if ($postCap == captcha()){
+
+        return true;
+
+    }
+    return false;
+
+}
 
 

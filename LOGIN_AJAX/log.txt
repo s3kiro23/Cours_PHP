@@ -26,3 +26,11 @@
  June 23, 2022, 2:39 pm a@g.c l'utilisateur s'est connecté!
  June 23, 2022, 2:45 pm a@g.c l'utilisateur s'est connecté!
  June 23, 2022, 2:45 pm a@g.c l'utilisateur s'est connecté!
+ 26-06-2022 12:29:26 a@g.c s'est connecté
+ 26-06-2022 12:31:03  s'est déconnecté
+ 26-06-2022 12:31:05  s'est déconnecté
+ 26-06-2022 12:31:05  s'est déconnecté
+ 26-06-2022 12:31:11 a@g.c s'est connecté
+ 26-06-2022 12:31:15  s'est déconnecté
+ 26-06-2022 12:31:40 a@g.c s'est connecté
+ 26-06-2022 12:31:44 a@g.c s'est déconnecté

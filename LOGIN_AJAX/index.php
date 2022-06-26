@@ -13,7 +13,7 @@
 <body>
 
 <div
-  class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
+  class="min-h-full flex items-center justify-center py-5 px-4 sm:px-6 lg:px-8"
 >
   <div class="max-w-md w-full space-y-8">
     <div>
@@ -102,6 +102,8 @@
     </form>
   </div>
 </div>
+<span class="flex justify-center">ou</span>
+<a href="inscription.php" class="flex justify-center text-indigo-600 font-medium">créer un nouveau compte.</a>
 
 </body>
 </html>
