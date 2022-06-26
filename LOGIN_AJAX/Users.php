@@ -29,7 +29,7 @@ class User {
 	}
 
 	public function setPassword($password){
-		$this->password = $password;
+		$this->password = password_hash($password, PASSWORD_BCRYPT);
 	}
 
 	public function getPrenom(){
@@ -47,11 +47,5 @@ class User {
 	public function setNom($nom){
 		$this->nom = $nom;
 	}
-
-    public function setPassword(){
-
-        password_hash($password, PASSWORD_BCRYPT);
-
-    }
 
 }

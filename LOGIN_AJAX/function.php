@@ -40,30 +40,29 @@ function dateJour(){
 
 }
 
-<<<<<<< HEAD
 function checkField(){
 
-    if (empty($_POST['prenom'])) {
+    if (isset($_POST['prenom']) && !empty($_POST['prenom'])) {
 
         return true; 
 
     } 
-    else if (empty($_POST['nom'])) {
+    else if (isset($_POST['nom']) && !empty($_POST['nom'])) {
 
         return true; 
 
     } 
-    else if (empty($_POST['login'])) {
+    else if (isset($_POST['login']) && !empty($_POST['login'])) {
 
         return true; 
 
     }
-    else if (empty($_POST['password'])) {
+    else if (isset($_POST['password']) && !empty($_POST['password'])) {
 
         return true; 
 
     }
-    else if (empty($_POST['password2'])) {
+    else if (isset($_POST['password2']) && !empty($_POST['password2'])) {
 
         return true; 
     
@@ -75,13 +74,17 @@ function checkField(){
 function checkPassword($passwd, $passwd2){
 
     if (isset($passwd) && isset($passwd2)){
-        
-        if ($passwd == $passwd2){
 
-            return true;
+        if (!empty($passwd) && !empty($passwd)){
+
+            if ($passwd == $passwd2){
+    
+                return true;
+    
+            }
 
         }
-
+        
     }
 
 }
@@ -119,5 +122,3 @@ function checkCaptcha($postCap){
 }
 
 
-=======
->>>>>>> bfc3565c45f2f05a40dede75ae6acc6a0a6fe65e

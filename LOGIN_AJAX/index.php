@@ -105,9 +105,6 @@
 <span class="flex justify-center">ou</span>
 <a href="inscription.php" class="flex justify-center text-indigo-600 font-medium">créer un nouveau compte.</a>
 
-</body>
-</html>
-
 <script>
 
 $(document).ready(function() {
@@ -133,7 +130,7 @@ console.log("pwd = " + passwd);
             password: passwd,
         },
         success: function(response) {
-
+          console.log('id');
             if (response['status'] == 0){
 
                 iziToast.error({
@@ -147,6 +144,7 @@ console.log("pwd = " + passwd);
 
             }
             else{
+              console.log('id2');
 
                 iziToast.success({
 
@@ -166,9 +164,12 @@ console.log("pwd = " + passwd);
 
         },
         error: function() {
-            
+            console.log('errID')
         }
     });
 }
 
 </script>
+
+</body>
+</html>
