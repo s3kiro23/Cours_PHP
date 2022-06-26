@@ -5,7 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" integrity="sha512-O03ntXoVqaGUTAeAmvQ2YSzkCvclZEcPQu1eqloPaHfJ5RuNGiS4l+3duaidD801P50J28EHyonCV06CUlTSag==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script
+    src="https://code.jquery.com/jquery-3.6.0.js"
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous">
+    </script>    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -14,7 +18,7 @@
 <body>
 
     <div
-            class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
+            class="min-h-full flex items-center justify-center pt-12 pb-4 px-4 sm:px-6 lg:px-8"
     >
         <div class="max-w-md w-full space-y-8">
             <div>
@@ -109,6 +113,7 @@
                 </div>
                 <div>
                     <button
+                            type="submit"
                             id='signIn'
                             class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
@@ -125,13 +130,17 @@
                                     d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                             </svg>
                         </span>
-
                         S'incrire !
                     </button>
                 </div>
             </form>
         </div>
     </div>
+    <span class="flex justify-center">ou</span>
+    <a id="to_logIn" class="cursor-pointer flex justify-center text-indigo-600 font-medium">retour à la connexion.</a>
+
+
+</body>
 
 <script>
 
@@ -139,7 +148,9 @@ $(document).ready(function() {
 
     captcha();
     // $('#password').on('keyup', checkPassword);
-    
+    $('#to_logIn').on('click', logIn);
+
+
 });
 
 var checkPassword = function() {
@@ -158,10 +169,11 @@ var checkPassword = function() {
         type: 'POST',
         data: {
             request: 'password',
+            passwd: 'password',
+            passwd2: 'password2' 
         },
         success: function(response) {
             console.log('success');
-            $("#captcha").html(response['get_captcha']);
 
         },
         error: function() {
@@ -173,24 +185,6 @@ var checkPassword = function() {
         
 var signIn = function(){
 
-    let prenom = $('#prenom').val();
-    console.log("prenom = " + prenom);
-
-    let nom = $('#nom').val();
-    console.log("nom = " + nom);
-
-    let login = $('#login').val();
-    console.log("login = " + login);
-
-    let passwd = $('#password').val();
-    console.log("passwd = " + passwd);
-
-    let passwd2 = $('#password2').val();
-    console.log("passwd2 = " + passwd2);
-
-    // let captcha = $('captcha').html();
-    // console.log("captcha = " + captcha);
-
     console.log(1);
     $.ajax({
 
@@ -199,12 +193,12 @@ var signIn = function(){
         type: 'POST',
         data: {
             request: 'signIn',
-            prenom: 'prenom',
-            nom: 'nom',
-            login: 'login',
-            passwd: 'password',
-            passwd2: 'password2',
-            checkCap: 'captcha_verif'
+            prenom: $('#prenom').val(),
+            nom: $('#nom').val(),
+            login: $('#login').val(),
+            passwd: $('#password').val(),
+            passwd2: $('#password2').val(),
+            checkCap: $('#captcha_verif').val()
         },
 
         success: function(response) {
@@ -243,7 +237,8 @@ var signIn = function(){
         },
 
         error: function() {
-        
+            console.log('errorSign');
+
         }
 
     });
@@ -272,13 +267,53 @@ function captcha(){
     });
 }
 
+var logIn = function(){
+ console.log("login1");
+  $.ajax({
+        url: 'connect.php',
+        dataType: 'JSON',
+        type: 'POST',
+        data: {
+            request: 'to_logIn',
+        },
+        success: function(response) {
+          console.log('logInResp');
+
+          let timerInterval
+          Swal.fire({
+            title: response['msg'],
+            html: 'I will close in <b></b> milliseconds.',
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: () => {
+              Swal.showLoading()
+              const b = Swal.getHtmlContainer().querySelector('b')
+              timerInterval = setInterval(() => {
+                b.textContent = Swal.getTimerLeft()
+              }, 100)
+            },
+            willClose: () => {
+              clearInterval(timerInterval)
+            }
+          }).then((result) => {
+            /* Read more about handling dismissals below */
+            if (result.dismiss === Swal.DismissReason.timer) {
+              console.log('I was closed by the timer')
+            }
+          })
+
+          setTimeout(() => {
+                window.location.replace('index.php')
+          }, 1500);
+
+        },
+
+        error: function() {
+            console.log('errSignIn')
+        }
+    });
+
+}
+
 </script>
-
-<?php require_once 'function.php';     
-
-$get_captcha = captcha();
-
-echo json_encode(array("get_captcha" => $get_captcha));?>
-
-</body>
 </html>

@@ -42,29 +42,34 @@ function dateJour(){
 
 function checkField(){
 
-    if (isset($_POST['prenom']) && !empty($_POST['prenom'])) {
+    if (isset($_POST['prenom']) && empty($_POST['prenom'])) {
 
-        return true; 
-
-    } 
-    else if (isset($_POST['nom']) && !empty($_POST['nom'])) {
-
-        return true; 
+        return 'prenom'; 
 
     } 
-    else if (isset($_POST['login']) && !empty($_POST['login'])) {
+    else if (isset($_POST['nom']) && empty($_POST['nom'])) {
 
-        return true; 
+        return 'nom'; 
+
+    } 
+    else if (isset($_POST['login']) && empty($_POST['login'])) {
+
+        return 'login'; 
 
     }
-    else if (isset($_POST['password']) && !empty($_POST['password'])) {
+    else if (isset($_POST['passwd']) && empty($_POST['passwd'])) {
 
-        return true; 
+        return 'password'; 
 
     }
-    else if (isset($_POST['password2']) && !empty($_POST['password2'])) {
+    else if (isset($_POST['passwd2']) && empty($_POST['passwd2'])) {
 
-        return true; 
+        return 'password2'; 
+    
+    }
+    else if (isset($_POST['checkCap']) && empty($_POST['checkCap'])) {
+
+        return 'Captcha vérif'; 
     
     }
     return false;
@@ -110,9 +115,9 @@ function captcha(){
 
 }
 
-function checkCaptcha($postCap){
+function checkCaptcha(){
 
-    if ($postCap == captcha()){
+    if (captcha() == $_POST['checkCap']){
 
         return true;
 

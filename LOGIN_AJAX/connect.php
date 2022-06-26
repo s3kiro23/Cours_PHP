@@ -65,15 +65,17 @@ switch ($_POST['request']){
 
     break;
 
-    case 'password' :
+    case 'to_signIn' :
 
-        $msg = "Les mots de passe ne correspondent pas!";
+        $msg = "Redirection vers la page d'inscription en cours!";
 
-        if (checkPassword($_POST['password'], $_POST['password2'])){
+        echo json_encode(array("msg" => $msg));
 
-            $msg = "OK!";
+    break;
 
-        }
+    case 'to_logIn' :
+
+        $msg = "Redirection vers la page de connexion en cours!";
 
         echo json_encode(array("msg" => $msg));
 
@@ -83,14 +85,53 @@ switch ($_POST['request']){
 
         $status = 1;
         $msg = "Création de votre compte réussi, Enjoy :D !";
+        // $user1 = "";
 
 
         if (checkField()){
 
             $status = 0;
-            $msg = "Au moins un champ n'a pas été rempli !";
+            $msg = "Le champ ".checkField()." est vide !";
 
+            if (checkPassword($_POST['passwd'], $_POST['passwd2']) && checkPasswdLenght($_POST['passwd']) && checkCaptcha($_POST['checkCap'])){
+    
+                $status = 1;
+                $msg = "Création de votre compte réussi, Enjoy :D !";
+        
+            }
+            else if (!checkPassword($_POST['passwd'], $_POST['passwd2'])){
+    
+                $status = 0;
+                $msg = "Les mots de passe ne correspondent pas!";
+    
+            }
         }
+
+        // if ($status == 1){
+
+        //     // $user1 = new User($_POST['login'], $_POST['passwd'], $_POST['prenom'], $_POST['nom']);
+        //     $_SESSION['nom'] = $_POST['nom'];
+        //     $_SESSION['prenom'] = $_POST['prenom'];
+        //     $_SESSION['login'] = $_POST['login'];
+        //     $_SESSION['passwd'] = $_POST['passwd'];
+        //     file_put_contents($log_path, "\n ".dateJour()." ".get_login()." s'est connecté", FILE_APPEND);
+
+        // }
+        
+        // if (checkCaptcha()){
+
+        //     $status = 0;
+        //     $msg = "Captcha erroné.";
+
+        // }
+
+
+        // if (!checkPasswdLenght($_POST['passwd'])){
+
+        //     $status = 0;
+        //     $msg = "Condition de création du mot de passe non remplies.";
+
+        // }
 
         echo json_encode(array("status" => $status, "msg" => $msg));
 
@@ -101,7 +142,6 @@ switch ($_POST['request']){
         $get_captcha = captcha();
 
         echo json_encode(array('get_captcha' => $get_captcha));
-
 
     break;   
     

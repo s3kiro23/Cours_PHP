@@ -5,8 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" integrity="sha512-O03ntXoVqaGUTAeAmvQ2YSzkCvclZEcPQu1eqloPaHfJ5RuNGiS4l+3duaidD801P50J28EHyonCV06CUlTSag==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script
+    src="https://code.jquery.com/jquery-3.6.0.js"
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous">
+    </script>    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.tailwindcss.com"></script>   
     <title>LOGIN - AJAX</title>
 </head>
@@ -103,22 +108,17 @@
   </div>
 </div>
 <span class="flex justify-center">ou</span>
-<a href="inscription.php" class="flex justify-center text-indigo-600 font-medium">créer un nouveau compte.</a>
+<a id="to_signIn" class="cursor-pointer flex justify-center text-indigo-600 font-medium">créer un nouveau compte.</a>
 
 <script>
 
 $(document).ready(function() {
 
+  $('#to_signIn').on('click', signIn);
 
 });
 
 var connect = function(){
-
-let login = $('#login').val();
-console.log("login = " + login);
-
-let passwd = $('#password').val();
-console.log("pwd = " + passwd);
 
     $.ajax({
         url: 'connect.php',
@@ -126,8 +126,8 @@ console.log("pwd = " + passwd);
         type: 'POST',
         data: {
             request: 'connexion',
-            login: login,
-            password: passwd,
+            login: $('#login').val(),
+            password: $('#password').val(),
         },
         success: function(response) {
           console.log('id');
@@ -144,7 +144,7 @@ console.log("pwd = " + passwd);
 
             }
             else{
-              console.log('id2');
+              // console.log('id2');
 
                 iziToast.success({
 
@@ -167,6 +167,54 @@ console.log("pwd = " + passwd);
             console.log('errID')
         }
     });
+}
+
+var signIn = function(){
+ console.log("sign1");
+  $.ajax({
+        url: 'connect.php',
+        dataType: 'JSON',
+        type: 'POST',
+        data: {
+            request: 'to_signIn',
+        },
+        success: function(response) {
+          console.log('signInResp');
+
+          let timerInterval
+          Swal.fire({
+            title: response['msg'],
+            html: 'I will close in <b></b> milliseconds.',
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: () => {
+              Swal.showLoading()
+              const b = Swal.getHtmlContainer().querySelector('b')
+              timerInterval = setInterval(() => {
+                b.textContent = Swal.getTimerLeft()
+              }, 100)
+            },
+            willClose: () => {
+              clearInterval(timerInterval)
+            }
+          }).then((result) => {
+            /* Read more about handling dismissals below */
+            if (result.dismiss === Swal.DismissReason.timer) {
+              console.log('I was closed by the timer')
+            }
+          })
+
+          setTimeout(() => {
+                window.location.replace('inscription.php')
+          }, 1500);
+
+        },
+
+        error: function() {
+            console.log('errSignIn')
+        }
+    });
+
 }
 
 </script>
