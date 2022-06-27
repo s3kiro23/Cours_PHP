@@ -10,7 +10,7 @@ class User {
     public function __construct($login, $password, $prenom, $nom){
         
         $this->login = $login;
-        $this->password = $password;
+        $this->password = password_hash($password, PASSWORD_BCRYPT);
         $this->prenom = $prenom;
         $this->nom = $nom;
 
@@ -46,6 +46,11 @@ class User {
 
 	public function setNom($nom){
 		$this->nom = $nom;
+	}
+
+	static public function create(){
+
+		
 	}
 
 }

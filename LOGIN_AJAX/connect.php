@@ -1,6 +1,6 @@
 <?php session_start(); 
 require_once 'function.php';
-require_once 'User.php';
+require_once 'Users.php';
 
 switch ($_POST['request']){
 
@@ -51,92 +51,97 @@ switch ($_POST['request']){
 
     break;
 
+    
+    case 'to_signIn' :
+        
+        $msg = "Redirection vers la page d'inscription en cours!";
+        
+        echo json_encode(array("msg" => $msg));
+
+    break;
+    
+    case 'to_logIn' :
+        
+        $msg = "Redirection vers la page de connexion en cours!";
+        
+        echo json_encode(array("msg" => $msg));
+
+    break;
+        
+    case 'signIn' :
+        
+    $user = '';
+    $status = 1;
+    $msg = "Création de votre compte réussi, Enjoy :D !";
+    
+    if (checkField()){
+
+        $status = 0;
+        $msg = "Le champ ".checkField()." est vide !";
+
+        if (checkPassword($_POST['passwd'], $_POST['passwd2']) && checkPasswdLenght($_POST['passwd']) && checkCaptcha($_POST['checkCap'])){
+
+            $status = 1;
+            $msg = "Création de votre compte réussi, Enjoy :D !";
+            
+        }
+        if (!checkPassword($_POST['passwd'], $_POST['passwd2'])){
+            
+            $status = 0;
+            $msg = "Les mots de passe ne correspondent pas!";
+            
+        }
+    }
+    
+    if ($status == 1){
+        
+        $log_path = 'log.txt';
+        
+        $user = new User($_POST['login'], $_POST['passwd'], $_POST['prenom'], $_POST['nom']);
+        $_SESSION['nom'] = $user->getNom();
+        $_SESSION['prenom'] = $user->getPrenom();
+        $_SESSION['login'] = $user->getLogin();
+        $_SESSION['passwd'] = $user->getPassword();
+        file_put_contents($log_path, "\n ".dateJour()." ".get_login()." a créé un nouveau compte.", FILE_APPEND);
+        
+    }
+    
+    // if (checkCaptcha()){
+        
+        //     $status = 0;
+        //     $msg = "Captcha erroné.";
+        
+        // }
+        
+        
+        // if (!checkPasswdLenght($_POST['passwd'])){
+            
+            //     $status = 0;
+            //     $msg = "Condition de création du mot de passe non remplies.";
+            
+            // }
+                
+    echo json_encode(array("status" => $status, "msg" => $msg, "user" => $user));
+                
+    break;  
+
     case 'user_login' :
 
-        $html = "Vous n'êtes pas connecté ! ";
+        $login = "Vous n'êtes pas connecté ! ";
 
         if (is_logged()){
 
-            $html = "Bienvenue ".get_login();
+            $login = get_login();
+            $nom = $_SESSION['nom'];
+            $prenom = $_SESSION['prenom'];
+            $password = $_SESSION['passwd'];
 
         }
 
-        echo json_encode(array("html" => $html));
+        echo json_encode(array("login" => $login, "nom" => $nom, "prenom" => $prenom, "password" => $password));
 
     break;
-
-    case 'to_signIn' :
-
-        $msg = "Redirection vers la page d'inscription en cours!";
-
-        echo json_encode(array("msg" => $msg));
-
-    break;
-
-    case 'to_logIn' :
-
-        $msg = "Redirection vers la page de connexion en cours!";
-
-        echo json_encode(array("msg" => $msg));
-
-    break;
-
-    case 'signIn' :
-
-        $status = 1;
-        $msg = "Création de votre compte réussi, Enjoy :D !";
-        // $user1 = "";
-
-
-        if (checkField()){
-
-            $status = 0;
-            $msg = "Le champ ".checkField()." est vide !";
-
-            if (checkPassword($_POST['passwd'], $_POST['passwd2']) && checkPasswdLenght($_POST['passwd']) && checkCaptcha($_POST['checkCap'])){
-    
-                $status = 1;
-                $msg = "Création de votre compte réussi, Enjoy :D !";
-        
-            }
-            else if (!checkPassword($_POST['passwd'], $_POST['passwd2'])){
-    
-                $status = 0;
-                $msg = "Les mots de passe ne correspondent pas!";
-    
-            }
-        }
-
-        // if ($status == 1){
-
-        //     // $user1 = new User($_POST['login'], $_POST['passwd'], $_POST['prenom'], $_POST['nom']);
-        //     $_SESSION['nom'] = $_POST['nom'];
-        //     $_SESSION['prenom'] = $_POST['prenom'];
-        //     $_SESSION['login'] = $_POST['login'];
-        //     $_SESSION['passwd'] = $_POST['passwd'];
-        //     file_put_contents($log_path, "\n ".dateJour()." ".get_login()." s'est connecté", FILE_APPEND);
-
-        // }
-        
-        // if (checkCaptcha()){
-
-        //     $status = 0;
-        //     $msg = "Captcha erroné.";
-
-        // }
-
-
-        // if (!checkPasswdLenght($_POST['passwd'])){
-
-        //     $status = 0;
-        //     $msg = "Condition de création du mot de passe non remplies.";
-
-        // }
-
-        echo json_encode(array("status" => $status, "msg" => $msg));
-
-    break;  
-
+                
     case 'captcha' :
 
         $get_captcha = captcha();

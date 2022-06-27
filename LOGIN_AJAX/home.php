@@ -24,9 +24,50 @@
         <div
             class="text-white transition ease-in delay-75 hover:uppercase hover:font-bold hover:text-orange-500 duration-200"
         >
-            <span id='user_login'></span>
+            <span class='user_login'></span>
         </div>
     </nav>
+
+    <div class="bg-white shadow overflow-hidden rounded-lg my-12 lg:mx-60  ">
+        <div class="py-5 px-6">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">Profil</h3>
+            <p class="mt-1 max-w-2xl text-gray-500">Informations personnelles.</p>
+        </div>
+        <div class="border-t border-gray-200">
+            <dl></dl>
+                <div class="flex items-center gap-4 bg-gray-50 px-4 py-5">
+                    <div>
+                        <dt class="font-medium text-gray-500">Nom</dt>
+                        <dd id="user_nom" class="mt-1 mb-3 text-gray-900 mt-0 col-span-2"></dd>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4 bg-gray-50 px-4 py-5">
+                    <div>
+                        <dt class="font-medium text-gray-500">Prénom</dt>
+                        <dd id="user_prenom" class="mt-1 mb-3 text-gray-900 mt-0 col-span-2"></dd>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4 bg-white px-4 py-5">
+                    <div>
+                        <dt class="font-medium text-gray-500">Login / Email</dt>
+                        <dd class="user_login mt-1 mb-3 text-gray-900 mt-0 col-span-2"></dd>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4 bg-white px-4 py-5">
+                    <div>
+                        <dt id="pwd" class=" font-medium text-gray-500">Mot de passe</dt>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 bg-gray-50 px-4 py-5">
+                    <div>
+                        <dt class=" font-medium text-gray-500">à propos de <span class="user_login"></span></dt>
+                        <dd class="mt-1  text-gray-900 mt-0 col-span-2"></dd>
+                    </div>
+                </div>
+            </dl>
+        </div>
+    </div>
 
 <script>
 
@@ -83,7 +124,10 @@ function load(){
         },
         success: function(response) {
             // console.log(2);
-            $("#user_login").html(response['html']);
+            $(".user_login").html(response['login']);
+            $("#pwd").html(response['password']);
+            $("#user_nom").html(response['nom']);
+            $("#user_prenom").html(response['prenom']);
 
         },
         error: function() {

@@ -137,7 +137,7 @@
         </div>
     </div>
     <span class="flex justify-center">ou</span>
-    <a id="to_logIn" class="cursor-pointer flex justify-center text-indigo-600 font-medium">retour à la connexion.</a>
+    <a id="to_logIn" class="cursor-pointer flex justify-center text-indigo-600 font-medium">retour à la page connexion.</a>
 
 
 </body>
@@ -228,9 +228,9 @@ var signIn = function(){
                 });
                 console.log('Success');
 
-                // setTimeout(() => {
-                // window.location.replace("home.php");
-                // }, 2300);
+                setTimeout(() => {
+                window.location.replace("home.php");
+                }, 1600);
 
             }
 
