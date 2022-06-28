@@ -41,7 +41,7 @@
                         <input
                                 id="prenom"
                                 name="prenom"
-                                type="prenom"
+                                type="text"
                                 class="field appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                                 placeholder="Prénom"
                         />
@@ -53,7 +53,7 @@
                         <input
                                 id="nom"
                                 name="nom"
-                                type="nom"
+                                type="text"
                                 class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                                 placeholder="Nom"
                         />
@@ -139,21 +139,20 @@
     <span class="flex justify-center">ou</span>
     <a id="to_logIn" class="cursor-pointer flex justify-center text-indigo-600 font-medium">retour à la page connexion.</a>
 
-
 </body>
 
 <script>
 
-$(document).ready(function() {
+$(function() {
 
     captcha();
     // $('#password').on('keyup', checkPassword);
-    $('#to_logIn').on('click', logIn);
+    $('#to_logIn').on('click', to_logIn);
 
 
 });
 
-var checkPassword = function() {
+let checkPassword = function() {
 
     let password = $('#password').val();
     console.log("password = " + password);
@@ -183,7 +182,7 @@ var checkPassword = function() {
 
 }
         
-var signIn = function(){
+let signIn = function(){
 
     console.log(1);
     $.ajax({
@@ -198,12 +197,13 @@ var signIn = function(){
             login: $('#login').val(),
             passwd: $('#password').val(),
             passwd2: $('#password2').val(),
-            checkCap: $('#captcha_verif').val()
+            checkCap: $('#captcha_verif').val(),
+            captcha: $('#captcha').html(),
         },
 
         success: function(response) {
 
-            if (response['status'] == 0){
+            if (response['status'] === 0){
                 console.log('error');
 
                 Swal.fire({
@@ -238,7 +238,6 @@ var signIn = function(){
 
         error: function() {
             console.log('errorSign');
-
         }
 
     });
@@ -267,7 +266,7 @@ function captcha(){
     });
 }
 
-var logIn = function(){
+let to_logIn = function(){
  console.log("login1");
   $.ajax({
         url: 'connect.php',

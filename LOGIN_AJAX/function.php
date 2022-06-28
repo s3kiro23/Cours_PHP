@@ -80,7 +80,7 @@ function checkPassword($passwd, $passwd2){
 
     if (isset($passwd) && isset($passwd2)){
 
-        if (!empty($passwd) && !empty($passwd)){
+        if (!empty($passwd) && !empty($passwd2)){
 
             if ($passwd == $passwd2){
     
@@ -91,10 +91,11 @@ function checkPassword($passwd, $passwd2){
         }
         
     }
+    return false;
 
 }
 
-function checkPasswdLenght($passwd){
+/*function checkPasswdLenght($passwd){
 
     $pattern = '/[A-Z][a-z][0-9]{8}/';
 
@@ -105,7 +106,7 @@ function checkPasswdLenght($passwd){
     }
     return false;
 
-}
+}*/
 
 function captcha(){
 
@@ -115,9 +116,9 @@ function captcha(){
 
 }
 
-function checkCaptcha(){
+function checkCaptcha($capToCheck, $RandCap){
 
-    if (captcha() == $_POST['checkCap']){
+    if ($capToCheck == $RandCap){
 
         return true;
 

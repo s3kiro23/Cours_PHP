@@ -34,51 +34,90 @@
             <p class="mt-1 max-w-2xl text-gray-500">Informations personnelles.</p>
         </div>
         <div class="border-t border-gray-200">
-            <dl></dl>
-                <div class="flex items-center gap-4 bg-gray-50 px-4 py-5">
-                    <div>
-                        <dt class="font-medium text-gray-500">Nom</dt>
-                        <dd id="user_nom" class="mt-1 mb-3 text-gray-900 mt-0 col-span-2"></dd>
-                    </div>
+            <div class="flex items-center gap-4 bg-gray-50 px-4 py-5">
+                <div>
+                    <dt class="font-medium text-gray-500">Nom</dt>
+                    <dd id="user_nom" class="mt-1 mb-3 text-gray-900 mt-0 col-span-2"></dd>
                 </div>
-                <div class="flex items-center gap-4 bg-gray-50 px-4 py-5">
-                    <div>
-                        <dt class="font-medium text-gray-500">Prénom</dt>
-                        <dd id="user_prenom" class="mt-1 mb-3 text-gray-900 mt-0 col-span-2"></dd>
-                    </div>
+            </div>
+            <div class="flex items-center gap-4 bg-gray-50 px-4 py-5">
+                <div>
+                    <dt class="font-medium text-gray-500">Prénom</dt>
+                    <dd id="user_prenom" class="mt-1 mb-3 text-gray-900 mt-0 col-span-2"></dd>
                 </div>
-                <div class="flex items-center gap-4 bg-white px-4 py-5">
-                    <div>
-                        <dt class="font-medium text-gray-500">Login / Email</dt>
-                        <dd class="user_login mt-1 mb-3 text-gray-900 mt-0 col-span-2"></dd>
-                    </div>
+            </div>
+            <div class="flex items-center gap-4 bg-white px-4 py-5">
+                <div>
+                    <dt class="font-medium text-gray-500">Login / Email</dt>
+                    <dd class="user_login mt-1 mb-3 text-gray-900 mt-0 col-span-2"></dd>
                 </div>
-                <div class="flex items-center gap-4 bg-white px-4 py-5">
-                    <div>
-                        <dt id="pwd" class=" font-medium text-gray-500">Mot de passe</dt>
-                    </div>
+            </div>
+            <div class="flex items-center gap-4 bg-white px-4 py-5">
+                <div>
+                    <dt class=" font-medium text-gray-500">Mot de passe</dt>
+                    <dd id="pwd" class="mt-1 mb-3 text-gray-900 mt-0 col-span-2"></dd>
                 </div>
+            </div>
 
-                <div class="flex items-center gap-4 bg-gray-50 px-4 py-5">
-                    <div>
-                        <dt class=" font-medium text-gray-500">à propos de <span class="user_login"></span></dt>
-                        <dd class="mt-1  text-gray-900 mt-0 col-span-2"></dd>
-                    </div>
+            <div class="flex items-center gap-4 bg-gray-50 px-4 py-5">
+                <div>
+                    <dt class=" font-medium text-gray-500">à propos de <span class="user_login"></span></dt>
+                    <dd class="mt-1  text-gray-900 mt-0 col-span-2"></dd>
                 </div>
-            </dl>
+            </div>
         </div>
     </div>
 
+<!--    --><?php
+/*
+    $servername = 'localhost';
+    $username = 'root';
+    $password = '';
+    $dbname = 'user_aflokkat';
+    $login = 'a@a.a';
+    $pass = 'az';
+
+    try {
+
+        $dbco = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        $dbco->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $dbco->beginTransaction();
+
+        $query = $dbco->prepare('SELECT id, login, password FROM user WHERE login=?');
+        $query->execute([$login]);
+        $user = $query->fetch(PDO::FETCH_ASSOC);
+        $passH = $user['password'];
+
+        echo ($passH);
+
+        if (password_verify($pass, $passH)){
+
+            echo 'yes';
+        }
+        else {
+            echo 'no';
+        }
+
+        print_r($user);
+
+
+    } catch (PDOException $e) {
+        $status = 0;
+        $msg = "Erreur : ".$e->getMessage();
+    }
+    */?>
+
 <script>
 
-$(document).ready(function() {
+$(function() {
 
     load();
     $("#logout").on('click', logout);
 
 });
 
-var logout = function(){
+let logout = function(){
 
     console.log(1);
     $.ajax({

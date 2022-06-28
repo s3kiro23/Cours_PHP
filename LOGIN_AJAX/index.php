@@ -112,13 +112,13 @@
 
 <script>
 
-$(document).ready(function() {
+$(function() {
 
   $('#to_signIn').on('click', signIn);
 
 });
 
-var connect = function(){
+let connect = function(){
 
     $.ajax({
         url: 'connect.php',
@@ -131,7 +131,7 @@ var connect = function(){
         },
         success: function(response) {
           console.log('id');
-            if (response['status'] == 0){
+            if (response['status'] === 0){
 
                 iziToast.error({
 
@@ -168,7 +168,7 @@ var connect = function(){
     });
 }
 
-var signIn = function(){
+let signIn = function(){
  console.log("sign1");
   $.ajax({
         url: 'connect.php',

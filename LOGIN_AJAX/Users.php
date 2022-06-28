@@ -48,9 +48,49 @@ class User {
 		$this->nom = $nom;
 	}
 
-	static public function create(){
+	public function create(){
 
-		
+        $servername = 'localhost';
+        $username = 'root';
+        $password = '';
+        $dbname = 'user_aflokkat';
+
+        try {
+
+            $dbco = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+            $dbco->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            $dbco->beginTransaction();
+
+            /*        $sql = "CREATE DATABASE user_aflokkat";*/
+
+
+
+            /*        $sql = "CREATE TABLE user (
+                    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                    login VARCHAR(30) NOT NULL ,
+                    nom VARCHAR(30) NOT NULL,
+                    prenom VARCHAR(30) NOT NULL,
+                    password VARCHAR(150) NOT NULL
+                    )";*/
+
+            $preparedSql = $dbco->prepare('INSERT INTO user (`login`, `nom`, `prenom`, `password`)
+                VALUES (:login, :nom, :prenom, :password)');
+
+            $preparedSql->execute(array(
+                'login' => $this->login,
+                'nom' => $this->nom,
+                'prenom' => $this->prenom,
+                'password' => $this->password
+            ));
+
+            $dbco->commit();
+
+            echo 'Utilisateur '.$dbco->lastInsertId().' bien créé!';
+
+        } catch (PDOException $e) {
+            echo "Erreur : ".$e->getMessage();
+        }
 	}
 
 }
