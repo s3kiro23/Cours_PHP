@@ -50,29 +50,24 @@ class User {
 
 	public function create(){
 
-        $servername = 'localhost';
-        $username = 'root';
-        $password = '';
-        $dbname = 'user_aflokkat';
-
         try {
 
-            $dbco = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+            $dbco = new PDO("mysql:host=localhost;dbname=user_aflokkat", 'root', '');
             $dbco->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             $dbco->beginTransaction();
 
-            /*        $sql = "CREATE DATABASE user_aflokkat";*/
+                    // $sql = "CREATE DATABASE user_aflokkat";
 
 
 
-            /*        $sql = "CREATE TABLE user (
-                    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-                    login VARCHAR(30) NOT NULL ,
-                    nom VARCHAR(30) NOT NULL,
-                    prenom VARCHAR(30) NOT NULL,
-                    password VARCHAR(150) NOT NULL
-                    )";*/
+                    // $sql = "CREATE TABLE user (
+                    // id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                    // login VARCHAR(30) NOT NULL ,
+                    // nom VARCHAR(30) NOT NULL,
+                    // prenom VARCHAR(30) NOT NULL,
+                    // password VARCHAR(150) NOT NULL
+                    // )";
 
             $preparedSql = $dbco->prepare('INSERT INTO user (`login`, `nom`, `prenom`, `password`)
                 VALUES (:login, :nom, :prenom, :password)');
@@ -83,14 +78,17 @@ class User {
                 'prenom' => $this->prenom,
                 'password' => $this->password
             ));
+            // $dbco->exec($sql);
 
             $dbco->commit();
 
-            echo 'Utilisateur '.$dbco->lastInsertId().' bien créé!';
-
         } catch (PDOException $e) {
-            echo "Erreur : ".$e->getMessage();
+            // echo "Erreur : ".$e->getMessage();
         }
 	}
+
+    static public function checkUser(){
+        
+    }
 
 }

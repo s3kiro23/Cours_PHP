@@ -15,12 +15,12 @@
     <script src="https://cdn.tailwindcss.com"></script>   
     <title>LOGIN - AJAX</title>
 </head>
-<body>
+<body class="bg-[url('img/logIn_pic.jpg')] bg-cover bg-no-repeat">
 
 <div
-  class="min-h-full flex items-center justify-center py-5 px-4 sm:px-6 lg:px-8"
+  class="min-h-full flex mt-14 justify-center py-5 px-4 sm:px-6 lg:px-8"
 >
-  <div class="max-w-md w-full space-y-8">
+  <div class="space-y-8 bg-white rounded px-4 py-5 bg-opacity-50">
     <div>
       <img
         class="mx-auto h-12 w-auto"
@@ -108,7 +108,7 @@
   </div>
 </div>
 <span class="flex justify-center">ou</span>
-<a id="to_signIn" class="cursor-pointer flex justify-center text-indigo-600 font-medium">créer un nouveau compte.</a>
+<a id="to_signIn" class="cursor-pointer flex justify-center text-white hover:text-indigo-600 font-medium">créer un nouveau compte.</a>
 
 <script>
 
@@ -121,7 +121,7 @@ $(function() {
 let connect = function(){
 
     $.ajax({
-        url: 'connect.php',
+        url: 'controller.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -171,7 +171,7 @@ let connect = function(){
 let signIn = function(){
  console.log("sign1");
   $.ajax({
-        url: 'connect.php',
+        url: 'controller.php',
         dataType: 'JSON',
         type: 'POST',
         data: {

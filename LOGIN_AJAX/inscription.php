@@ -15,12 +15,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Inscription</title>
 </head>
-<body>
+<body class="bg-[url('img/signIn_pic.jpg')] bg-cover bg-no-repeat">
 
     <div
             class="min-h-full flex items-center justify-center pt-12 pb-4 px-4 sm:px-6 lg:px-8"
     >
-        <div class="max-w-md w-full space-y-8">
+        <div class="max-w-md w-full space-y-8 bg-white bg-opacity-50 py-4 px-4 rounded">
             <div>
                 <img
                         class="mx-auto h-12 w-auto"
@@ -28,7 +28,7 @@
                         alt="Workflow"
                 />
 
-                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                <h2 class="mt-6 text-center text-3xl font-extrabold">
                     Créer votre compte
                 </h2>
             </div>
@@ -136,8 +136,8 @@
             </form>
         </div>
     </div>
-    <span class="flex justify-center">ou</span>
-    <a id="to_logIn" class="cursor-pointer flex justify-center text-indigo-600 font-medium">retour à la page connexion.</a>
+    <span class="flex justify-center text-white">ou</span>
+    <a id="to_logIn" class="cursor-pointer flex justify-center text-indigo-600 hover:text-white font-medium">retour à la page connexion.</a>
 
 </body>
 
@@ -163,7 +163,7 @@ let checkPassword = function() {
     console.log('pwd');
     $.ajax({
 
-        url: 'connect.php',
+        url: 'controller.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -187,7 +187,7 @@ let signIn = function(){
     console.log(1);
     $.ajax({
 
-        url: 'connect.php',
+        url: 'controller.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -249,7 +249,7 @@ function captcha(){
     console.log('cap');
     $.ajax({
 
-        url: 'connect.php',
+        url: 'controller.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -269,7 +269,7 @@ function captcha(){
 let to_logIn = function(){
  console.log("login1");
   $.ajax({
-        url: 'connect.php',
+        url: 'controller.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
