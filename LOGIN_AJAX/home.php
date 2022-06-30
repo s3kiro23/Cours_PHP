@@ -16,9 +16,12 @@
     <script src="js/header.js"></script>
     <title>Home</title>
 </head>
-<body>
-    
+
+<header>
     <navbar-component></navbar-component>
+</header>
+
+<body>
 
     <h1
             class="text-dark text-5xl text-center m-3 p-3 hover:text-green-500 border-r-50"
@@ -92,6 +95,95 @@
             </form>
         </div>
     </section>
-    
+
+<script>
+
+    $(function() {
+
+        load();
+        $("#logout").on('click', logout);
+        $("#to_profil").on('click', toProfil);
+
+    });
+
+    let logout = function(){
+
+        console.log(1);
+        $.ajax({
+
+            url: 'controller.php',
+            dataType: 'JSON',
+            type: 'POST',
+            data: {
+                request: 'logout',
+            },
+            success: function(response) {
+
+                iziToast.success({
+
+                    timeout: 2000,
+                    progressBar: true,
+                    message: response['msg'],
+                    position: 'topRight',
+
+                });
+
+                setTimeout(() => {
+                    window.location.href = "index.php";
+                }, 2300);
+
+            },
+            error: function() {
+
+            }
+        });
+    }
+
+    function load(){
+
+        // console.log(1);
+        $.ajax({
+
+            url: 'controller.php',
+            dataType: 'JSON',
+            type: 'POST',
+            data: {
+                request: 'user_login',
+            },
+            success: function(response) {
+                // console.log(2);
+                $(".user_login").html(response['login']);
+
+            },
+            error: function() {
+
+            }
+        });
+    }
+
+    let toProfil = function(){
+        console.log("toprof");
+        $.ajax({
+            url: 'controller.php',
+            dataType: 'JSON',
+            type: 'POST',
+            data: {
+                request: 'to_profil',
+            },
+            success: function(response) {
+                console.log('to_profResp');
+                window.location.replace('profil.php')
+            },
+
+            error: function() {
+                console.log('errProf')
+            }
+        });
+
+    }
+
+
+</script>
+
 </body>    
 </html>

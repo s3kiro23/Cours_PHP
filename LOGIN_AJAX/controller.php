@@ -57,7 +57,6 @@ switch ($_POST['request']){
         echo json_encode(array("status" => $status, "msg" => $msg));
 
     break;
-
     
     case 'to_signIn' :
         
@@ -74,7 +73,23 @@ switch ($_POST['request']){
         echo json_encode(array("msg" => $msg));
 
     break;
-        
+
+    case 'to_home' :
+
+        $msg = "Redirection vers la page Home!";
+
+        echo json_encode(array("msg" => $msg));
+
+    break;
+
+    case 'to_profil' :
+
+        $msg = "Redirection vers la page de profil!";
+
+        echo json_encode(array("msg" => $msg));
+
+    break;
+
     case 'signIn' :
 
         $status = 1;
@@ -150,7 +165,37 @@ switch ($_POST['request']){
         echo json_encode(array("login" => get_login(), "nom" => $user['nom'], "prenom" => $user['prenom'], "password" => $user['password']));
 
     break;
-                
+
+    case 'modify' :
+
+        $msg = 'Echec modification!';
+        $field = '';
+
+        if (!empty($_POST['fieldName'])){
+
+           $msg = 'Modif réussi!';
+           $field = 'test';
+
+        }
+
+    echo json_encode(array("msg" => $msg, "field" => $field));
+
+    break;
+
+    case 'deleteAccount' :
+
+        $msg = "";
+
+        if (isset($_SESSION['login']) & !empty($_SESSION['login'])){
+
+            $msg = 'test';
+
+        }
+
+        echo json_encode(array('msg' => $msg));
+
+    break;
+
     case 'captcha' :
 
         $get_captcha = captcha();
