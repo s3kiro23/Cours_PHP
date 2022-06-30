@@ -16,9 +16,21 @@
     <title>Home</title>
 </head>
 <body>
-
     <navbar-component></navbar-component>
-
+    
+    <div class="background">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    </div>
     <div class="bg-white shadow overflow-hidden rounded-lg my-12 lg:mx-60  ">
         <div class="py-5 px-6">
             <h3 class="text-lg leading-6 font-medium text-gray-900">Profil</h3>
@@ -53,7 +65,7 @@
             <div class="flex items-center gap-4 bg-gray-50 px-4 py-5">
                 <div>
                     <dt class=" font-medium text-gray-500">à propos de <span class="user_login"></span></dt>
-                    <dd class="mt-1  text-gray-900 mt-0 col-span-2"></dd>
+                    <dd class="mt-1 text-gray-900 mt-0 col-span-2"></dd>
                 </div>
             </div>
         </div>

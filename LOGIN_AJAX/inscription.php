@@ -72,7 +72,7 @@
                     </div>
 
                     <div>
-                        <label for="password" class="sr-only">Email address</label>
+                        <label for="password" class="sr-only">Password</label>
 
                         <input
                                 id="password"
@@ -84,7 +84,7 @@
                     </div>
 
                     <div>
-                        <label for="password2" class="sr-only">Password</label>
+                        <label for="password2" class="sr-only">Password2</label>
 
                         <input
                                 id="password2"
@@ -137,7 +137,7 @@
         </div>
     </div>
     <span class="flex justify-center text-white">ou</span>
-    <a id="to_logIn" class="cursor-pointer flex justify-center text-indigo-600 hover:text-white font-medium">retour à la page connexion.</a>
+    <a id="to_logIn" class="mb-6 cursor-pointer flex justify-center text-indigo-600 hover:text-white font-medium">retour à la page connexion.</a>
 
 </body>
 

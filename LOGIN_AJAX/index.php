@@ -12,26 +12,28 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.tailwindcss.com"></script>   
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
     <title>LOGIN - AJAX</title>
 </head>
-<body class="bg-[url('img/logIn_pic.jpg')] bg-cover bg-no-repeat">
+
+<body class="bg-[url('img/logIn_pic.jpg')] bg-cover bg-no-repeat z-1">
 
 <div
   class="min-h-full flex mt-14 justify-center py-5 px-4 sm:px-6 lg:px-8"
 >
-  <div class="space-y-8 bg-white rounded px-4 py-5 bg-opacity-50">
-    <div>
-      <img
-        class="mx-auto h-12 w-auto"
-        src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-        alt="Workflow"
-      />
-      <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-        Connexion à votre compte
-      </h2>
-    </div>
-    <form class="mt-8 space-y-6" action="javascript:connect();" method="POST">
+<div class="space-y-8 bg-white rounded px-4 py-5 bg-opacity-50">
+  <div>
+    <img
+    class="mx-auto h-12 w-auto"
+    src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+    alt="Workflow"
+    />
+    <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+      Connexion à votre compte
+    </h2>
+  </div>
+  <form class="mt-8 space-y-6" action="javascript:connect();" method="POST">
       <input type="hidden" name="remember" value="true" />
       <div class="rounded-md shadow-sm -space-y-px">
         <div>
@@ -53,7 +55,6 @@
             name="password"
             type="password"
             autocomplete="current-password"
-            required
             class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
             placeholder="Mot de passe"
           />
@@ -107,6 +108,7 @@
     </form>
   </div>
 </div>
+
 <span class="flex justify-center">ou</span>
 <a id="to_signIn" class="cursor-pointer flex justify-center text-white hover:text-indigo-600 font-medium">créer un nouveau compte.</a>
 
