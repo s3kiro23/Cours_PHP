@@ -95,6 +95,7 @@
                         />
                     </div>
                 </div>
+                
                 <div class="rounded-md">
                     <div class="px-3 py-2 rounded-t-md bg-indigo-500 text-white">
                             <span>Captcha :</span>

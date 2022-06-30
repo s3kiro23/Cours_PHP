@@ -17,6 +17,8 @@
     <title>LOGIN - AJAX</title>
 </head>
 
+
+
 <body class="bg-[url('img/logIn_pic.jpg')] bg-cover bg-no-repeat z-1">
 
 <div
@@ -60,6 +62,8 @@
           />
         </div>
       </div>
+
+      <header
 
       <div class="flex items-center justify-between">
         <div class="flex items-center">

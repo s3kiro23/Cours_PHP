@@ -7,5 +7,7 @@
     <orderEntry type="library" name="@types/jquery-ajax-chain" level="application" />
     <orderEntry type="library" name="@types/jquery" level="application" />
     <orderEntry type="library" name="@types/script-ext-html-webpack-plugin" level="application" />
+    <orderEntry type="library" name="izitoast" level="application" />
+    <orderEntry type="library" name="jquery-3.6.0" level="application" />
   </component>
 </module>
