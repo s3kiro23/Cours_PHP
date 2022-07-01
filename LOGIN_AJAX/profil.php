@@ -5,68 +5,66 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" integrity="sha512-O03ntXoVqaGUTAeAmvQ2YSzkCvclZEcPQu1eqloPaHfJ5RuNGiS4l+3duaidD801P50J28EHyonCV06CUlTSag==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/style.css">
     <script
     src="https://code.jquery.com/jquery-3.6.0.js"
     integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
     crossorigin="anonymous">
-    </script>    
+    </script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.tailwindcss.com"></script>   
     <script src="js/header.js"></script>
     <title>Home</title>
 </head>
-<body>
+<header>
     <navbar-component></navbar-component>
-    
-    <div class="background">
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    </div>
-    <div class="bg-white shadow overflow-hidden rounded-lg my-12 lg:mx-60  ">
-        <div class="py-5 px-6">
-            <h3 class="text-lg leading-6 font-medium text-gray-900">Profil</h3>
-            <p class="mt-1 max-w-2xl text-gray-500">Informations personnelles.</p>
+</header>
+
+<body>
+
+    <div class="bg-indigo-100 shadow overflow-hidden rounded-lg my-12 lg:mx-60  ">
+        <div class="py-5 px-6 justify-between">
+            <h3 class="text-2xl leading-6 font-medium text-gray-900">Profil</h3>
+            <p class="test mt-1 max-w-2xl text-gray-500">Informations personnelles.</p>
+            <button id="delete" class="mt-5 text-red-600">Delete account</button>
         </div>
         <div class="border-t border-gray-200">
-            <div class="flex items-center gap-4 bg-gray-50 px-4 py-5">
+            <div class="flex items-center gap-4 bg-gray-50 px-6 py-5 justify-between">
                 <div>
-                    <dt class="font-medium text-gray-500">Nom</dt>
+                    <dt id="fieldName" class="font-medium text-gray-500">Nom</dt>
                     <dd id="user_nom" class="mt-1 mb-3 text-gray-900 mt-0 col-span-2"></dd>
                 </div>
+                <button class="data_modify text-indigo-600 font-bold">Modify</button>
             </div>
-            <div class="flex items-center gap-4 bg-gray-50 px-4 py-5">
+            <div class="flex items-center gap-4 bg-white px-6 py-5 justify-between">
                 <div>
-                    <dt class="font-medium text-gray-500">Prénom</dt>
+                    <dt id="fieldLastname" class="font-medium text-gray-500">Prénom</dt>
                     <dd id="user_prenom" class="mt-1 mb-3 text-gray-900 mt-0 col-span-2"></dd>
                 </div>
+                <button class="data_modify text-indigo-600 font-bold">Modify</button>
             </div>
-            <div class="flex items-center gap-4 bg-white px-4 py-5">
+            <div class="flex items-center gap-4 bg-gray-50 px-6 py-5 justify-between">
                 <div>
-                    <dt class="font-medium text-gray-500">Login / Email</dt>
+                    <dt id="fieldLogin" class="font-medium text-gray-500">Login / Email</dt>
                     <dd class="user_login mt-1 mb-3 text-gray-900 mt-0 col-span-2"></dd>
                 </div>
+                <button class="data_modify text-indigo-600 font-bold">Modify</button>
             </div>
-            <div class="flex items-center gap-4 bg-white px-4 py-5">
+            <div class="flex items-center gap-4 bg-white px-6 py-5 justify-between">
                 <div>
-                    <dt class=" font-medium text-gray-500">Mot de passe</dt>
+                    <dt id="fieldPwd" class="font-medium text-gray-500">Mot de passe</dt>
                     <dd id="pwd" class="mt-1 mb-3 text-gray-900 mt-0 col-span-2"></dd>
                 </div>
+                <button class="data_modify text-indigo-600 font-bold">Modify</button>
             </div>
 
-            <div class="flex items-center gap-4 bg-gray-50 px-4 py-5">
+            <div class="flex items-center gap-4 bg-gray-50 px-6 py-5 justify-between">
                 <div>
-                    <dt class=" font-medium text-gray-500">à propos de <span class="user_login"></span></dt>
+                    <dt id="fieldAbout" class=" font-medium text-gray-500">à propos de <span class="user_login"></span></dt>
                     <dd class="mt-1 text-gray-900 mt-0 col-span-2"></dd>
                 </div>
+                <button class="data_modify text-indigo-600 font-bold">Modify</button>
             </div>
         </div>
     </div>
@@ -111,14 +109,115 @@
     }
     */?>
 
+<!--    --><?php /*echo $_SESSION['login']; */?>
+
 <script>
 
 $(function() {
 
     load();
     $("#logout").on('click', logout);
+    $("#to_home").on('click', toHome);
+    $(".data_modify").on('click', modify);
+    $("#delete").on('click', deleteAccount);
 
 });
+
+let deleteAccount = function (){
+
+    console.log(1);
+    $.ajax({
+
+        url: 'controller.php',
+        dataType: 'JSON',
+        type: 'POST',
+        data: {
+            request: 'deleteAccount',
+        },
+        success: function(response) {
+            console.log(1);
+            Swal.fire({
+                title: 'êtes-vous sûr!?',
+                text: "Vous ne pourrez pas revenir en arrière après validation!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Oui, supprime le!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Supprimé!',
+                        'Votre compte à bien été supprimé.',
+                        'success'
+                    )
+                    setTimeout(() => {
+                        window.location.href = "index.php";
+                    }, 2300);
+                }
+            })
+        },
+        error: function() {
+            console.log('delError')
+        }
+    });
+}
+
+let modify = function (){
+
+    console.log(1);
+    $.ajax({
+
+        url: 'controller.php',
+        dataType: 'JSON',
+        type: 'POST',
+        data: {
+            request: 'modify',
+            fieldName: $('#fieldName').html(),
+            fieldLastname: $('#fieldLastname').html(),
+            fieldLogin: $('#fieldLogin').html(),
+            fieldPwd: $('#fieldPwd').html(),
+        },
+        success: function(response) {
+            console.log('success');
+            Swal.fire({
+                title: 'Modification de votre ',
+                input: 'text',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Save',
+                showLoaderOnConfirm: true,
+                preConfirm: (login) => {
+                    return fetch(`//api.github.com/users/${login}`)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(response.statusText)
+                            }
+                            return response.json()
+                        })
+                        .catch(error => {
+                            Swal.showValidationMessage(
+                                `Request failed: ${error}`
+                            )
+                        })
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: `${result.value.login}'s avatar`,
+                        imageUrl: result.value.avatar_url
+                    })
+                }
+            });
+        },
+        error: function() {
+        console.log('moderror')
+        }
+    });
+}
 
 let logout = function(){
 
@@ -174,6 +273,27 @@ function load(){
         },
         error: function() {
             
+        }
+    });
+}
+
+let toHome = function() {
+    console.log("tohome");
+    $.ajax({
+        url: 'controller.php',
+        dataType: 'JSON',
+        type: 'POST',
+        data: {
+            request: 'to_home',
+        },
+        success: function (response) {
+            console.log('to_home');
+            window.location.replace('home.php')
+
+        },
+
+        error: function () {
+            console.log('errhome')
         }
     });
 }

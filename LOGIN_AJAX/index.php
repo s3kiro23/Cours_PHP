@@ -35,7 +35,7 @@
       Connexion à votre compte
     </h2>
   </div>
-  <form class="mt-8 space-y-6" action="javascript:connect();" method="POST">
+    <form class="mt-8 space-y-6" action="javascript:connect();" method="POST">
       <input type="hidden" name="remember" value="true" />
       <div class="rounded-md shadow-sm -space-y-px">
         <div>
@@ -62,8 +62,6 @@
           />
         </div>
       </div>
-
-      <header
 
       <div class="flex items-center justify-between">
         <div class="flex items-center">

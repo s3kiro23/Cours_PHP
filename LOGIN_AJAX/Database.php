@@ -4,12 +4,12 @@ class Database {
 
     private $dbco;
 
-    function __construct()
+    public function __construct()
     {
 
         try {
 
-            $this->dbco = new PDO("mysql:host='localhost';dbname='user_aflokkat'", 'root', '');
+            $this->dbco = new PDO("mysql:host=localhost;dbname=user_aflokkat", 'root', '');
             $this->dbco->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         } catch (PDOException $e) {
@@ -17,10 +17,9 @@ class Database {
         }
     }
 
-    public function checkDB(){
-
+    public function checkDb()
+    {
         return $this->dbco;
-
     }
 
 }

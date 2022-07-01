@@ -16,14 +16,14 @@
     <script src="js/header.js"></script>
     <title>Home</title>
 </head>
-<body>
-    
-    <navbar-component></navbar-component>
 
-    <h1
-            class="text-dark text-5xl text-center m-3 p-3 hover:text-green-500 border-r-50"
-    >
-    </h1>
+<header>
+    <navbar-component></navbar-component>
+</header>
+
+<body>
+
+    <h1 class="text-dark text-5xl text-center m-3 p-3 hover:text-green-500 border-r-50"></h1>
     <form class="container max-w-4xl px-6 py-10 mx-auto" method="POST">
         <div class="flex justify-center mx-auto">
             <div class="mb-3">
@@ -73,11 +73,11 @@
                         <div>
                             <span class="text-gray-400">
                                 <a class="col-span-3 px-4 py-5 font-medium text-indigo-600 hover:text-indigo-500"
-                                   href="/notes/{{ note.id }}">Modify
+                                   href="">Modify
                                 </a>
                             </span>
                             <a class="px-4 py-5 px-6 font-medium text-red-600 hover:text-red-500"
-                            href="/delete-note/{{ note.id }}">
+                            href="">
                                 Delete
                             </a>
                         </div>
@@ -92,6 +92,95 @@
             </form>
         </div>
     </section>
-    
+
+<script>
+
+    $(function() {
+
+        load();
+        $("#logout").on('click', logout);
+        $("#to_profil").on('click', toProfil);
+
+    });
+
+    let logout = function(){
+
+        console.log(1);
+        $.ajax({
+
+            url: 'controller.php',
+            dataType: 'JSON',
+            type: 'POST',
+            data: {
+                request: 'logout',
+            },
+            success: function(response) {
+
+                iziToast.success({
+
+                    timeout: 2000,
+                    progressBar: true,
+                    message: response['msg'],
+                    position: 'topRight',
+
+                });
+
+                setTimeout(() => {
+                    window.location.href = "index.php";
+                }, 2300);
+
+            },
+            error: function() {
+
+            }
+        });
+    }
+
+    function load(){
+
+        // console.log(1);
+        $.ajax({
+
+            url: 'controller.php',
+            dataType: 'JSON',
+            type: 'POST',
+            data: {
+                request: 'user_login',
+            },
+            success: function(response) {
+                // console.log(2);
+                $(".user_login").html(response['login']);
+
+            },
+            error: function() {
+
+            }
+        });
+    }
+
+    let toProfil = function(){
+        console.log("toprof");
+        $.ajax({
+            url: 'controller.php',
+            dataType: 'JSON',
+            type: 'POST',
+            data: {
+                request: 'to_profil',
+            },
+            success: function(response) {
+                console.log('to_profResp');
+                window.location.replace('profil.php')
+            },
+
+            error: function() {
+                console.log('errProf')
+            }
+        });
+
+    }
+
+
+</script>
+
 </body>    
 </html>

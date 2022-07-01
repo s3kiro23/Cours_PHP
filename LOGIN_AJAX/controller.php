@@ -1,9 +1,10 @@
 <?php session_start(); 
 require_once 'function.php';
 require_once 'Users.php';
-// require_once 'dbConnect.php';
-// $db = new Database();
-// $GLOBAL['db'] = $db->checkDB();
+require_once 'Database.php';
+
+$db = new Database();
+$GLOBALS['db'] = $db->checkDb();
 
 switch ($_POST['request']){
 
@@ -15,19 +16,12 @@ switch ($_POST['request']){
 
         try {
 
-            $dbco = new PDO("mysql:host=localhost;dbname=user_aflokkat", 'root', '');
-            $dbco->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-            $dbco->beginTransaction();
-
-            $query = $dbco->prepare('SELECT id, login, password FROM user WHERE login=?');
-            $query->execute([$_POST['login']]);
-            $user = $query->fetch(PDO::FETCH_ASSOC);
+            $user = User::checkUser($_POST['login']);
 /*            print_r($user);*/
-
+/*            error_log(json_encode($user));*/
             if ($user && password_verify($_POST['password'], $user['password'])){
 /*            if ($user){*/
-                $_SESSION['login'] = $_POST['login'];
+                $_SESSION['id'] = $user['id'];
                 file_put_contents($log_path, "\n ".dateJour()." ".get_login()." s'est connecté", FILE_APPEND);
 
             } else {
@@ -57,7 +51,6 @@ switch ($_POST['request']){
         echo json_encode(array("status" => $status, "msg" => $msg));
 
     break;
-
     
     case 'to_signIn' :
         
@@ -74,7 +67,23 @@ switch ($_POST['request']){
         echo json_encode(array("msg" => $msg));
 
     break;
-        
+
+    case 'to_home' :
+
+        $msg = "Redirection vers la page Home!";
+
+        echo json_encode(array("msg" => $msg));
+
+    break;
+
+    case 'to_profil' :
+
+        $msg = "Redirection vers la page de profil!";
+
+        echo json_encode(array("msg" => $msg));
+
+    break;
+
     case 'signIn' :
 
         $status = 1;
@@ -91,7 +100,6 @@ switch ($_POST['request']){
 
             $status = 0;
             $msg = "Les mots de passe ne correspondent pas!";
-
 
         }
         else if (!checkCaptcha($_POST['checkCap'], $_POST['captcha'])){
@@ -110,8 +118,15 @@ switch ($_POST['request']){
 
         if ($status == 1){
 
-            $user = new User($_POST['login'], $_POST['passwd'], $_POST['prenom'], $_POST['nom']);
-            $user->create();
+            User::create($_POST['login'], $_POST['passwd'], $_POST['prenom'], $_POST['nom']);
+            /*$user = new User(0);
+
+            $user->setLogin($_POST['login']);
+            $user->setPassword($_POST['passwd']);
+            $user->setPrenom($_POST['prenom']);
+            $user->setNom($_POST['nom']);
+            $user->generate();*/
+
             $_SESSION['login'] = $_POST['login'];
 
             $log_path = 'log.txt';
@@ -125,32 +140,53 @@ switch ($_POST['request']){
 
     case 'user_login' :
 
-        $login = "Vous n'êtes pas connecté ! ";
+        $user = "Vous n'êtes pas connecté ! ";
 
         if (is_logged()){
 
-            try {
-
-                $dbco = new PDO("mysql:host=localhost;dbname=user_aflokkat", 'root', '');
-                $dbco->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-                $dbco->beginTransaction();
-
-                $query = $dbco->prepare('SELECT id, nom, prenom, password FROM user WHERE login=?');
-                $query->execute([get_login()]);
-                $user = $query->fetch(PDO::FETCH_ASSOC);
-
-            } catch (PDOException $e) {
-                $status = 0;
-                $msg = "Erreur : ".$e->getMessage();
-            }
+            $user = User::checkUser($_SESSION['id']);
 
         }
 
         echo json_encode(array("login" => get_login(), "nom" => $user['nom'], "prenom" => $user['prenom'], "password" => $user['password']));
 
     break;
-                
+
+    case 'modify' :
+
+        $msg = 'Echec modification!';
+
+        if (!empty($_POST['fieldName'])){
+
+           $msg = 'Modif réussi!';
+
+        }
+
+    echo json_encode(array("msg" => $msg));
+
+    break;
+
+    case 'deleteAccount' :
+        $msg = "";
+
+        if (isset($_SESSION['login']) & !empty($_SESSION['login'])){
+
+            $user = new User($_SESSION['login']);
+            $user ->delete();
+
+            $msg = 'test';
+/*            $GLOBALS['db']->beginTransaction();
+            $query = $GLOBALS['db']->prepare('DELETE FROM `user` WHERE login=:login');
+            $query->bindValue(':login', $_SESSION['login']);
+            $query->execute();
+            $GLOBALS['db']->commit();*/
+
+        }
+
+        echo json_encode(array('msg' => $msg));
+
+    break;
+
     case 'captcha' :
 
         $get_captcha = captcha();

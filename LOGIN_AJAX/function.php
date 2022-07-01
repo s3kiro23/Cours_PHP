@@ -1,8 +1,9 @@
 <?php
 
-function is_logged(){
+function is_logged(): bool
+{
 
-    return isset($_SESSION['login']);
+    return isset($_SESSION['id']);
 
 }
 
@@ -10,11 +11,11 @@ function get_login(){
 
     if (is_logged()){
         
-        return $_SESSION['login'];
+        return $_SESSION['id'];
 
     }
 
-    return $_POST['login'];
+/*    return "toto";*/
 
 }
 
@@ -32,7 +33,8 @@ function get_login(){
 
 // }
 
-function dateJour(){
+function dateJour(): string
+{
 
     $date = new dateTime();
 
@@ -40,7 +42,8 @@ function dateJour(){
 
 }
 
-function checkField(){
+function checkField()
+{
 
     if (isset($_POST['prenom']) && empty($_POST['prenom'])) {
 
@@ -69,14 +72,15 @@ function checkField(){
     }
     else if (isset($_POST['checkCap']) && empty($_POST['checkCap'])) {
 
-        return 'Captcha vérif'; 
+        return 'Captcha vérif';
     
     }
     return false;
 
 }
 
-function checkPassword($passwd, $passwd2){
+function checkPassword($passwd, $passwd2): bool
+{
 
     if (isset($passwd) && isset($passwd2)){
 
@@ -108,15 +112,13 @@ function checkPassword($passwd, $passwd2){
 
 }*/
 
-function captcha(){
-
-    $nb_verif = random_int(0, 999);
-
-    return $nb_verif;
-
+function captcha(): int
+{
+    return random_int(0, 999);
 }
 
-function checkCaptcha($capToCheck, $RandCap){
+function checkCaptcha($capToCheck, $RandCap): bool
+{
 
     if ($capToCheck == $RandCap){
 

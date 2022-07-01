@@ -230,7 +230,7 @@ let signIn = function(){
                 console.log('Success');
 
                 setTimeout(() => {
-                window.location.replace("home.php");
+                /*window.location.replace("home.php");*/
                 }, 1600);
 
             }
