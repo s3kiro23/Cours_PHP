@@ -170,17 +170,16 @@ class User {
 
     }
 
-    static public function checkUser($login)
+    static public function checkUser($id)
     {
-
         $user = false;
         try {
 
             $GLOBALS['db']->beginTransaction();
-
-            $query = $GLOBALS['db']->prepare('SELECT id, nom, prenom, password FROM user WHERE login=?');
-            $query->execute([$login]);
+            $query = $GLOBALS['db']->prepare('SELECT * FROM `user` WHERE id=?');
+            $query->execute([$id]);
             $user = $query->fetch(PDO::FETCH_ASSOC);
+            error_log(json_encode($user));
 
         } catch (PDOException $e) {
 /*            $msg = "Erreur : ".$e->getMessage();*/

@@ -17,6 +17,7 @@ switch ($_POST['request']){
         try {
 
             $user = User::checkUser($_POST['login']);
+            error_log(json_encode($user));
 /*            print_r($user);*/
 /*            error_log(json_encode($user));*/
             if ($user && password_verify($_POST['password'], $user['password'])){
@@ -140,13 +141,15 @@ switch ($_POST['request']){
 
     case 'user_login' :
 
-        $user = "Vous n'êtes pas connecté ! ";
-
+        $login = "Vous n'êtes pas connecté ! ";
+        $user = false;
+        error_log($_SESSION['id']);
         if (is_logged()){
-
+            error_log($_SESSION['id']);
             $user = User::checkUser($_SESSION['id']);
 
         }
+        error_log(json_encode($user));
 
         echo json_encode(array("login" => get_login(), "nom" => $user['nom'], "prenom" => $user['prenom'], "password" => $user['password']));
 
