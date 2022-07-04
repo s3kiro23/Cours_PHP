@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" integrity="sha512-O03ntXoVqaGUTAeAmvQ2YSzkCvclZEcPQu1eqloPaHfJ5RuNGiS4l+3duaidD801P50J28EHyonCV06CUlTSag==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script
     src="https://code.jquery.com/jquery-3.6.0.js"
     integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
     crossorigin="anonymous">
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.tailwindcss.com"></script>   
@@ -24,25 +27,25 @@
 <body>
 
     <h1 class="text-dark text-5xl text-center m-3 p-3 hover:text-green-500 border-r-50"></h1>
-    <form class="container max-w-4xl px-6 py-10 mx-auto" method="POST">
+    <form class="container max-w-4xl px-6 py-10 mx-auto" action="javascript:newCommand();" method="POST">
         <div class="flex justify-center mx-auto">
             <div class="mb-3">
-                <label for="titre" class="sr-only">Titre</label>
+                <label for="titre" class="sr-only">Commande</label>
                 <input id="titre"
                        name="titre"
                        class="appearance-none mb-3 rounded relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                        type="text"
                        required
-                       placeholder="Titre note"
+                       placeholder="Titre nouvelle commande"
                 />
-                <label for="description" class="sr-only">Note</label>
-                <textarea
-                        id="description"
-                        name="description"
-                        required
-                        class="appearance-none rounded px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        placeholder="Corps de votre note ici !">
-                </textarea>
+                <label for="label" class="sr-only">Label commande</label>
+                <input id="label"
+                       name="label"
+                       class="appearance-none mb-3 rounded relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                       type="text"
+                       required
+                       placeholder="Label commande"
+                />
             </div>
         </div>
         <div class="flex justify-center mx-auto">
@@ -64,34 +67,44 @@
     <hr class="border-gray-300 w-10 mx-auto">
     <section class="bg-white">
         <div class="container max-w-4xl px-6 py-5 mx-auto">
-            <h1 class="text-4xl font-semibold text-center text-gray-800 white:text-dark">Dernières notes créées</h1>
-    
-            <form class="mt-12 space-y-8">
-                <div class="border-2 border-gray-300 rounded-lg">
-                    <div class="flex justify-between items-center w-full p-8">
-                        <h1 class="font-semibold text-gray-700 white:text-dark"></h1>
-                        <div>
-                            <span class="text-gray-400">
-                                <a class="col-span-3 px-4 py-5 font-medium text-indigo-600 hover:text-indigo-500"
-                                   href="">Modify
-                                </a>
-                            </span>
-                            <a class="px-4 py-5 px-6 font-medium text-red-600 hover:text-red-500"
-                            href="">
-                                Delete
-                            </a>
-                        </div>
+            <h1 class="mb-4 text-4xl font-semibold text-center text-gray-800 white:text-dark">Commandes en cours</h1>
+            <div class="border-2 border-gray-300 rounded-lg">
+                <div class="flex py-3 justify-between items-center w-full">
+                    <div class="px-4 font-semibold text-gray-700 white:text-dark">test</div>
+                    <div>
+                        <button class="col-span-3 px-4 font-medium text-indigo-600 hover:text-indigo-500"
+                                type="button" data-toggle="modal" data-target="#exampleModalCenter">
+                            Show
+                        </button>
+                        <button class="px-4 font-medium text-red-600 hover:text-red-500"
+                                type="button">
+                            Delete
+                        </button>
                     </div>
-    
-                    <hr class="border-gray-300">
-    
-                    <p class="p-8 text-sm text-gray-500 dark:text-gray-300">
-    
-                    </p>
                 </div>
-            </form>
+            </div>
         </div>
     </section>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="buttn" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <script>
 
@@ -102,6 +115,37 @@
         $("#to_profil").on('click', toProfil);
 
     });
+
+    function newCommand(){
+
+        console.log('newco');
+        $.ajax({
+
+            url: 'controller.php',
+            dataType: 'JSON',
+            type: 'POST',
+            data: {
+                request: 'newCommand',
+                title: $('#titre').val(),
+                label: $('#label').val(),
+            },
+            success: function(response) {
+
+                iziToast.success({
+
+                    timeout: 2000,
+                    progressBar: true,
+                    message: response['msg'],
+                    position: 'topRight',
+
+                });
+
+            },
+            error: function() {
+
+            }
+        });
+    }
 
     let logout = function(){
 

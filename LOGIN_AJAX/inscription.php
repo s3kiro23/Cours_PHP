@@ -153,7 +153,7 @@ $(function() {
 
 });
 
-let checkPassword = function() {
+/*let checkPassword = function() {
 
     let password = $('#password').val();
     console.log("password = " + password);
@@ -179,7 +179,7 @@ let checkPassword = function() {
         error: function() {
             console.log('pwd err');
         }
-    });
+    });*/
 
 }
         

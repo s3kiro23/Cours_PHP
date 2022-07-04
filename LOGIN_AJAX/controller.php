@@ -1,7 +1,8 @@
-<?php session_start(); 
+<?php session_start();
 require_once 'function.php';
 require_once 'Users.php';
 require_once 'Database.php';
+
 
 $db = new Database();
 $GLOBALS['db'] = $db->checkDb();
@@ -17,7 +18,7 @@ switch ($_POST['request']){
         try {
 
             $user = User::checkUser($_POST['login']);
-            error_log(json_encode($user));
+/*            error_log(json_encode($user));*/
 /*            print_r($user);*/
 /*            error_log(json_encode($user));*/
             if ($user && password_verify($_POST['password'], $user['password'])){
@@ -110,6 +111,12 @@ switch ($_POST['request']){
 
         }
 
+        else if (User::checkUser($_POST['login'])){
+            $status = 0;
+            $msg = "Le login existe déjà!";
+        }
+
+
     /*    else if (!checkPasswdLenght($_POST['passwd'])){
 
             $status = 0;
@@ -120,6 +127,9 @@ switch ($_POST['request']){
         if ($status == 1){
 
             User::create($_POST['login'], $_POST['passwd'], $_POST['prenom'], $_POST['nom']);
+            $query = $GLOBALS['db']->prepare('SELECT * FROM `user` WHERE login=?');
+            $query->execute([$_POST['login']]);
+            $user = $query->fetch(PDO::FETCH_ASSOC);
             /*$user = new User(0);
 
             $user->setLogin($_POST['login']);
@@ -128,7 +138,7 @@ switch ($_POST['request']){
             $user->setNom($_POST['nom']);
             $user->generate();*/
 
-            $_SESSION['login'] = $_POST['login'];
+            $_SESSION['id'] = $user['id'];
 
             $log_path = 'log.txt';
             file_put_contents($log_path, "\n ".dateJour()." ".get_login()." a créé un nouveau compte.", FILE_APPEND);
@@ -143,38 +153,64 @@ switch ($_POST['request']){
 
         $login = "Vous n'êtes pas connecté ! ";
         $user = false;
-        error_log($_SESSION['id']);
+/*        error_log($_SESSION['id']);*/
         if (is_logged()){
-            error_log($_SESSION['id']);
-            $user = User::checkUser($_SESSION['id']);
+/*            error_log($_SESSION['id']);*/
+            $user = new User($_SESSION['id']);
 
         }
-        error_log(json_encode($user));
+/*        error_log(json_encode($user));*/
+        if(!$user){
+            echo json_encode(1);
 
-        echo json_encode(array("login" => get_login(), "nom" => $user['nom'], "prenom" => $user['prenom'], "password" => $user['password']));
+        }else{
+            echo json_encode(array("login" => $user->getLogin(), "nom" => $user->getNom(), "prenom" => $user->getPrenom(), "password" => $user->getPassword()));
+        }
+
 
     break;
 
     case 'modify' :
+        error_log('query_mod');
+        $status = 0;
+        $msg = 'Login avec un @ obligatoire!';
+        $user = new User($_SESSION['id']);
 
-        $msg = 'Echec modification!';
+        if (isset($_POST['type_value']) && !empty($_POST['type_value']) &&  $_POST['type_value'] == 'Nom'){
 
-        if (!empty($_POST['fieldName'])){
+            $user->setNom($_POST['value']);
 
-           $msg = 'Modif réussi!';
+        }
+        else if (isset($_POST['type_value']) &&  !empty($_POST['type_value']) &&  $_POST['type_value'] == 'Prenom'){
+
+            $user->setPrenom($_POST['value']);
+
+        }
+        else if (isset($_POST['type_value']) && !empty($_POST['type_value']) && $_POST['type_value'] == 'Login'){
+            if (strstr($_POST['value'], '@')) {
+                $user->setLogin($_POST['value']);
+                $status = 1;
+            }
+        }
+
+        else if (isset($_POST['type_value']) && !empty($_POST['type_value']) && $_POST['type_value'] == 'Password'){
+
+            $user->setPassword($_POST['value']);
 
         }
 
-    echo json_encode(array("msg" => $msg));
+        $user->update();
+
+    echo json_encode(array("status" => $status, "msg" => $msg));
 
     break;
 
     case 'deleteAccount' :
         $msg = "";
 
-        if (isset($_SESSION['login']) & !empty($_SESSION['login'])){
+        if (isset($_SESSION['id']) & !empty($_SESSION['id'])){
 
-            $user = new User($_SESSION['login']);
+            $user = new User($_SESSION['id']);
             $user ->delete();
 
             $msg = 'test';

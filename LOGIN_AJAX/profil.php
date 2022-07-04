@@ -35,28 +35,28 @@
                     <dt id="fieldName" class="font-medium text-gray-500">Nom</dt>
                     <dd id="user_nom" class="mt-1 mb-3 text-gray-900 mt-0 col-span-2"></dd>
                 </div>
-                <button class="data_modify text-indigo-600 font-bold">Modify</button>
+                <button class="data_modify text-indigo-600 font-bold" data-id="Nom">Modify</button>
             </div>
             <div class="flex items-center gap-4 bg-white px-6 py-5 justify-between">
                 <div>
                     <dt id="fieldLastname" class="font-medium text-gray-500">Prénom</dt>
                     <dd id="user_prenom" class="mt-1 mb-3 text-gray-900 mt-0 col-span-2"></dd>
                 </div>
-                <button class="data_modify text-indigo-600 font-bold">Modify</button>
+                <button class="data_modify text-indigo-600 font-bold" data-id="Prenom">Modify</button>
             </div>
             <div class="flex items-center gap-4 bg-gray-50 px-6 py-5 justify-between">
                 <div>
                     <dt id="fieldLogin" class="font-medium text-gray-500">Login / Email</dt>
                     <dd class="user_login mt-1 mb-3 text-gray-900 mt-0 col-span-2"></dd>
                 </div>
-                <button class="data_modify text-indigo-600 font-bold">Modify</button>
+                <button class="data_modify text-indigo-600 font-bold" data-id="Login">Modify</button>
             </div>
             <div class="flex items-center gap-4 bg-white px-6 py-5 justify-between">
                 <div>
                     <dt id="fieldPwd" class="font-medium text-gray-500">Mot de passe</dt>
                     <dd id="pwd" class="mt-1 mb-3 text-gray-900 mt-0 col-span-2"></dd>
                 </div>
-                <button class="data_modify text-indigo-600 font-bold">Modify</button>
+                <button class="data_modify text-indigo-600 font-bold" data-id="Password">Modify</button>
             </div>
 
             <div class="flex items-center gap-4 bg-gray-50 px-6 py-5 justify-between">
@@ -64,7 +64,7 @@
                     <dt id="fieldAbout" class=" font-medium text-gray-500">à propos de <span class="user_login"></span></dt>
                     <dd class="mt-1 text-gray-900 mt-0 col-span-2"></dd>
                 </div>
-                <button class="data_modify text-indigo-600 font-bold">Modify</button>
+                <button class="data_modify text-indigo-600 font-bold" data-id="About">Modify</button>
             </div>
         </div>
     </div>
@@ -126,97 +126,89 @@ $(function() {
 let deleteAccount = function (){
 
     console.log(1);
-    $.ajax({
+    Swal.fire({
+        title: 'êtes-vous sûr!?',
+        text: "Vous ne pourrez pas revenir en arrière après validation!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Oui, supprime le!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire(
+                'Supprimé!',
+                'Votre compte à bien été supprimé.',
+                'success',
+                $.ajax({
 
-        url: 'controller.php',
-        dataType: 'JSON',
-        type: 'POST',
-        data: {
-            request: 'deleteAccount',
-        },
-        success: function(response) {
-            console.log(1);
-            Swal.fire({
-                title: 'êtes-vous sûr!?',
-                text: "Vous ne pourrez pas revenir en arrière après validation!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Oui, supprime le!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire(
-                        'Supprimé!',
-                        'Votre compte à bien été supprimé.',
-                        'success'
-                    )
-                    setTimeout(() => {
-                        window.location.href = "index.php";
-                    }, 2300);
-                }
-            })
-        },
-        error: function() {
-            console.log('delError')
+                    url: 'controller.php',
+                    dataType: 'JSON',
+                    type: 'POST',
+                    data: {
+                        request: 'deleteAccount',
+                    },
+                    success: function(response) {
+                        console.log(1);
+                    },
+                    error: function() {
+                        console.log('delError')
+                    }
+                })
+            )
+            setTimeout(() => {
+                window.location.href = "index.php";
+            }, 2300);
         }
-    });
+    })
 }
 
 let modify = function (){
-
-    console.log(1);
-    $.ajax({
-
-        url: 'controller.php',
-        dataType: 'JSON',
-        type: 'POST',
-        data: {
-            request: 'modify',
-            fieldName: $('#fieldName').html(),
-            fieldLastname: $('#fieldLastname').html(),
-            fieldLogin: $('#fieldLogin').html(),
-            fieldPwd: $('#fieldPwd').html(),
+    var type = $(this).attr('data-id');
+    console.log(type);
+    Swal.fire({
+        title: 'Nouveau ' + type,
+        input: 'text',
+        inputAttributes: {
+            autocapitalize: 'off'
         },
-        success: function(response) {
-            console.log('success');
-            Swal.fire({
-                title: 'Modification de votre ',
-                input: 'text',
-                inputAttributes: {
-                    autocapitalize: 'off'
+        showCancelButton: true,
+        confirmButtonText: 'Save',
+        showLoaderOnConfirm: true,
+        preConfirm: (input) => {
+            console.log('query_ajax');
+            $.ajax({
+
+                url: 'controller.php',
+                dataType: 'JSON',
+                type: 'POST',
+                data: {
+                    request: 'modify',
+                    value: input,
+                    type_value: type
                 },
-                showCancelButton: true,
-                confirmButtonText: 'Save',
-                showLoaderOnConfirm: true,
-                preConfirm: (login) => {
-                    return fetch(`//api.github.com/users/${login}`)
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error(response.statusText)
-                            }
-                            return response.json()
-                        })
-                        .catch(error => {
-                            Swal.showValidationMessage(
-                                `Request failed: ${error}`
-                            )
-                        })
+                success: function(response) {
+
                 },
-                allowOutsideClick: () => !Swal.isLoading()
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire({
-                        title: `${result.value.login}'s avatar`,
-                        imageUrl: result.value.avatar_url
-                    })
+                error: function() {
+                    console.log('moderror')
                 }
             });
         },
-        error: function() {
-        console.log('moderror')
+        allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire(
+                'Modification effectuée!',
+                'Votre champ a bien été mis à jour.',
+                'success',
+            )
+            setTimeout(() => {
+                window.location.replace('profil.php')
+            }, 1300);
         }
     });
+
 }
 
 let logout = function(){
@@ -264,11 +256,16 @@ function load(){
             request: 'user_login',
         },
         success: function(response) {
+
+            if(response == 1){
+                window.location.href = "index.php";
+            }else{
+                $(".user_login").html(response['login']);
+                $("#pwd").html(response['password']);
+                $("#user_nom").html(response['nom']);
+                $("#user_prenom").html(response['prenom']);
+            }
             // console.log(2);
-            $(".user_login").html(response['login']);
-            $("#pwd").html(response['password']);
-            $("#user_nom").html(response['nom']);
-            $("#user_prenom").html(response['prenom']);
 
         },
         error: function() {

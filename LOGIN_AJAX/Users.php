@@ -17,20 +17,18 @@ class User {
 
         $this->id = 0;
 
-        /*$GLOBALS['db']->beginTransaction();
+        $GLOBALS['db']->beginTransaction();
         $query = $GLOBALS['db']->prepare('SELECT * FROM `user` WHERE id=?');
         $query->execute([$id]);
-        error_log('test');
-        if ($user = $query->fetch(PDO::FETCH_ASSOC)){
-            error_log(json_encode($user));
+/*        error_log('test');*/
+        if ($user = $query->fetch(PDO::FETCH_ASSOC)) {
+/*            error_log(json_encode($user));*/
             $this->id = $user['id'];
             $this->login = $user['login'];
             $this->password = password_hash($user['password'], PASSWORD_BCRYPT);
             $this->prenom = $user['prenom'];
             $this->nom = $user['nom'];
-
-        }*/
-
+        }
     }
 
     public function getLogin()
@@ -110,24 +108,20 @@ class User {
         }
 	}
 
-    static public function update($login, $nom, $prenom, $password)
+    public function update()
     {
+
         try {
+            $query = $GLOBALS['db']->prepare('UPDATE `user` SET nom=:nom, prenom=:prenom, login=:login, password=:password WHERE id=:id');
 
-            $GLOBALS['db']->beginTransaction();
-
-            $preparedSql = $GLOBALS['db']->prepare('INSERT INTO user (`login`, `nom`, `prenom`, `password`)
-                VALUES (:login, :nom, :prenom, :password)');
-
-            $preparedSql->execute(array(
-                'login' => $login,
-                'nom' => $nom,
-                'prenom' => $prenom,
-                'password' => $password
-            ));
-            // $dbco->exec($sql);
-
+            $query->bindValue(':id', $this->id);
+            $query->bindValue(':nom', $this->nom);
+            $query->bindValue(':prenom', $this->prenom);
+            $query->bindValue(':login', $this->login);
+            $query->bindValue(':password', $this->password);
+            $query->execute();
             $GLOBALS['db']->commit();
+            error_log('updateOK');
 
         } catch (PDOException $e) {
             // echo "Erreur : ".$e->getMessage();
@@ -136,8 +130,7 @@ class User {
     }
 
     public function delete(){
-        error_log('test');
-        $GLOBALS['db']->beginTransaction();
+        error_log('deleteFct');
         $query = $GLOBALS['db']->prepare('DELETE FROM `user` WHERE id=:id');
         $query->bindValue(':id', $_SESSION['id']);
         $query->execute();
@@ -170,16 +163,16 @@ class User {
 
     }
 
-    static public function checkUser($id)
+    static public function checkUser($login)
     {
         $user = false;
         try {
 
             $GLOBALS['db']->beginTransaction();
-            $query = $GLOBALS['db']->prepare('SELECT * FROM `user` WHERE id=?');
-            $query->execute([$id]);
+            $query = $GLOBALS['db']->prepare('SELECT * FROM `user` WHERE login=?');
+            $query->execute([$login]);
             $user = $query->fetch(PDO::FETCH_ASSOC);
-            error_log(json_encode($user));
+/*            error_log(json_encode($user));*/
 
         } catch (PDOException $e) {
 /*            $msg = "Erreur : ".$e->getMessage();*/
