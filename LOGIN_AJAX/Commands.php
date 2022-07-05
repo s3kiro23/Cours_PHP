@@ -69,16 +69,6 @@ class Commands {
 
             $GLOBALS['db']->beginTransaction();
 
-            // $sql = "CREATE DATABASE user_aflokkat";
-
-            // $sql = "CREATE TABLE command (
-            // c_id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-            // title VARCHAR(30) NOT NULL ,
-            // label VARCHAR(30) NOT NULL,
-            // date VARCHAR(30) NOT NULL,
-            // FOREIGN KEY user_id VARCHAR(150) NOT NULL
-            // )";
-
             $query = $GLOBALS['db']->prepare('INSERT INTO command (`title`, `label`, `date`, `user_id`)
                 VALUES (:title, :label, :date, :user_id)');
 

@@ -42,6 +42,19 @@ function dateJour(): string
 
 }
 
+function checkDateVSpwdExp(){
+
+    $tomorrow = date("d-m-Y H:i:s", mktime(0, 0, 0, date("m")+1, date("d"), date("Y")));
+    $currentDate = date("d-m-Y H:i:s");
+
+    if ($tomorrow < $currentDate){
+        echo "tomorrow < à currentdate";
+    } else {
+        echo "tomorrow > à currentdate";
+    }
+
+}
+
 function checkField()
 {
 
@@ -99,9 +112,9 @@ function checkPassword($passwd, $passwd2): bool
 
 }
 
-/*function checkPasswdLenght($passwd){
+function checkPasswdLenght($passwd){
 
-    $pattern = '/[A-Z][a-z][0-9]{8}/';
+    $pattern = '/^(?=.*\d)(?=.*[@#\-_$%^&+=§!\?])(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z@#\-_$%^&+=§!\?]{8,15}$/';
 
     if (preg_match_all($pattern, $passwd)){
 
@@ -110,7 +123,7 @@ function checkPassword($passwd, $passwd2): bool
     }
     return false;
 
-}*/
+}
 
 function captcha(): int
 {

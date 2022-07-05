@@ -35,7 +35,7 @@
       Connexion à votre compte
     </h2>
   </div>
-    <form class="mt-8 space-y-6" action="javascript:connect();" method="POST">
+    <form id="contentLogIn" class="mt-8 space-y-6" action="javascript:connect();" method="POST">
       <input type="hidden" name="remember" value="true" />
       <div class="rounded-md shadow-sm -space-y-px">
         <div>
@@ -147,6 +147,20 @@ let connect = function(){
                 });
 
             }
+            else if (response['status'] === 2) {
+
+                iziToast.error({
+
+                    timeout: 2000,
+                    progressBar: true,
+                    message: response['msg'],
+                    position: 'topRight',
+
+                });
+
+                $('#contentLogIn').html(response['contentPwdLogin']);
+
+            }
             else{
               // console.log('id2');
                 iziToast.success({
@@ -170,6 +184,57 @@ let connect = function(){
             console.log('errID')
         }
     });
+}
+
+let newPwd = function(){
+    console.log("newPwdAjax");
+    $.ajax({
+        url: 'controller.php',
+        dataType: 'JSON',
+        type: 'POST',
+        data: {
+            request: 'newPwd',
+            password: $('#password').val(),
+            password2: $('#password2').val(),
+        },
+        success: function(response) {
+            console.log('newPwdAjaxResp');
+
+            let timerInterval
+            Swal.fire({
+                title: response['msg'],
+                html: 'I will close in <b></b> milliseconds.',
+                timer: 1500,
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading()
+                    const b = Swal.getHtmlContainer().querySelector('b')
+                    timerInterval = setInterval(() => {
+                        b.textContent = Swal.getTimerLeft()
+                    }, 100)
+                },
+                willClose: () => {
+                    clearInterval(timerInterval)
+                }
+            }).then((result) => {
+                /* Read more about handling dismissals below */
+                if (result.dismiss === Swal.DismissReason.timer) {
+                    console.log('I was closed by the timer')
+                }
+            })
+
+/*            setTimeout(() => {
+                window.location.replace('inscription.php')
+            }, 1500);*/
+
+        },
+
+        error: function() {
+            console.log('errSignIn')
+        }
+    });
+
+
 }
 
 let signIn = function(){

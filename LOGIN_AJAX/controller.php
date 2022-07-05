@@ -14,17 +14,74 @@ switch ($_POST['request']){
         $status = 1;
         $msg = "Connexion réussi!";
         $log_path = 'log.txt';
+        $contentPwdLogin = "";
 
         try {
 
             $user = User::checkUser($_POST['login']);
-/*            error_log(json_encode($user));*/
-/*            print_r($user);*/
-/*            error_log(json_encode($user));*/
+            $dateJour = date("Y-m-d H:i:s");
+
+
             if ($user && password_verify($_POST['password'], $user['password'])){
-/*            if ($user){*/
-                $_SESSION['id'] = $user['id'];
-                file_put_contents($log_path, "\n ".dateJour()." ".get_login()." s'est connecté", FILE_APPEND);
+                error_log($user['pwdExp']);
+
+                if ($user['pwdExp'] > $dateJour){
+                    $_SESSION['id'] = $user['id'];
+                    file_put_contents($log_path, "\n ".dateJour()." ".get_login()." s'est connecté", FILE_APPEND);
+                } else {
+                    $msg = "Mot de passe expiré!";
+                    $status = 2;
+                    $contentPwdLogin =
+                    "<form action='javascript:newPwd();' class='mt-8 space-y-6' method='POST'>
+                        <div class='rounded-md shadow-sm -space-y-px'>
+                          <label for='password' class='sr-only'>Password</label>
+                          <input
+                            id='password'
+                            name='password'
+                            type='password'
+                            autocomplete='current-password'
+                            required
+                            class='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
+                            placeholder='Nouveau mot de passe'
+                          />
+                        </div>
+                        <div>
+                          <label for='password2' class='sr-only'>Mot de passe2</label>
+                          <input
+                            id='password2'
+                            name='password2'
+                            type='password'
+                            autocomplete='current-password'
+                            class='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
+                            placeholder='Confirmation mot de passe'
+                          />
+                        </div>
+                        <div>
+                            <button
+                                type='submit'
+                                class='group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+                                id='newPwd'
+                            >
+                              <span class='absolute left-0 inset-y-0 flex items-center pl-3'>
+                                <svg
+                                  class='h-5 w-5 text-indigo-400 group-hover:text-amber-500'
+                                  xmlns='http://www.w3.org/2000/svg'
+                                  viewBox='0 0 20 20'
+                                  fill='currentColor'
+                                  aria-hidden='true'
+                                      >
+                                  <path
+                                    fill-rule='evenodd'
+                                    d='M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z'
+                                    clip-rule='evenodd'
+                                        />
+                                </svg>
+                              </span>
+                                        Update
+                            </button>
+                          </div>
+                      </form>";
+                }
 
             } else {
                 $status = 0;
@@ -36,7 +93,7 @@ switch ($_POST['request']){
             $msg = "Erreur : ".$e->getMessage();
         }
 
-        echo json_encode(array("status" => $status, "msg" => $msg));
+        echo json_encode(array("status" => $status, "msg" => $msg, "contentPwdLogin" => $contentPwdLogin));
 
     break;  
 
@@ -90,6 +147,7 @@ switch ($_POST['request']){
 
         $status = 1;
         $msg = "Création de votre compte réussi, Enjoy :D !";
+        $user = User::checkUser($_POST['login']);
 
         if (checkField()){
 
@@ -111,13 +169,13 @@ switch ($_POST['request']){
 
         }
 
-        else if (User::checkUser($_POST['login'])){
+        else if ($user){
             $status = 0;
             $msg = "Le login existe déjà!";
         }
 
 
-    /*    else if (!checkPasswdLenght($_POST['passwd'])){
+/*        else if (!checkPasswdLenght($_POST['passwd'])){
 
             $status = 0;
             $msg = "Condition de création du mot de passe non remplies!";
@@ -125,11 +183,11 @@ switch ($_POST['request']){
         }*/
 
         if ($status == 1){
-
-            User::create($_POST['login'], $_POST['passwd'], $_POST['prenom'], $_POST['nom']);
+            $currenPwdExp = date("Y-m-d H:i:s", mktime(0, 0, 0, date("m")  , date("d")+1, date("Y")));
+            $utilisateur = User::create($_POST['login'], $_POST['passwd'], $_POST['prenom'], $_POST['nom'], $currenPwdExp);
             $query = $GLOBALS['db']->prepare('SELECT * FROM `user` WHERE login=?');
             $query->execute([$_POST['login']]);
-            $user = $query->fetch(PDO::FETCH_ASSOC);
+            $utilisateur = $query->fetch(PDO::FETCH_ASSOC);
             /*$user = new User(0);
 
             $user->setLogin($_POST['login']);
@@ -137,8 +195,9 @@ switch ($_POST['request']){
             $user->setPrenom($_POST['prenom']);
             $user->setNom($_POST['nom']);
             $user->generate();*/
+            error_log(json_encode($utilisateur));
 
-            $_SESSION['id'] = $user['id'];
+            $_SESSION['id'] = $utilisateur['id'];
 
             $log_path = 'log.txt';
             file_put_contents($log_path, "\n ".dateJour()." ".get_login()." a créé un nouveau compte.", FILE_APPEND);
@@ -171,7 +230,7 @@ switch ($_POST['request']){
     break;
 
     case 'modify' :
-        error_log('query_mod');
+/*        error_log('query_mod');*/
         $status = 0;
         $msg = 'Login avec un @ obligatoire!';
         $user = new User($_SESSION['id']);

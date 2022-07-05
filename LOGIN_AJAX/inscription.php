@@ -181,7 +181,7 @@ $(function() {
         }
     });*/
 
-}
+/*}*/
         
 let signIn = function(){
 
@@ -218,7 +218,7 @@ let signIn = function(){
                 });
             }
             
-            else{
+            else {
                 
                 Swal.fire({
                     position: 'center',
@@ -229,9 +229,9 @@ let signIn = function(){
                 });
                 console.log('Success');
 
-                setTimeout(() => {
+ /*               setTimeout(() => {
                 window.location.replace("home.php");
-                }, 1600);
+                }, 1600);*/
 
             }
 

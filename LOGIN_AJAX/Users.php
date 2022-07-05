@@ -12,6 +12,7 @@ class User {
     private $password;
     private $prenom;
     private $nom;
+    private $pwdExp;
 
     public function __construct($id){
 
@@ -22,12 +23,13 @@ class User {
         $query->execute([$id]);
 /*        error_log('test');*/
         if ($user = $query->fetch(PDO::FETCH_ASSOC)) {
-/*            error_log(json_encode($user));*/
+            error_log(json_encode($user));
             $this->id = $user['id'];
             $this->login = $user['login'];
             $this->password = password_hash($user['password'], PASSWORD_BCRYPT);
             $this->prenom = $user['prenom'];
             $this->nom = $user['nom'];
+            $this->pwdExp = $user['pwdExp'];
         }
     }
 
@@ -40,6 +42,14 @@ class User {
     {
 		$this->login = $login;
 	}
+
+    public function getPwdExp(){
+        return $this->pwdExp;
+    }
+
+    public function setPwdExp($pwdExp){
+        $this->pwdExp = $pwdExp;
+    }
 
 	public function getPassword()
     {
@@ -71,33 +81,20 @@ class User {
 		$this->nom = $nom;
 	}
 
-	static public function create($login, $nom, $prenom, $password)
+	static public function create($login, $nom, $prenom, $password, $pwdExp)
     {
 
         try {
 
-            $GLOBALS['db']->beginTransaction();
-
-                    // $sql = "CREATE DATABASE user_aflokkat";
-
-
-
-                    // $sql = "CREATE TABLE user (
-                    // id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-                    // login VARCHAR(30) NOT NULL ,
-                    // nom VARCHAR(30) NOT NULL,
-                    // prenom VARCHAR(30) NOT NULL,
-                    // password VARCHAR(150) NOT NULL
-                    // )";
-
-            $preparedSql = $GLOBALS['db']->prepare('INSERT INTO user (`login`, `nom`, `prenom`, `password`)
-                VALUES (:login, :nom, :prenom, :password)');
+            $preparedSql = $GLOBALS['db']->prepare('INSERT INTO user (`login`, `nom`, `prenom`, `password`, `pwdExp`)
+                VALUES (:login, :nom, :prenom, :password, :pwdExp)');
 
             $preparedSql->execute(array(
                 'login' => $login,
                 'nom' => $nom,
                 'prenom' => $prenom,
-                'password' => password_hash($password, PASSWORD_BCRYPT)
+                'password' => password_hash($password, PASSWORD_BCRYPT),
+                'pwdExp' => $pwdExp
             ));
             // $dbco->exec($sql);
 
@@ -138,7 +135,7 @@ class User {
 
     }
 
-    public function generate(){
+/*    public function generate(){
         try {
 
             $GLOBALS['db']->beginTransaction();
@@ -161,23 +158,22 @@ class User {
             // echo "Erreur : ".$e->getMessage();
         }
 
-    }
+    }*/
 
     static public function checkUser($login)
     {
-        $user = false;
+        $userCheck = false;
         try {
 
             $GLOBALS['db']->beginTransaction();
             $query = $GLOBALS['db']->prepare('SELECT * FROM `user` WHERE login=?');
             $query->execute([$login]);
-            $user = $query->fetch(PDO::FETCH_ASSOC);
-/*            error_log(json_encode($user));*/
+            $userCheck = $query->fetch(PDO::FETCH_ASSOC);
 
         } catch (PDOException $e) {
 /*            $msg = "Erreur : ".$e->getMessage();*/
         }
-        return $user;
+        return $userCheck;
 
     }
 
