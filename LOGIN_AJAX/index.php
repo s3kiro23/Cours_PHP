@@ -24,7 +24,7 @@
 <div
   class="min-h-full flex mt-14 justify-center py-5 px-4 sm:px-6 lg:px-8"
 >
-<div class="space-y-8 bg-white rounded px-4 py-5 bg-opacity-50">
+<div id="contentLogIn"  class="space-y-8 bg-white rounded px-4 py-5 bg-opacity-50">
   <div>
     <img
     class="mx-auto h-12 w-auto"
@@ -35,7 +35,7 @@
       Connexion à votre compte
     </h2>
   </div>
-    <form id="contentLogIn" class="mt-8 space-y-6" action="javascript:connect();" method="POST">
+    <form class="mt-8 space-y-6" action="javascript:connect();" method="POST">
       <input type="hidden" name="remember" value="true" />
       <div class="rounded-md shadow-sm -space-y-px">
         <div>
@@ -199,38 +199,33 @@ let newPwd = function(){
         },
         success: function(response) {
             console.log('newPwdAjaxResp');
-
-            let timerInterval
-            Swal.fire({
-                title: response['msg'],
-                html: 'I will close in <b></b> milliseconds.',
-                timer: 1500,
-                timerProgressBar: true,
-                didOpen: () => {
-                    Swal.showLoading()
-                    const b = Swal.getHtmlContainer().querySelector('b')
-                    timerInterval = setInterval(() => {
-                        b.textContent = Swal.getTimerLeft()
-                    }, 100)
-                },
-                willClose: () => {
-                    clearInterval(timerInterval)
-                }
-            }).then((result) => {
-                /* Read more about handling dismissals below */
-                if (result.dismiss === Swal.DismissReason.timer) {
-                    console.log('I was closed by the timer')
-                }
-            })
-
-/*            setTimeout(() => {
-                window.location.replace('inscription.php')
-            }, 1500);*/
-
+            if (response['status'] === 1){
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: response['msg'],
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                console.log('Success');
+                setTimeout(() => {
+                    window.location.replace('home.php')
+                }, 1500);
+            } else {
+                Swal.fire({
+                    title: 'Erreur',
+                    text: response['msg'],
+                    icon: 'warning',
+                    showCancelButton: true,
+                    showConfirmButton:false,
+                    cancelButtonColor: '#3085d6',
+                    cancelButtonText: 'Retry!'
+                });
+            }
         },
 
         error: function() {
-            console.log('errSignIn')
+            console.log('errNewPwd')
         }
     });
 

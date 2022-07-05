@@ -109,13 +109,14 @@ class User {
     {
 
         try {
-            $query = $GLOBALS['db']->prepare('UPDATE `user` SET nom=:nom, prenom=:prenom, login=:login, password=:password WHERE id=:id');
+            $query = $GLOBALS['db']->prepare('UPDATE `user` SET nom=:nom, prenom=:prenom, login=:login, password=:password, pwdExp=:pwdExp WHERE id=:id');
 
             $query->bindValue(':id', $this->id);
             $query->bindValue(':nom', $this->nom);
             $query->bindValue(':prenom', $this->prenom);
             $query->bindValue(':login', $this->login);
             $query->bindValue(':password', $this->password);
+            $query->bindValue(':pwdExp', $this->pwdExp);
             $query->execute();
             $GLOBALS['db']->commit();
             error_log('updateOK');

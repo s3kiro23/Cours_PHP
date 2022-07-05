@@ -24,37 +24,49 @@ switch ($_POST['request']){
 
             if ($user && password_verify($_POST['password'], $user['password'])){
                 error_log($user['pwdExp']);
+                $_SESSION['id'] = $user['id'];
 
                 if ($user['pwdExp'] > $dateJour){
-                    $_SESSION['id'] = $user['id'];
                     file_put_contents($log_path, "\n ".dateJour()." ".get_login()." s'est connecté", FILE_APPEND);
                 } else {
-                    $msg = "Mot de passe expiré!";
+                    $msg = "Mot de passe expiré! Merci de créer un nouveau mot de passe.";
                     $status = 2;
                     $contentPwdLogin =
-                    "<form action='javascript:newPwd();' class='mt-8 space-y-6' method='POST'>
+                    "<div>
+                        <img
+                            class='mx-auto h-12 w-auto'
+                            src='https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg'
+                            alt='Workflow'
+                        />
+                        <h2 class='mt-6 text-center text-3xl font-extrabold text-gray-900'>
+                            Mise à jour <br> de votre mot de passe
+                        </h2>
+                    </div>
+                    <form action='javascript:newPwd();' class='mt-8 space-y-6' method='POST'>
                         <div class='rounded-md shadow-sm -space-y-px'>
-                          <label for='password' class='sr-only'>Password</label>
-                          <input
-                            id='password'
-                            name='password'
-                            type='password'
-                            autocomplete='current-password'
-                            required
-                            class='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
-                            placeholder='Nouveau mot de passe'
-                          />
-                        </div>
-                        <div>
-                          <label for='password2' class='sr-only'>Mot de passe2</label>
-                          <input
-                            id='password2'
-                            name='password2'
-                            type='password'
-                            autocomplete='current-password'
-                            class='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
-                            placeholder='Confirmation mot de passe'
-                          />
+                            <div>
+                              <label for='password' class='sr-only'>Password</label>
+                              <input
+                                id='password'
+                                name='password'
+                                type='password'
+                                autocomplete='current-password'
+                                required
+                                class='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
+                                placeholder='Nouveau mot de passe'
+                              />                      
+                            </div>                       
+                            <div>
+                              <label for='password2' class='sr-only'>Mot de passe2</label>
+                              <input
+                                id='password2'
+                                name='password2'
+                                type='password'
+                                autocomplete='current-password'
+                                class='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
+                                placeholder='Confirmation mot de passe'
+                              />
+                            </div>
                         </div>
                         <div>
                             <button
@@ -69,18 +81,18 @@ switch ($_POST['request']){
                                   viewBox='0 0 20 20'
                                   fill='currentColor'
                                   aria-hidden='true'
-                                      >
-                                  <path
+                                >
+                                <path
                                     fill-rule='evenodd'
                                     d='M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z'
                                     clip-rule='evenodd'
-                                        />
+                                />
                                 </svg>
                               </span>
-                                        Update
+                                        Modifier
                             </button>
-                          </div>
-                      </form>";
+                        </div>
+                    </form>";
                 }
 
             } else {
@@ -95,7 +107,33 @@ switch ($_POST['request']){
 
         echo json_encode(array("status" => $status, "msg" => $msg, "contentPwdLogin" => $contentPwdLogin));
 
-    break;  
+    break;
+
+    case 'newPwd' :
+
+        $status = 1;
+        $msg = "Mise à jour réussi, Enjoy :D !";
+        $currenPwdExp = date("Y-m-d H:i:s", mktime(0, 0, 0, date("m")  , date("d")+1, date("Y")));
+        $user = new User($_SESSION['id']);
+        error_log($_POST['password']);
+
+        if (!checkPasswdLenght($_POST['password'])){
+            $status = 0;
+            $msg = "Condition de création du mot de passe non remplies!";
+        }
+        else if (!checkPassword($_POST['password'], $_POST['password2'])){
+            $status= 0;
+            $msg = "Les mots de passe ne correspondent pas!";
+        }
+        else {
+            $user->setPassword($_POST['password']);
+            $user->setPwdExp($currenPwdExp);
+            $user->update();
+        }
+
+        echo json_encode(array("status" => $status, "msg" => $msg));
+
+    break;
 
     case 'logout':
 
