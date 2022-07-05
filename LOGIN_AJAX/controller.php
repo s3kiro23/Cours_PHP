@@ -2,6 +2,7 @@
 require_once 'function.php';
 require_once 'Users.php';
 require_once 'Database.php';
+require_once 'Logs.php';
 
 
 $db = new Database();
@@ -98,6 +99,10 @@ switch ($_POST['request']){
             } else {
                 $status = 0;
                 $msg = "Mauvais login ou mot de passe!";
+                $log = new Log($user['id'], 1);
+                error_log($user['id']);
+                error_log(json_encode($log));
+                $log::create($user['id'], 1);
             }
 
         } catch (PDOException $e) {
