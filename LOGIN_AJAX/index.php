@@ -160,6 +160,19 @@ let connect = function(){
 
                 $('#contentLogIn').html(response['contentPwdLogin']);
 
+            }else if (response['status'] === 3) {
+
+                iziToast.success({
+
+                    timeout: 2000,
+                    progressBar: true,
+                    message: response['msg'],
+                    position: 'topRight',
+
+                });
+
+                $('#contentLogIn').html(response['contentPwdLogin']);
+
             }
             else{
               // console.log('id2');
@@ -228,8 +241,49 @@ let newPwd = function(){
             console.log('errNewPwd')
         }
     });
+}
 
+let smsVerif = function(){
+    console.log("smsVerif");
+    $.ajax({
+        url: 'controller.php',
+        dataType: 'JSON',
+        type: 'POST',
+        data: {
+            request: 'sub_sms',
+            sms_verif: $('#sms_verif').val(),
+        },
+        success: function(response) {
+            console.log('sms_verifResp');
+            if (response['status'] === 1){
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: response['msg'],
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                console.log('Success');
+                setTimeout(() => {
+                    window.location.replace('home.php')
+                }, 1500);
+            } else {
+                Swal.fire({
+                    title: 'Erreur',
+                    text: response['msg'],
+                    icon: 'warning',
+                    showCancelButton: true,
+                    showConfirmButton:false,
+                    cancelButtonColor: '#3085d6',
+                    cancelButtonText: 'Retry!'
+                });
+            }
+        },
 
+        error: function() {
+            console.log('errSms_verif')
+        }
+    });
 }
 
 let signIn = function(){

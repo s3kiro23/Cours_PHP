@@ -22,16 +22,73 @@ switch ($_POST['request']){
             $user = User::checkUser($_POST['login']);
 
             if ($user && password_verify($_POST['password'], $user['password'])){
-                    $_SESSION['id'] = encrypt($user['id']);
-                    error_log($_SESSION['id']);
+/*                $_SESSION['id'] = encrypt($user['id']);*/
+                /*  error_log($_SESSION['id']);*/
                     $log = Log::checkLog($user['id']);
-                    error_log($log);
+/*                    error_log($log);*/
 
                     if ($log <= 5){
 
                         $dateJour = date("Y-m-d H:i:s");
 
                         if ($user['pwdExp'] > $dateJour){
+                            $_SESSION['id'] = encrypt($user['id']);
+                            User::sms(decrypt($_SESSION['id']));
+                            $status = 3;
+                            $msg = 'A2F activée !';
+                            $contentPwdLogin =
+                                "<div>
+                                    <img
+                                        class='mx-auto h-12 w-auto'
+                                        src='https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg'
+                                        alt='Workflow'
+                                    />
+                                    <h2 class='mt-6 text-center text-3xl font-extrabold text-gray-900'>
+                                        Renseignez le code SMS
+                                    </h2>
+                                </div>
+                            <form action='javascript:smsVerif();' class='mt-8 space-y-6' method='POST'>
+                                <div class='rounded-md'>
+                                    <div class='px-3 py-2 rounded-t-md bg-indigo-500 text-white'>
+                                            <span>Code :</span>
+                                            <span id='sms'></span>
+                                    </div>
+                                    <div>
+                                        <label for='sms_verif' class='sr-only'>sms_verif</label>
+                                        <input
+                                                id='sms_verif'
+                                                name='sms_verif'
+                                                type='text'
+                                                class='field appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
+                                                placeholder='Entrez le code sms reçu.'
+                                        />
+                                    </div>
+                                </div>
+                                <div>
+                                    <button
+                                        type='submit'
+                                        class='group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+                                        id='sub_sms'
+                                    >
+                                      <span class='absolute left-0 inset-y-0 flex items-center pl-3'>
+                                        <svg
+                                          class='h-5 w-5 text-indigo-400 group-hover:text-amber-500'
+                                          xmlns='http://www.w3.org/2000/svg'
+                                          viewBox='0 0 20 20'
+                                          fill='currentColor'
+                                          aria-hidden='true'
+                                        >
+                                        <path
+                                            fill-rule='evenodd'
+                                            d='M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z'
+                                            clip-rule='evenodd'
+                                        />
+                                        </svg>
+                                      </span>
+                                                Valider
+                                    </button>
+                                </div>
+                            </form>";
                             file_put_contents($log_path, "\n ".dateJour()." ".get_login()." s'est connecté", FILE_APPEND);
                         } else {
                             $msg = "Mot de passe expiré! Merci de créer un nouveau mot de passe.";
@@ -148,6 +205,23 @@ switch ($_POST['request']){
 
     break;
 
+    case 'sub_sms':
+
+        $status = 0;
+        $msg = "Echec de la double authentification!";
+        $smsCheck = User::checkSmsCode(decrypt($_SESSION['id']), $_POST['sms_verif']);
+
+        if ($smsCheck){
+            $status = 1;
+            $msg = "A2F validée, Enjoy :D !";
+            User::updateSMS(decrypt($_SESSION['id']));
+/*            error_log(json_encode($smsCheck));*/
+        }
+
+        echo json_encode(array("status" => $status, "msg" => $msg));
+
+    break;
+
     case 'logout':
 
         $status = 1;
@@ -235,7 +309,14 @@ switch ($_POST['request']){
 
         if ($status == 1){
             $currenPwdExp = date("Y-m-d H:i:s", mktime(0, 0, 0, date("m")  , date("d")+1, date("Y")));
-            $utilisateur = User::create($_POST['login'], $_POST['passwd'], $_POST['prenom'], $_POST['nom'], $currenPwdExp);
+            $utilisateur = User::create(
+                $_POST['login'],
+                $_POST['passwd'],
+                $_POST['prenom'],
+                $_POST['nom'],
+                $currenPwdExp,
+                date("Y-m-d H:i:s"),
+                User::random_hash());
             $query = $GLOBALS['db']->prepare('SELECT * FROM `user` WHERE login=?');
             $query->execute([$_POST['login']]);
             $utilisateur = $query->fetch(PDO::FETCH_ASSOC);

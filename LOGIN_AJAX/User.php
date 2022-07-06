@@ -13,6 +13,8 @@ class User {
     private $prenom;
     private $nom;
     private $pwdExp;
+    private $created_date;
+    private $hash;
 
     public function __construct($id){
 
@@ -30,6 +32,7 @@ class User {
             $this->prenom = $user['prenom'];
             $this->nom = $user['nom'];
             $this->pwdExp = $user['pwdExp'];
+            $this->created_date = $user['created_date'];
         }
     }
 
@@ -81,20 +84,22 @@ class User {
 		$this->nom = $nom;
 	}
 
-	static public function create($login, $nom, $prenom, $password, $pwdExp)
+	static public function create($login, $nom, $prenom, $password, $pwdExp, $created_date, $hash)
     {
 
         try {
 
-            $preparedSql = $GLOBALS['db']->prepare('INSERT INTO user (`login`, `nom`, `prenom`, `password`, `pwdExp`)
-                VALUES (:login, :nom, :prenom, :password, :pwdExp)');
+            $preparedSql = $GLOBALS['db']->prepare('INSERT INTO user (`login`, `nom`, `prenom`, `password`, `pwdExp`, `created_date`, `hash`)
+                VALUES (:login, :nom, :prenom, :password, :pwdExp, :created_date, :hash)');
 
             $preparedSql->execute(array(
                 'login' => $login,
                 'nom' => $nom,
                 'prenom' => $prenom,
                 'password' => password_hash($password, PASSWORD_BCRYPT),
-                'pwdExp' => $pwdExp
+                'pwdExp' => $pwdExp,
+                'created_date' => $created_date,
+                'hash' => $hash
             ));
             // $dbco->exec($sql);
 
@@ -104,6 +109,18 @@ class User {
             // echo "Erreur : ".$e->getMessage();
         }
 	}
+
+     static public function random_hash(){
+
+        $longueur = 30;
+        $listeCar = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!%@$#?';
+        $chaine = '';
+        $max = mb_strlen($listeCar, '8bit') - 1;
+        for ($i = 0; $i < $longueur; ++$i) {
+            $chaine .= $listeCar[random_int(0, $max)];
+        }
+        return $chaine;
+    }
 
     public function update()
     {
@@ -177,5 +194,60 @@ class User {
         return $userCheck;
 
     }
+
+    static public function sms($user_id){
+
+        $code = random_int(1000, 10000);
+
+        $query = $GLOBALS['db']->prepare('INSERT INTO log_sms (`user_id`, `code`)
+                VALUES (:user_id, :code)');
+
+        $query->execute(array(
+            'user_id' => $user_id,
+            'code' => $code,
+        ));
+
+        $GLOBALS['db']->commit();
+
+    }
+
+    static public function checkSmsCode($user_id, $input){
+        $smsCheck = false;
+
+        try {
+/*        error_log('fctCheckSMS1');
+        error_log($user_id);*/
+
+/*            $GLOBALS['db']->beginTransaction();*/
+            $query = $GLOBALS['db']->prepare('SELECT * FROM `log_sms` WHERE user_id=? AND code=? AND state="0"');
+/*            error_log('fctCheckSMS2');*/
+            $query->execute([$user_id, $input]);
+            $smsCheck = $query->fetch(PDO::FETCH_ASSOC);
+/*            error_log('fctCheckSMS3');*/
+
+/*            error_log(json_encode($smsCheck));*/
+
+        } catch (PDOException $e) {
+            /*            $msg = "Erreur : ".$e->getMessage();*/
+        }
+        return $smsCheck;
+
+    }
+
+    static public function updateSMS($user_id)
+    {
+        try {
+            $query = $GLOBALS['db']->prepare('UPDATE `log_sms` SET state=:state WHERE user_id=:user_id');
+            $query->bindValue(':state', 1);
+            $query->bindValue(':user_id', $user_id);
+            $query->execute();
+            $GLOBALS['db']->commit();
+
+        } catch (PDOException $e) {
+            // echo "Erreur : ".$e->getMessage();
+        }
+
+    }
+
 
 }
