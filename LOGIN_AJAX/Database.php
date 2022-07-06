@@ -9,7 +9,7 @@ class Database {
 
         try {
 
-            $this->dbco = new PDO("mysql:host=localhost;dbname=user_aflokkat", 'root', '');
+            $this->dbco = new PDO("mysql:host=localhost;dbname=user_aflokkat", 'db', 'Db123!@20');
             $this->dbco->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         } catch (PDOException $e) {

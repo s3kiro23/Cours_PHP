@@ -1,8 +1,8 @@
 <?php session_start();
 require_once 'function.php';
-require_once 'Users.php';
+require_once 'User.php';
 require_once 'Database.php';
-require_once 'Logs.php';
+require_once 'Log.php';
 
 
 $db = new Database();
@@ -20,90 +20,98 @@ switch ($_POST['request']){
         try {
 
             $user = User::checkUser($_POST['login']);
-            $dateJour = date("Y-m-d H:i:s");
-
 
             if ($user && password_verify($_POST['password'], $user['password'])){
-                error_log($user['pwdExp']);
-                $_SESSION['id'] = $user['id'];
+                    $_SESSION['id'] = encrypt($user['id']);
+                    error_log($_SESSION['id']);
+                    $log = Log::checkLog($user['id']);
+                    error_log($log);
 
-                if ($user['pwdExp'] > $dateJour){
-                    file_put_contents($log_path, "\n ".dateJour()." ".get_login()." s'est connecté", FILE_APPEND);
-                } else {
-                    $msg = "Mot de passe expiré! Merci de créer un nouveau mot de passe.";
-                    $status = 2;
-                    $contentPwdLogin =
-                    "<div>
-                        <img
-                            class='mx-auto h-12 w-auto'
-                            src='https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg'
-                            alt='Workflow'
-                        />
-                        <h2 class='mt-6 text-center text-3xl font-extrabold text-gray-900'>
-                            Mise à jour <br> de votre mot de passe
-                        </h2>
-                    </div>
-                    <form action='javascript:newPwd();' class='mt-8 space-y-6' method='POST'>
-                        <div class='rounded-md shadow-sm -space-y-px'>
-                            <div>
-                              <label for='password' class='sr-only'>Password</label>
-                              <input
-                                id='password'
-                                name='password'
-                                type='password'
-                                autocomplete='current-password'
-                                required
-                                class='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
-                                placeholder='Nouveau mot de passe'
-                              />                      
-                            </div>                       
-                            <div>
-                              <label for='password2' class='sr-only'>Mot de passe2</label>
-                              <input
-                                id='password2'
-                                name='password2'
-                                type='password'
-                                autocomplete='current-password'
-                                class='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
-                                placeholder='Confirmation mot de passe'
-                              />
-                            </div>
-                        </div>
-                        <div>
-                            <button
-                                type='submit'
-                                class='group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-                                id='newPwd'
-                            >
-                              <span class='absolute left-0 inset-y-0 flex items-center pl-3'>
-                                <svg
-                                  class='h-5 w-5 text-indigo-400 group-hover:text-amber-500'
-                                  xmlns='http://www.w3.org/2000/svg'
-                                  viewBox='0 0 20 20'
-                                  fill='currentColor'
-                                  aria-hidden='true'
-                                >
-                                <path
-                                    fill-rule='evenodd'
-                                    d='M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z'
-                                    clip-rule='evenodd'
+                    if ($log <= 5){
+
+                        $dateJour = date("Y-m-d H:i:s");
+
+                        if ($user['pwdExp'] > $dateJour){
+                            file_put_contents($log_path, "\n ".dateJour()." ".get_login()." s'est connecté", FILE_APPEND);
+                        } else {
+                            $msg = "Mot de passe expiré! Merci de créer un nouveau mot de passe.";
+                            $status = 2;
+                            $contentPwdLogin =
+                            "<div>
+                                <img
+                                    class='mx-auto h-12 w-auto'
+                                    src='https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg'
+                                    alt='Workflow'
                                 />
-                                </svg>
-                              </span>
-                                        Modifier
-                            </button>
-                        </div>
-                    </form>";
-                }
+                                <h2 class='mt-6 text-center text-3xl font-extrabold text-gray-900'>
+                                    Mise à jour <br> de votre mot de passe
+                                </h2>
+                            </div>
+                            <form action='javascript:newPwd();' class='mt-8 space-y-6' method='POST'>
+                                <div class='rounded-md shadow-sm -space-y-px'>
+                                    <div>
+                                      <label for='password' class='sr-only'>Password</label>
+                                      <input
+                                        id='password'
+                                        name='password'
+                                        type='password'
+                                        autocomplete='current-password'
+                                        required
+                                        class='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
+                                        placeholder='Nouveau mot de passe'
+                                      />                      
+                                    </div>                       
+                                    <div>
+                                      <label for='password2' class='sr-only'>Mot de passe2</label>
+                                      <input
+                                        id='password2'
+                                        name='password2'
+                                        type='password'
+                                        autocomplete='current-password'
+                                        class='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
+                                        placeholder='Confirmation mot de passe'
+                                      />
+                                    </div>
+                                </div>
+                                <div>
+                                    <button
+                                        type='submit'
+                                        class='group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+                                        id='newPwd'
+                                    >
+                                      <span class='absolute left-0 inset-y-0 flex items-center pl-3'>
+                                        <svg
+                                          class='h-5 w-5 text-indigo-400 group-hover:text-amber-500'
+                                          xmlns='http://www.w3.org/2000/svg'
+                                          viewBox='0 0 20 20'
+                                          fill='currentColor'
+                                          aria-hidden='true'
+                                        >
+                                        <path
+                                            fill-rule='evenodd'
+                                            d='M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z'
+                                            clip-rule='evenodd'
+                                        />
+                                        </svg>
+                                      </span>
+                                                Modifier
+                                    </button>
+                                </div>
+                            </form>";
+                        }
 
-            } else {
-                $status = 0;
-                $msg = "Mauvais login ou mot de passe!";
-                $log = new Log($user['id'], 1);
-                error_log($user['id']);
-                error_log(json_encode($log));
-                $log::create($user['id'], 1);
-            }
+                    } else {
+                        $status = 0;
+                        $msg = "Compte bloqué!";
+                    }
+                } else {
+                    $status = 0;
+                    $msg = "Mauvais login ou mot de passe!";
+                    $log = new Log($user['id']);
+/*                    error_log($user['id']);*/
+/*                    error_log(Log::checkLog($user['id']));*/
+                    $log::create($user['id'], date("Y-m-d H:i:s"));
+                }
 
         } catch (PDOException $e) {
             $status = 0;
@@ -119,8 +127,8 @@ switch ($_POST['request']){
         $status = 1;
         $msg = "Mise à jour réussi, Enjoy :D !";
         $currenPwdExp = date("Y-m-d H:i:s", mktime(0, 0, 0, date("m")  , date("d")+1, date("Y")));
-        $user = new User($_SESSION['id']);
-        error_log($_POST['password']);
+        $user = new User(decrypt($_SESSION['id']));
+/*        error_log($_POST['password']);*/
 
         if (!checkPasswdLenght($_POST['password'])){
             $status = 0;
@@ -240,7 +248,7 @@ switch ($_POST['request']){
             $user->generate();*/
             error_log(json_encode($utilisateur));
 
-            $_SESSION['id'] = $utilisateur['id'];
+            $_SESSION['id'] = encrypt($utilisateur['id']);
 
             $log_path = 'log.txt';
             file_put_contents($log_path, "\n ".dateJour()." ".get_login()." a créé un nouveau compte.", FILE_APPEND);
@@ -258,7 +266,7 @@ switch ($_POST['request']){
 /*        error_log($_SESSION['id']);*/
         if (is_logged()){
 /*            error_log($_SESSION['id']);*/
-            $user = new User($_SESSION['id']);
+            $user = new User(decrypt($_SESSION['id']));
 
         }
 /*        error_log(json_encode($user));*/
@@ -276,7 +284,7 @@ switch ($_POST['request']){
 /*        error_log('query_mod');*/
         $status = 0;
         $msg = 'Login avec un @ obligatoire!';
-        $user = new User($_SESSION['id']);
+        $user = new User(decrypt($_SESSION['id']));
 
         if (isset($_POST['type_value']) && !empty($_POST['type_value']) &&  $_POST['type_value'] == 'Nom'){
 
@@ -309,10 +317,11 @@ switch ($_POST['request']){
 
     case 'deleteAccount' :
         $msg = "";
+        $ID = decrypt($_SESSION['id']);
 
-        if (isset($_SESSION['id']) & !empty($_SESSION['id'])){
+        if (isset($ID) & !empty($ID)){
 
-            $user = new User($_SESSION['id']);
+            $user = new User($ID);
             $user ->delete();
 
             $msg = 'test';

@@ -1,6 +1,6 @@
 <?php session_start(); 
 require_once 'function.php';
-require_once 'Users.php';
+require_once 'User.php';
 
 switch ($_POST['request']){
 

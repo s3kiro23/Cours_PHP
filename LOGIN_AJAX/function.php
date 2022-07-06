@@ -2,8 +2,8 @@
 
 function is_logged(): bool
 {
-
-    return isset($_SESSION['id']);
+    $ID = decrypt($_SESSION['id']);
+    return isset($ID);
 
 }
 
@@ -11,7 +11,7 @@ function get_login(){
 
     if (is_logged()){
         
-        return $_SESSION['id'];
+        return decrypt($_SESSION['id']);
 
     }
 
@@ -140,6 +140,22 @@ function checkCaptcha($capToCheck, $RandCap): bool
     }
     return false;
 
+}
+
+function encrypt($data){
+    $key = base64_decode("H2F:Dm94S|b+&3fE6=epazezaAZEzea@!");
+    $encryption_key = base64_decode($key);
+    $initVector = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));
+    $encrypted = openssl_encrypt($data, 'aes-256-cbc', $encryption_key, 0, $initVector);
+    return base64_encode($encrypted.'::'.$initVector);
+}
+
+function decrypt($data){
+    $key = base64_decode("H2F:Dm94S|b+&3fE6=epazezaAZEzea@!");
+    $encryption_key = base64_decode($key);
+    list($encrypted_data, $initVector) = explode('::', base64_decode($data), 2);
+    $result = openssl_decrypt($encrypted_data, 'aes-256-cbc', $encryption_key, 0, $initVector);
+    return $result;
 }
 
 
