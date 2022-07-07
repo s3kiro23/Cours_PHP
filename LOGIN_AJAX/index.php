@@ -77,7 +77,7 @@
         </div>
 
         <div class="text-sm">
-          <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">
+          <a id="toRequestMail" class="cursor-pointer font-medium text-indigo-600 hover:text-indigo-500">
             mot de passe oublié?
           </a>
         </div>
@@ -118,9 +118,15 @@
 
 $(function() {
 
-  $('#to_signIn').on('click', signIn);
+    load();
 
 });
+
+function load(){
+    $('#to_signIn').on('click', signIn);
+    $('#toRequestMail').on('click', toRequestMail);
+    $('#tokenLink').on('click', tokenLink);
+}
 
 let connect = function(){
 
@@ -241,6 +247,112 @@ let newPwd = function(){
             console.log('errNewPwd')
         }
     });
+}
+
+let toRequestMail = function(){
+    console.log("requestMail");
+    $.ajax({
+        url: 'controller.php',
+        dataType: 'JSON',
+        type: 'POST',
+        data: {
+            request: 'toRequestMail',
+        },
+        success: function(response) {
+            console.log('toRequestMailResp');
+            iziToast.success({
+
+                timeout: 2000,
+                progressBar: true,
+                message: response['msg'],
+                position: 'topRight',
+
+            });
+
+            $('#contentLogIn').html(response['contentForgot']);
+
+        },
+
+        error: function() {
+            console.log('errToRequestMail')
+        }
+    });
+}
+
+let genToken = function() {
+
+    console.log("genTokenAjax");
+    $.ajax({
+        url: 'controller.php',
+        dataType: 'JSON',
+        type: 'POST',
+        data: {
+            request: 'genToken',
+            mail: $('#email').val()
+        },
+        success: function(response) {
+            console.log('genToken');
+
+            if (response['status'] === 1){
+                console.log('genTokenSuccess');
+                iziToast.success({
+
+                    timeout: 2000,
+                    progressBar: true,
+                    message: response['msg'],
+                    position: 'topRight',
+
+                });
+
+                $('#contentLogIn').html(response['contentToken']);
+                $('#tokenLink').html(response['token']);
+                load();
+
+            } else {
+                console.log('genToken2Err');
+
+                iziToast.error({
+
+                    timeout: 2000,
+                    progressBar: true,
+                    message: response['msg'],
+                    position: 'topRight',
+
+                });
+
+            }
+
+        },
+
+        error: function() {
+            console.log('errGenToken')
+        }
+    });
+
+}
+
+let tokenLink = function (){
+
+    console.log("tokenLinkAjax");
+    $.ajax({
+        url: 'controller.php',
+        dataType: 'JSON',
+        type: 'POST',
+        data: {
+            request: 'tokenLink',
+        },
+        success: function(response) {
+            console.log('tokenLinkResp');
+
+            window.location.replace('changePassword.php?token='+$('#tokenLink').html());
+
+        },
+
+        error: function() {
+            console.log('errTokenLink')
+        }
+    });
+
 }
 
 let smsVerif = function(){

@@ -249,5 +249,61 @@ class User {
 
     }
 
+    static public function request($user_id){
+
+        $hash = random_hash();
+
+        $query = $GLOBALS['db']->prepare('INSERT INTO request (`user_id`, `hash`)
+                VALUES (:user_id, :hash)');
+
+        $query->execute(array(
+            'user_id' => $user_id,
+            'hash' => $hash,
+        ));
+
+        $GLOBALS['db']->commit();
+
+    }
+
+    static public function checkRequest($user_id){
+        $requestCheck = false;
+
+        try {
+            /*        error_log('fctCheckSMS1');
+                    error_log($user_id);*/
+
+            /*            $GLOBALS['db']->beginTransaction();*/
+            $query = $GLOBALS['db']->prepare('SELECT * FROM `request` WHERE user_id=? AND state="0"');
+            /*            error_log('fctCheckSMS2');*/
+            $query->execute([$user_id]);
+            $requestCheck = $query->fetch(PDO::FETCH_ASSOC);
+            /*            error_log('fctCheckSMS3');*/
+
+            /*            error_log(json_encode($smsCheck));*/
+
+        } catch (PDOException $e) {
+            /*            $msg = "Erreur : ".$e->getMessage();*/
+        }
+        return $requestCheck;
+
+    }
+
+    static public function updateRequest($user_id, $hash)
+    {
+        try {
+            $query = $GLOBALS['db']->prepare('UPDATE `request` SET state=:state WHERE user_id=:user_id AND hash=:hash');
+            $query->bindValue(':state', 1);
+            $query->bindValue(':user_id', $user_id);
+            $query->bindValue(':hash', $hash);
+            $query->execute();
+            $GLOBALS['db']->commit();
+
+        } catch (PDOException $e) {
+            // echo "Erreur : ".$e->getMessage();
+        }
+
+    }
+
+
 
 }
