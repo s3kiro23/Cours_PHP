@@ -106,7 +106,7 @@
 
         console.log("changePasswordAjax");
         $.ajax({
-            url: 'controller.php',
+            url: 'Controller/controller.php',
             dataType: 'JSON',
             type: 'POST',
             data: {

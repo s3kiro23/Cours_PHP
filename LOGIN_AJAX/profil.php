@@ -125,7 +125,6 @@ $(function() {
 
 let deleteAccount = function (){
 
-    console.log(1);
     Swal.fire({
         title: 'êtes-vous sûr!?',
         text: "Vous ne pourrez pas revenir en arrière après validation!",
@@ -142,7 +141,7 @@ let deleteAccount = function (){
                 'success',
                 $.ajax({
 
-                    url: 'controller.php',
+                    url: 'Controller/controller.php',
                     dataType: 'JSON',
                     type: 'POST',
                     data: {
@@ -179,7 +178,7 @@ let modify = function (){
             console.log('query_ajax');
             $.ajax({
 
-                url: 'controller.php',
+                url: 'Controller/controller.php',
                 dataType: 'JSON',
                 type: 'POST',
                 data: {
@@ -216,7 +215,7 @@ let logout = function(){
     console.log(1);
     $.ajax({
 
-        url: 'controller.php',
+        url: 'Controller/controller.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -249,7 +248,7 @@ function load(){
     // console.log(1);
     $.ajax({
 
-        url: 'controller.php',
+        url: 'Controller/controller.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -277,7 +276,7 @@ function load(){
 let toHome = function() {
     console.log("tohome");
     $.ajax({
-        url: 'controller.php',
+        url: 'Controller/controller.php',
         dataType: 'JSON',
         type: 'POST',
         data: {

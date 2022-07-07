@@ -131,7 +131,7 @@ function load(){
 let connect = function(){
 
     $.ajax({
-        url: 'controller.php',
+        url: 'Controller/controller.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -208,13 +208,13 @@ let connect = function(){
 let newPwd = function(){
     console.log("newPwdAjax");
     $.ajax({
-        url: 'controller.php',
+        url: 'Controller/controller.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
             request: 'newPwd',
+            user: $("#user").val(),
             password: $('#password').val(),
-            password2: $('#password2').val(),
         },
         success: function(response) {
             console.log('newPwdAjaxResp');
@@ -252,7 +252,7 @@ let newPwd = function(){
 let toRequestMail = function(){
     console.log("requestMail");
     $.ajax({
-        url: 'controller.php',
+        url: 'Controller/controller.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -283,7 +283,7 @@ let genToken = function() {
 
     console.log("genTokenAjax");
     $.ajax({
-        url: 'controller.php',
+        url: 'Controller/controller.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -335,7 +335,7 @@ let tokenLink = function (){
 
     console.log("tokenLinkAjax");
     $.ajax({
-        url: 'controller.php',
+        url: 'Controller/controller.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -358,7 +358,7 @@ let tokenLink = function (){
 let smsVerif = function(){
     console.log("smsVerif");
     $.ajax({
-        url: 'controller.php',
+        url: 'Controller/controller.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -401,7 +401,7 @@ let smsVerif = function(){
 let signIn = function(){
  console.log("sign1");
   $.ajax({
-        url: 'controller.php',
+        url: 'Controller/controller.php',
         dataType: 'JSON',
         type: 'POST',
         data: {

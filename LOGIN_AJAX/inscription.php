@@ -198,7 +198,7 @@ let signIn = function(){
     console.log(1);
     $.ajax({
 
-        url: 'controller.php',
+        url: 'Controller/controller.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -260,7 +260,7 @@ function captcha(){
     console.log('cap');
     $.ajax({
 
-        url: 'controller.php',
+        url: 'Controller/controller.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -280,7 +280,7 @@ function captcha(){
 let to_logIn = function(){
  console.log("login1");
   $.ajax({
-        url: 'controller.php',
+        url: 'Controller/controller.php',
         dataType: 'JSON',
         type: 'POST',
         data: {

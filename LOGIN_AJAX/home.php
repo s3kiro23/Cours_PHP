@@ -121,7 +121,7 @@
         console.log('newco');
         $.ajax({
 
-            url: 'controller.php',
+            url: 'Controller/controller.php',
             dataType: 'JSON',
             type: 'POST',
             data: {
@@ -152,7 +152,7 @@
         console.log(1);
         $.ajax({
 
-            url: 'controller.php',
+            url: 'Controller/controller.php',
             dataType: 'JSON',
             type: 'POST',
             data: {
@@ -185,7 +185,7 @@
         // console.log(1);
         $.ajax({
 
-            url: 'controller.php',
+            url: 'Controller/controller.php',
             dataType: 'JSON',
             type: 'POST',
             data: {
@@ -205,7 +205,7 @@
     let toProfil = function(){
         console.log("toprof");
         $.ajax({
-            url: 'controller.php',
+            url: 'Controller/controller.php',
             dataType: 'JSON',
             type: 'POST',
             data: {
