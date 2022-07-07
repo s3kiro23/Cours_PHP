@@ -215,17 +215,9 @@ class User {
         $smsCheck = false;
 
         try {
-/*        error_log('fctCheckSMS1');
-        error_log($user_id);*/
-
-/*            $GLOBALS['db']->beginTransaction();*/
             $query = $GLOBALS['db']->prepare('SELECT * FROM `log_sms` WHERE user_id=? AND code=? AND state="0"');
-/*            error_log('fctCheckSMS2');*/
             $query->execute([$user_id, $input]);
             $smsCheck = $query->fetch(PDO::FETCH_ASSOC);
-/*            error_log('fctCheckSMS3');*/
-
-/*            error_log(json_encode($smsCheck));*/
 
         } catch (PDOException $e) {
             /*            $msg = "Erreur : ".$e->getMessage();*/
@@ -263,24 +255,17 @@ class User {
 
         $GLOBALS['db']->commit();
 
+        return $hash;
+
     }
 
-    static public function checkRequest($user_id){
+    static public function checkRequest($hash){
         $requestCheck = false;
 
         try {
-            /*        error_log('fctCheckSMS1');
-                    error_log($user_id);*/
-
-            /*            $GLOBALS['db']->beginTransaction();*/
-            $query = $GLOBALS['db']->prepare('SELECT * FROM `request` WHERE user_id=? AND state="0"');
-            /*            error_log('fctCheckSMS2');*/
-            $query->execute([$user_id]);
+            $query = $GLOBALS['db']->prepare('SELECT * FROM `request` WHERE hash=? AND state="0"');
+            $query->execute([$hash]);
             $requestCheck = $query->fetch(PDO::FETCH_ASSOC);
-            /*            error_log('fctCheckSMS3');*/
-
-            /*            error_log(json_encode($smsCheck));*/
-
         } catch (PDOException $e) {
             /*            $msg = "Erreur : ".$e->getMessage();*/
         }
@@ -288,13 +273,13 @@ class User {
 
     }
 
-    static public function updateRequest($user_id, $hash)
+    static public function updateRequest($user_id)
     {
         try {
-            $query = $GLOBALS['db']->prepare('UPDATE `request` SET state=:state WHERE user_id=:user_id AND hash=:hash');
+            $query = $GLOBALS['db']->prepare('UPDATE `request` SET state=:state WHERE user_id=:user_id');
             $query->bindValue(':state', 1);
             $query->bindValue(':user_id', $user_id);
-            $query->bindValue(':hash', $hash);
+/*            $query->bindValue(':hash', $hash);*/
             $query->execute();
             $GLOBALS['db']->commit();
 

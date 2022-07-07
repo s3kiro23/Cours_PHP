@@ -25,7 +25,7 @@ switch ($_POST['request']){
 /*                $_SESSION['id'] = encrypt($user['id']);*/
                 /*  error_log($_SESSION['id']);*/
                     $log = Log::checkLog($user['id']);
-/*                    error_log($log);*/
+                    error_log($log);
 
                     if ($log <= 5){
 
@@ -250,12 +250,12 @@ switch ($_POST['request']){
             error_log(json_encode($user));
 
             if ($user){
-                User::request($user['id']);
-                $token = User::checkRequest($user['id']);
-                error_log(json_encode($token['hash']));
-                /*                $token = $user*/
+                $hash =  User::request($user['id']);
+                $checkToken = User::checkRequest($hash);
+                $token = $checkToken['hash'];
+
                 $status = 1;
-                error_log($status);
+
                 $msg = "Token généré avec succés!";
                 $contentToken =
                     "<div>
@@ -280,26 +280,27 @@ switch ($_POST['request']){
             }
         }
 
-        echo json_encode(array("status" => $status, "msg" => $msg, "contentToken" => $contentToken, "token" => $token['hash']));
+        echo json_encode(array("status" => $status, "msg" => $msg, "contentToken" => $contentToken, "token" => $token));
 
     break;
 
     case 'tokenLink':
 
 /*        User::updateRequest($_POST['mail']);*/
+
         $msg = "Token validé!";
 
         echo json_encode(array("msg" => $msg));
 
     break;
 
-    case 'modify_pwd':
+/*    case 'modify_pwd':
 
 
         $token = User::checkRequest($user['id']);
 
 
-    break;
+    break;*/
 
     case 'newPwd' :
 
@@ -326,6 +327,53 @@ switch ($_POST['request']){
         echo json_encode(array("status" => $status, "msg" => $msg));
 
     break;
+
+    case 'modify_password' :
+
+        $status = 1;
+        $msg = "Récupération du compte réussi, Enjoy :D !";
+        $token = $_POST['token'];
+/*        error_log($token);*/
+
+
+        /*        if (!checkPasswdLenght($_POST['password'])){
+                    $status = 0;
+                    $msg = "Condition de création du mot de passe non remplies!";
+                }*/
+        if (!checkPassword($_POST['password'], $_POST['password2'])){
+            $status= 0;
+            $msg = "Les mots de passe ne correspondent pas!";
+        }
+
+        else if (isset($token) && !empty($token)){
+            $checkHash = User::checkRequest($token);
+/*            error_log(json_encode($checkHash));*/
+
+            if (!$checkHash){
+                error_log('1');
+                $status= 0;
+                $msg = "Ce token n'est plus valide!";
+            }
+
+            else if ($token == $checkHash['hash']) {
+
+                $user_hash = $checkHash['hash'];
+/*                error_log($checkHash['hash'] . ' 1');*/
+                $user = new User($checkHash['user_id']);
+                $currenPwdExp = date("Y-m-d H:i:s", mktime(0, 0, 0, date("m"), date("d") + 1, date("Y")));
+                error_log('modOK!');
+                $user->setPassword($_POST['password']);
+                $user->setPwdExp($currenPwdExp);
+                $user->update();
+                User::updateRequest($checkHash['user_id']);
+
+            }
+        }
+
+        echo json_encode(array("status" => $status, "msg" => $msg));
+
+        break;
+
 
     case 'sub_sms':
 

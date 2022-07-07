@@ -29,7 +29,7 @@ class Log
 
             $preparedSql2->execute(array(
                 'user_id' => $user_id,
-                'date' => $date,
+                'date' => $date
             ));
             error_log('prepLogOK');
 

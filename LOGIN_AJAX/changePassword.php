@@ -61,7 +61,6 @@
                     <button
                         type='submit'
                         class='group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-                        id='newPwd'
                     >
                           <span class='absolute left-0 inset-y-0 flex items-center pl-3'>
                             <svg
@@ -87,68 +86,68 @@
 
     <script>
 
-        function $_GET(param) {
-            var vars = {};
-            window.location.href.replace( location.hash, '' ).replace(
-                /[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
-                function( m, key, value ) { // callback
-                    vars[key] = value !== undefined ? value : '';
-                }
-            );
-
-            if ( param ) {
-                return vars[param] ? vars[param] : null;
+    function $_GET(param) {
+        var vars = {};
+        window.location.href.replace( location.hash, '' ).replace(
+            /[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
+            function( m, key, value ) { // callback
+                vars[key] = value !== undefined ? value : '';
             }
-            return vars;
+        );
+
+        if ( param ) {
+            return vars[param] ? vars[param] : null;
         }
+        return vars;
+    }
 
-     function changePassword(){
-        var token =$_GET('token');
-        console.log(token);
+    function changePassword(){
+        let token = $_GET('token');
 
-    console.log("changePasswordAjax");
+        console.log("changePasswordAjax");
         $.ajax({
             url: 'controller.php',
             dataType: 'JSON',
             type: 'POST',
             data: {
-                request: 'newPwd',
+                request: 'modify_password',
                 password: $('#password').val(),
                 password2: $('#password2').val(),
+                token: token
+            },
+            success: function(response) {
+                console.log('changePasswordResp');
+                if (response['status'] === 1){
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: response['msg'],
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+
+                    setTimeout(() => {
+                        console.log('redir')
+                        window.location.replace('index.php')
+                    }, 1500);
+
+
+                } else {
+                    Swal.fire({
+                        title: 'Erreur',
+                        text: response['msg'],
+                        icon: 'warning',
+                        showCancelButton: true,
+                        showConfirmButton:false,
+                        cancelButtonColor: '#3085d6',
+                        cancelButtonText: 'Retry!'
+                    });
+                }
             },
 
-        success: function(response) {
-        console.log('changePasswordResp');
-            if (response['status'] === 1){
-                Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: response['msg'],
-                showConfirmButton: false,
-                timer: 1500
-                });
-                console.log('Success');
-
-                setTimeout(() => {
-                window.location.replace('home.php')
-                }, 1500);
-
-            } else {
-                Swal.fire({
-                    title: 'Erreur',
-                    text: response['msg'],
-                    icon: 'warning',
-                    showCancelButton: true,
-                    showConfirmButton:false,
-                    cancelButtonColor: '#3085d6',
-                    cancelButtonText: 'Retry!'
-                    });
+            error: function() {
+                console.log('errChgPwd')
             }
-        },
-
-        error: function() {
-        console.log('errNewPwd')
-        }
         });
-        }
+    }
     </script>

@@ -239,9 +239,9 @@ let signIn = function(){
                 });
                 console.log('Success');
 
- /*               setTimeout(() => {
-                window.location.replace("home.php");
-                }, 1600);*/
+                setTimeout(() => {
+                window.location.replace("index.php");
+                }, 1600);
 
             }
 
