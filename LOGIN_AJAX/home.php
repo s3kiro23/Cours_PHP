@@ -68,21 +68,10 @@
     <section class="bg-white">
         <div class="container max-w-4xl px-6 py-5 mx-auto">
             <h1 class="mb-4 text-4xl font-semibold text-center text-gray-800 white:text-dark">Commandes en cours</h1>
-            <div class="border-2 border-gray-300 rounded-lg" id="listCommands">
-                <!--<div class="flex py-3 justify-between items-center w-full">
-                    <span class="pl-4 font-semibold text-gray-700 white:text-dark">N° de commande : </span>
-                    <span class="cmdID">Test</span>
-                    <div class="pl-4 font-semibold text-gray-700 white:text-dark">Date de commande : </div>
-                    <div class="cmdDate">Test</div>
-                    <div>
-                        <button onclick="showInfo($id)" class="showInfo col-span-3 px-4 font-medium text-indigo-600 hover:text-indigo-500"
-                                type="button">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                            </svg>
-                        </button>
-                    </div>
-                </div>-->
+            <div class="rounded-lg" id="listCommands">
+
+<!--                Contenu des commandes ici généré avec class HTML -->
+
             </div>
         </div>
     </section>

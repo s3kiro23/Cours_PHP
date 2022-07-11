@@ -214,12 +214,12 @@ class HTML
     public static function displayAllCmd($cmd){
 
 		return "
-            <div class='flex py-3 justify-between items-center w-full border-solid border-2 border-grey rounded'>
+            <div class='flex mb-2 py-3 justify-between items-center w-full border-2 border-gray-100 rounded'>
                 <span class='pl-4 font-semibold text-gray-700 white:text-dark'>N° de commande : </span>
                 <span id='cmdID'>".$cmd['id']."</span>
                 <span class='pl-4 font-semibold text-gray-700 white:text-dark'>Date de commande : </span>
                 <span id='cmdDate'>".$cmd['date']."</span>
-                <div>
+                <div class='flex justify-between items-center'>
                     <button id='showInfo' onclick='showInfo(\"".$cmd['id']."\")' class='col-span-3 px-4 font-medium text-indigo-600 hover:text-indigo-500'
                             type='button'>
                         <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-search' viewBox='0 0 16 16'>

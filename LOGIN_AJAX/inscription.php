@@ -15,17 +15,17 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Inscription</title>
 </head>
+
 <body class="bg-[url('img/signIn_pic.jpg')] bg-cover bg-no-repeat">
 
     <div class="min-h-full flex items-center justify-center pt-12 pb-4 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-md w-full space-y-8 bg-white bg-opacity-50 py-4 px-4 rounded">
+        <div class="max-w-md w-full bg-white bg-opacity-50 py-4 px-4 rounded">
             <div>
                 <img
-                        class="mx-auto h-12 w-auto"
-                        src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-                        alt="Workflow"
+                    class="mx-auto h-12 w-auto"
+                    src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                    alt="Workflow"
                 />
-
                 <h2 class="mt-6 text-center text-3xl font-extrabold">
                     Créer votre compte
                 </h2>
@@ -98,9 +98,10 @@
                         <select name="type" id="type-select"
                                 class="field appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                         >
-                            <option value="">--Choisissez un type de compte--</option>
+                            <option value="">-- Choisissez le type de commande --</option>
                             <option value="sur-place">Sur place</option>
                             <option value="emporter">A emporter</option>
+                            <option value="emporter">Livraison</option>
                         </select>
                     </div>
                 <div class="rounded-md py-3">
@@ -121,9 +122,9 @@
                 </div>
                 <div>
                     <button
-                            type="submit"
-                            id='signIn'
-                            class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        type="submit"
+                        id='signIn'
+                        class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
                         <span class="absolute left-0 inset-y-0 flex items-center pl-3">
                             <svg xmlns="http://www.w3.org/2000/svg" 
@@ -135,7 +136,8 @@
                                 <path 
                                     stroke-linecap="round" 
                                     stroke-linejoin="round"
-                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                                />
                             </svg>
                         </span>
                         S'incrire !
@@ -143,12 +145,12 @@
                 </div>
             </form>
         </div>
+    <span class="flex justify-center text-white mt-5">ou</span>
+    <a id="to_logIn" class="cursor-pointer flex justify-center text-indigo-600 hover:text-white font-medium">retour
+        à la page connexion.
+    </a>
     </div>
-    <div class="ml-6">
-        <span class="flex justify-center text-white">ou</span>
-        <a id="to_logIn" class="mb-6 cursor-pointer flex justify-center text-indigo-600 hover:text-white font-medium">retour
-            à la page connexion.</a>
-    </div>
+
 
 </body>
 
