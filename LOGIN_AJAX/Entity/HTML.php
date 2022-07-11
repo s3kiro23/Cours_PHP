@@ -211,19 +211,24 @@ class HTML
         ";
     }
 
+    public static function displayAllCmd($cmd){
 
-    public static function displayPage($data){
-
-		if($data['type'] == "prof"){
-			$html = "<a href='/aflokkat4/liststudent.php'>Liste Etudiant</a>";
-		}else{
-			$html = "<a href='/aflokkat4/listprof.php'>Liste Prof</a>";
-		}
-
-		$html .= "<button> Deconnexion</button>";
-
-		return $html;
+		return "
+            <div class='flex py-3 justify-between items-center w-full border-solid border-2 border-grey rounded'>
+                <span class='pl-4 font-semibold text-gray-700 white:text-dark'>N° de commande : </span>
+                <span id='cmdID'>".$cmd['id']."</span>
+                <span class='pl-4 font-semibold text-gray-700 white:text-dark'>Date de commande : </span>
+                <span id='cmdDate'>".$cmd['date']."</span>
+                <div>
+                    <button id='showInfo' onclick='showInfo(\"".$cmd['id']."\")' class='col-span-3 px-4 font-medium text-indigo-600 hover:text-indigo-500'
+                            type='button'>
+                        <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-search' viewBox='0 0 16 16'>
+                            <path d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+		";
 	}
-
 
 }

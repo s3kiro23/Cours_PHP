@@ -12,15 +12,15 @@ class User {
     private $password;
     private $prenom;
     private $nom;
+    private $type;
     private $pwdExp;
     private $created_date;
-    private $hash;
 
     public function __construct($id){
 
         $this->id = 0;
 
-        $GLOBALS['db']->beginTransaction();
+/*        $GLOBALS['db']->beginTransaction();*/
         $query = $GLOBALS['db']->prepare('SELECT * FROM `user` WHERE id=?');
         $query->execute([$id]);
 /*        error_log('test');*/
@@ -30,6 +30,7 @@ class User {
             $this->password = password_hash($user['password'], PASSWORD_BCRYPT);
             $this->prenom = $user['prenom'];
             $this->nom = $user['nom'];
+            $this->type = $user['type'];
             $this->pwdExp = $user['pwdExp'];
             $this->created_date = $user['created_date'];
         }
@@ -73,6 +74,16 @@ class User {
 		$this->prenom = $prenom;
 	}
 
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
 	public function getNom()
     {
 		return $this->nom;
@@ -83,18 +94,19 @@ class User {
 		$this->nom = $nom;
 	}
 
-	static public function create($login, $nom, $prenom, $password, $pwdExp, $created_date, $hash)
+	static public function create($login, $nom, $prenom, $type, $password, $pwdExp, $created_date, $hash)
     {
 
         try {
 
-            $preparedSql = $GLOBALS['db']->prepare('INSERT INTO user (`login`, `nom`, `prenom`, `password`, `pwdExp`, `created_date`, `hash`)
-                VALUES (:login, :nom, :prenom, :password, :pwdExp, :created_date, :hash)');
+            $preparedSql = $GLOBALS['db']->prepare('INSERT INTO user (`login`, `nom`, `prenom`, `type`, `password`, `pwdExp`, `created_date`, `hash`)
+                VALUES (:login, :nom, :prenom, :type, :password, :pwdExp, :created_date, :hash)');
 
             $preparedSql->execute(array(
                 'login' => $login,
                 'nom' => $nom,
                 'prenom' => $prenom,
+                'type' => $type,
                 'password' => password_hash($password, PASSWORD_BCRYPT),
                 'pwdExp' => $pwdExp,
                 'created_date' => $created_date,

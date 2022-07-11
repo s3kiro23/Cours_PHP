@@ -123,9 +123,11 @@ $(function() {
 });
 
 function load(){
+
     $('#to_signIn').on('click', signIn);
     $('#toRequestMail').on('click', toRequestMail);
     $('#tokenLink').on('click', tokenLink);
+
 }
 
 let connect = function(){

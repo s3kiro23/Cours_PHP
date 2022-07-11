@@ -2,8 +2,8 @@
 
 function is_logged(): bool
 {
-    $ID = decrypt($_SESSION['id']);
-    return isset($ID);
+
+    return decrypt($_SESSION['id']);
 
 }
 

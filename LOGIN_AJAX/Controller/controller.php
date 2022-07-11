@@ -4,6 +4,7 @@ require_once '../Entity/User.php';
 require_once '../Entity/Database.php';
 require_once '../Entity/Log.php';
 require_once '../Entity/HTML.php';
+require_once '../Entity/Command.php';
 
 
 $db = new Database();
@@ -277,18 +278,12 @@ switch ($_POST['request']){
 
         if ($status == 1){
             $currenPwdExp = date("Y-m-d H:i:s", mktime(0, 0, 0, date("m")  , date("d")+1, date("Y")));
-            $utilisateur = User::create(
-                $_POST['login'],
-                $_POST['passwd'],
-                $_POST['prenom'],
-                $_POST['nom'],
-                $currenPwdExp,
-                date("Y-m-d H:i:s"),
-                User::random_hash());
+            $utilisateur = User::create($_POST['login'], $_POST['nom'], $_POST['prenom'], $_POST['type'], $_POST['passwd'], $currenPwdExp, date("Y-m-d H:i:s"), User::random_hash());
             $query = $GLOBALS['db']->prepare('SELECT * FROM `user` WHERE login=?');
             $query->execute([$_POST['login']]);
             $utilisateur = $query->fetch(PDO::FETCH_ASSOC);
             $_SESSION['id'] = encrypt($utilisateur['id']);
+
             $log_path = 'log.txt';
             file_put_contents($log_path, "\n ".dateJour()." ".get_login()." a créé un nouveau compte.", FILE_APPEND);
 
@@ -296,7 +291,65 @@ switch ($_POST['request']){
 
         echo json_encode(array("status" => $status, "msg" => $msg));
                 
-    break;  
+    break;
+
+    case 'newCommand':
+
+        $newCmd = Command::createCmd($_POST['title'], $_POST['label'], decrypt($_SESSION['id']));
+        $msg = "Nouvelle commande créée avec l'ID de commande n° ".$newCmd." !";
+
+        echo json_encode(array("msg" => $msg));
+
+    break;
+
+/*    case 'currentCommands':
+
+        $currentCmd = Command::checkCurrentCmd($id);
+        $cmdID = $currentCmd['id'];
+        $date = $currentCmd['date'];
+
+        echo json_encode(array("cmdID" => $cmdID, "date" => $date));
+
+    break;*/
+
+    case 'listCommands':
+
+        $msg = "";
+        $html ="";
+        $allCmd = Command::checkAllCmd();
+        error_log(json_encode($allCmd));
+
+        if (is_array($allCmd) || is_object($allCmd))
+        {
+            // If yes, then foreach() will iterate over it.
+            foreach ($allCmd as $cmd){
+                $html .= HTML::displayAllCmd($cmd);
+            }
+        }
+        else // If $myList was not an array, then this block is executed.
+        {
+            $msg = "Erreur lors de la récupération du tableau";
+        }
+
+        echo json_encode(array("html" => $html, "msg" => $msg));
+
+    break;
+
+    case 'showInfo':
+
+        $currentCmd = Command::checkCurrentCmd($_POST['cmdID']);
+        $user = new User(decrypt($_SESSION['id']));
+
+        $cmdID = $currentCmd['id'];
+        $title = $currentCmd['title'];
+        $label = $currentCmd['label'];
+        $date = $currentCmd['date'];
+        $client = $user->getLogin();
+
+        echo json_encode(array("cmdID" => $cmdID, "title" => $title, "label" => $label, "date" => $date, "client" => $client));
+
+    break;
+
 
     case 'user_login' :
 
@@ -351,6 +404,7 @@ switch ($_POST['request']){
     break;
 
     case 'deleteAccount' :
+
         $msg = "Erreur";
         $ID = decrypt($_SESSION['id']);
 

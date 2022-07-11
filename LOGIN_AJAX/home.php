@@ -68,39 +68,57 @@
     <section class="bg-white">
         <div class="container max-w-4xl px-6 py-5 mx-auto">
             <h1 class="mb-4 text-4xl font-semibold text-center text-gray-800 white:text-dark">Commandes en cours</h1>
-            <div class="border-2 border-gray-300 rounded-lg">
-                <div class="flex py-3 justify-between items-center w-full">
-                    <div class="px-4 font-semibold text-gray-700 white:text-dark">test</div>
+            <div class="border-2 border-gray-300 rounded-lg" id="listCommands">
+                <!--<div class="flex py-3 justify-between items-center w-full">
+                    <span class="pl-4 font-semibold text-gray-700 white:text-dark">N° de commande : </span>
+                    <span class="cmdID">Test</span>
+                    <div class="pl-4 font-semibold text-gray-700 white:text-dark">Date de commande : </div>
+                    <div class="cmdDate">Test</div>
                     <div>
-                        <button class="col-span-3 px-4 font-medium text-indigo-600 hover:text-indigo-500"
-                                type="button" data-toggle="modal" data-target="#exampleModalCenter">
-                            Show
-                        </button>
-                        <button class="px-4 font-medium text-red-600 hover:text-red-500"
+                        <button onclick="showInfo($id)" class="showInfo col-span-3 px-4 font-medium text-indigo-600 hover:text-indigo-500"
                                 type="button">
-                            Delete
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                            </svg>
                         </button>
                     </div>
-                </div>
+                </div>-->
             </div>
         </div>
     </section>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="modalInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">N° de commande : </h5>
+                    <span id="modal-cmdID" class="pl-4">ID</span>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    ...
-                </div>
+                    <div>
+                        <span class="font-semibold text-gray-700 white:text-dark">Titre : </span>
+                        <span id="modal-cmdTitle" class="pl-4">titre</span>
+                    </div>
+                    <div>
+                        <span class="font-semibold text-gray-700 white:text-dark">Label : </span>
+                        <span id="modal-cmdLabel" class="pl-4">label</span>
+                    </div>
+                    <div>
+                        <span class="font-semibold text-gray-700 white:text-dark">Date : </span>
+                        <span id="modal-cmdDate" class="pl-4">date</span>
+                    </div>
+                    <div>
+                        <span class="font-semibold text-gray-700 white:text-dark">Client : </span>
+                        <span id="modal-cmdClient" class="pl-4">client</span>
+                    </div>
+<!--                    <span id="cmdTitle"></span>
+-->                </div>
                 <div class="modal-footer">
-                    <button type="button" class="buttn" data-dismiss="modal">Fermer</button>
+                    <button type="button" class="font-medium text-indigo-600 hover:text-indigo-500" data-dismiss="modal">Fermer</button>
                 </div>
             </div>
         </div>
@@ -108,121 +126,203 @@
 
 <script>
 
-    $(function() {
+$(function() {
 
-        load();
-        $("#logout").on('click', logout);
-        $("#to_profil").on('click', toProfil);
+    load();
 
+});
+
+function load(){
+
+    login();
+    listCommands();
+    $("#logout").on('click', logout);
+    $("#to_profil").on('click', toProfil);
+    $('.showInfo').on('click', showInfo);
+
+}
+
+function showInfo(id){
+
+    console.log(id);
+    $.ajax({
+
+        url: 'Controller/controller.php',
+        dataType: 'JSON',
+        type: 'POST',
+        data: {
+            request: 'showInfo',
+            cmdID: id
+        },
+        success: function(response) {
+            console.log('showInfo');
+
+            $('#modalInfo').modal('show');
+            $('#modal-cmdID').html(response['cmdID'])
+            $('#modal-cmdTitle').html(response['title'])
+            $('#modal-cmdLabel').html(response['label'])
+            $('#modal-cmdDate').html(response['date'])
+            $('#modal-cmdClient').html(response['client'])
+            load();
+
+        },
+        error: function() {
+            console.log('erroShow');
+        }
+    });
+}
+
+function newCommand(){
+
+    console.log('newco');
+    $.ajax({
+
+        url: 'Controller/controller.php',
+        dataType: 'JSON',
+        type: 'POST',
+        data: {
+            request: 'newCommand',
+            title: $('#titre').val(),
+            label: $('#label').val(),
+        },
+        success: function(response) {
+
+            iziToast.success({
+
+                timeout: 2000,
+                progressBar: true,
+                message: response['msg'],
+                position: 'topRight',
+
+            });
+
+        },
+        error: function() {
+
+        }
+    });
+}
+
+function listCommands(){
+
+    console.log('listCommands');
+    $.ajax({
+
+        url: 'Controller/controller.php',
+        dataType: 'JSON',
+        type: 'POST',
+        data: {
+            request: 'listCommands',
+        },
+        success: function(response) {
+
+            $("#listCommands").html(response['html']);
+
+        },
+        error: function() {
+
+        }
+    })
+}
+
+function currentCommand(){
+
+    console.log('currentCMD1');
+    $.ajax({
+
+        url: 'Controller/controller.php',
+        dataType: 'JSON',
+        type: 'POST',
+        data: {
+            request: 'currentCommands',
+        },
+        success: function(response) {
+
+            $(".cmdID").html(response['cmdID']);
+            $(".cmdDate").html(response['date']);
+
+        },
+        error: function() {
+
+        }
+    })
+}
+
+let logout = function(){
+
+    console.log(1);
+    $.ajax({
+
+        url: 'Controller/controller.php',
+        dataType: 'JSON',
+        type: 'POST',
+        data: {
+            request: 'logout',
+        },
+        success: function(response) {
+
+            iziToast.success({
+
+                timeout: 2000,
+                progressBar: true,
+                message: response['msg'],
+                position: 'topRight',
+
+            });
+
+            setTimeout(() => {
+                window.location.href = "index.php";
+            }, 2300);
+
+        },
+        error: function() {
+
+        }
+    });
+}
+
+function login(){
+
+    // console.log(1);
+    $.ajax({
+
+        url: 'Controller/controller.php',
+        dataType: 'JSON',
+        type: 'POST',
+        data: {
+            request: 'user_login',
+        },
+        success: function(response) {
+            // console.log(2);
+            $(".user_login").html(response['login']);
+
+        },
+        error: function() {
+
+        }
+    });
+}
+
+let toProfil = function(){
+    console.log("toprof");
+    $.ajax({
+        url: 'Controller/controller.php',
+        dataType: 'JSON',
+        type: 'POST',
+        data: {
+            request: 'to_profil',
+        },
+        success: function(response) {
+            console.log('to_profResp');
+            window.location.replace('profil.php')
+        },
+
+        error: function() {
+            console.log('errProf')
+        }
     });
 
-    function newCommand(){
-
-        console.log('newco');
-        $.ajax({
-
-            url: 'Controller/controller.php',
-            dataType: 'JSON',
-            type: 'POST',
-            data: {
-                request: 'newCommand',
-                title: $('#titre').val(),
-                label: $('#label').val(),
-            },
-            success: function(response) {
-
-                iziToast.success({
-
-                    timeout: 2000,
-                    progressBar: true,
-                    message: response['msg'],
-                    position: 'topRight',
-
-                });
-
-            },
-            error: function() {
-
-            }
-        });
-    }
-
-    let logout = function(){
-
-        console.log(1);
-        $.ajax({
-
-            url: 'Controller/controller.php',
-            dataType: 'JSON',
-            type: 'POST',
-            data: {
-                request: 'logout',
-            },
-            success: function(response) {
-
-                iziToast.success({
-
-                    timeout: 2000,
-                    progressBar: true,
-                    message: response['msg'],
-                    position: 'topRight',
-
-                });
-
-                setTimeout(() => {
-                    window.location.href = "index.php";
-                }, 2300);
-
-            },
-            error: function() {
-
-            }
-        });
-    }
-
-    function load(){
-
-        // console.log(1);
-        $.ajax({
-
-            url: 'Controller/controller.php',
-            dataType: 'JSON',
-            type: 'POST',
-            data: {
-                request: 'user_login',
-            },
-            success: function(response) {
-                // console.log(2);
-                $(".user_login").html(response['login']);
-
-            },
-            error: function() {
-
-            }
-        });
-    }
-
-    let toProfil = function(){
-        console.log("toprof");
-        $.ajax({
-            url: 'Controller/controller.php',
-            dataType: 'JSON',
-            type: 'POST',
-            data: {
-                request: 'to_profil',
-            },
-            success: function(response) {
-                console.log('to_profResp');
-                window.location.replace('profil.php')
-            },
-
-            error: function() {
-                console.log('errProf')
-            }
-        });
-
-    }
-
+}
 
 </script>
 

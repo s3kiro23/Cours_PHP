@@ -99,8 +99,8 @@
                                 class="field appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                         >
                             <option value="">--Choisissez un type de compte--</option>
-                            <option value="prof">Professeur</option>
-                            <option value="etudiant">Etudiant</option>
+                            <option value="sur-place">Sur place</option>
+                            <option value="emporter">A emporter</option>
                         </select>
                     </div>
                 <div class="rounded-md py-3">
@@ -154,45 +154,14 @@
 
 <script>
 
+
 $(function() {
 
     captcha();
-    // $('#password').on('keyup', checkPassword);
     $('#to_logIn').on('click', to_logIn);
-
 
 });
 
-/*let checkPassword = function() {
-
-    let password = $('#password').val();
-    console.log("password = " + password);
-
-    let password2 = $('#password2').val();
-    console.log("password2 = " + password2);
-
-    console.log('pwd');
-    $.ajax({
-
-        url: 'controller.php',
-        dataType: 'JSON',
-        type: 'POST',
-        data: {
-            request: 'password',
-            passwd: 'password',
-            passwd2: 'password2' 
-        },
-        success: function(response) {
-            console.log('success');
-
-        },
-        error: function() {
-            console.log('pwd err');
-        }
-    });*/
-
-/*}*/
-        
 let signIn = function(){
 
     console.log(1);
@@ -206,6 +175,7 @@ let signIn = function(){
             prenom: $('#prenom').val(),
             nom: $('#nom').val(),
             login: $('#login').val(),
+            type: $('#type-select').val(),
             passwd: $('#password').val(),
             passwd2: $('#password2').val(),
             checkCap: $('#captcha_verif').val(),
@@ -227,9 +197,9 @@ let signIn = function(){
                     cancelButtonText: 'Retry!'
                 });
             }
-            
+
             else {
-                
+
                 Swal.fire({
                     position: 'center',
                     icon: 'success',
@@ -256,7 +226,7 @@ let signIn = function(){
 }
 
 function captcha(){
-    
+
     console.log('cap');
     $.ajax({
 
@@ -323,7 +293,7 @@ let to_logIn = function(){
         }
     });
 
-}
+};
 
 </script>
 </html>
