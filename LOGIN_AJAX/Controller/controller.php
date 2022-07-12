@@ -316,14 +316,17 @@ switch ($_POST['request']){
 
         $msg = "";
         $html ="";
-        $allCmd = Command::checkAllCmd();
+        $off7 = $_POST['off7'];
+        $allCmd = Command::checkAllCmd($off7);
         error_log(json_encode($allCmd));
 
         if (is_array($allCmd) || is_object($allCmd))
         {
             // If yes, then foreach() will iterate over it.
             foreach ($allCmd as $cmd){
+
                 $html .= HTML::displayAllCmd($cmd);
+
             }
         }
         else // If $myList was not an array, then this block is executed.

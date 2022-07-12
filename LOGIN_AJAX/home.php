@@ -75,6 +75,25 @@
             </div>
         </div>
     </section>
+    <nav class="mb-5" aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            <li class="page-item"><a class="page-link" onclick=listCommands(0)>1</a></li>
+            <li class="page-item"><a class="page-link" onclick=listCommands(10)>2</a></li>
+            <li class="page-item"><a class="page-link" onclick=listCommands(20)>3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 
     <!-- Modal -->
     <div class="modal fade" id="modalInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -124,7 +143,7 @@ $(function() {
 function load(){
 
     login();
-    listCommands();
+    listCommands(0);
     $("#logout").on('click', logout);
     $("#to_profil").on('click', toProfil);
     $('.showInfo').on('click', showInfo);
@@ -152,7 +171,6 @@ function showInfo(id){
             $('#modal-cmdLabel').html(response['label'])
             $('#modal-cmdDate').html(response['date'])
             $('#modal-cmdClient').html(response['client'])
-            load();
 
         },
         error: function() {
@@ -192,7 +210,7 @@ function newCommand(){
     });
 }
 
-function listCommands(){
+function listCommands(off7){
 
     console.log('listCommands');
     $.ajax({
@@ -202,6 +220,7 @@ function listCommands(){
         type: 'POST',
         data: {
             request: 'listCommands',
+            off7: off7
         },
         success: function(response) {
 

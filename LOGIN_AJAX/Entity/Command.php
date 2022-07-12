@@ -21,12 +21,14 @@ class Command {
         error_log('ObjectCMD');
 
         if ($cmd = $query->fetch(PDO::FETCH_ASSOC)) {
+
             error_log('ObjectAlreadyExist');
             $this->id = $cmd['id'];
             $this->title = $cmd['title'];
             $this->label = $cmd['label'];
             $this->date = $cmd['date'];
             $this->user_id = $cmd['user_id'];
+
         }
 
     }
@@ -81,6 +83,7 @@ class Command {
 
     static public function checkCurrentCmd($id)
     {
+
         $cmdCheck = false;
         try {
 
@@ -95,12 +98,13 @@ class Command {
 
     }
 
-    static public function checkAllCmd()
+    static public function checkAllCmd($off7)
     {
         $AllCmdCheck = false;
         try {
-
-            $query = $GLOBALS['db']->prepare('SELECT * FROM `command`');
+            error_log(1);
+            $query = $GLOBALS['db']->prepare('SELECT * FROM `command` ORDER BY id DESC LIMIT 10 OFFSET :off7');
+            $query->bindValue(':off7', $off7, PDO::PARAM_INT);
             $query->execute();
             $AllCmdCheck = $query->fetchAll(PDO::FETCH_ASSOC);
 
@@ -110,7 +114,5 @@ class Command {
         return $AllCmdCheck;
 
     }
-
-
 
 }
