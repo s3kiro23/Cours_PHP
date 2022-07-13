@@ -26,8 +26,8 @@
 
 <body>
 
-    <h1 class="text-dark text-5xl text-center m-3 p-3 hover:text-green-500 border-r-50"></h1>
-    <form class="container max-w-4xl px-6 py-10 mx-auto" action="javascript:newCommand();" method="POST">
+<!--    <h1 class="text-dark text-5xl text-center m-3 p-3 hover:text-green-500 border-r-50"></h1>
+-->    <form class="container max-w-4xl px-6 py-10 mx-auto" action="javascript:newCommand();" method="POST">
         <div class="flex justify-center mx-auto">
             <div class="mb-3">
                 <label for="titre" class="sr-only">Commande</label>
@@ -66,32 +66,34 @@
     </form>
     <hr class="border-gray-300 w-10 mx-auto">
     <section class="bg-white">
-        <div class="container max-w-4xl px-6 py-5 mx-auto">
+        <div class="container max-w-4xl px-6 pb-4 pt-4 mx-auto">
             <h1 class="mb-4 text-4xl font-semibold text-center text-gray-800 white:text-dark">Commandes en cours</h1>
             <div class="rounded-lg" id="listCommands">
 
-<!--                Contenu des commandes ici généré avec class HTML -->
+            <!--Contenu des commandes ici, généré avec class HTML -->
 
             </div>
         </div>
     </section>
+
+    <!--Nombre pages-->
     <nav class="mb-5" aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
+<!--            <li class="page-item">
+                <a class="page-link" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                     <span class="sr-only">Previous</span>
                 </a>
-            </li>
-            <li class="page-item"><a class="page-link" onclick=listCommands(0)>1</a></li>
-            <li class="page-item"><a class="page-link" onclick=listCommands(10)>2</a></li>
-            <li class="page-item"><a class="page-link" onclick=listCommands(20)>3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
+            </li>-->
+
+            <!--Pagination ici, générée avec Class HTML-->
+
+ <!--           <li class="page-item">
+                <a class="page-link" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                     <span class="sr-only">Next</span>
                 </a>
-            </li>
+            </li>-->
         </ul>
     </nav>
 
@@ -143,7 +145,7 @@ $(function() {
 function load(){
 
     login();
-    listCommands(0);
+    listCommands(1);
     $("#logout").on('click', logout);
     $("#to_profil").on('click', toProfil);
     $('.showInfo').on('click', showInfo);
@@ -210,7 +212,7 @@ function newCommand(){
     });
 }
 
-function listCommands(off7){
+function listCommands(page){
 
     console.log('listCommands');
     $.ajax({
@@ -220,11 +222,12 @@ function listCommands(off7){
         type: 'POST',
         data: {
             request: 'listCommands',
-            off7: off7
+            page: page
         },
         success: function(response) {
 
             $("#listCommands").html(response['html']);
+            $(".pagination").html(response['paginationHTML'])
 
         },
         error: function() {

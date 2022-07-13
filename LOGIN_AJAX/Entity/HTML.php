@@ -231,4 +231,13 @@ class HTML
 		";
 	}
 
+    public static function pages($page, $numb){
+
+        return "
+
+            <a class='page-link' onclick=listCommands($page)>$numb</a></li>
+            
+		";
+    }
+
 }

@@ -35,28 +35,28 @@
                     <dt id="fieldName" class="font-medium text-gray-500">Nom</dt>
                     <dd id="user_nom" class="mt-1 mb-3 text-gray-900 mt-0 col-span-2"></dd>
                 </div>
-                <button class="data_modify text-indigo-600 font-bold" data-id="Nom">Modify</button>
+                <button class="data_modify text-indigo-600 font-bold" data-id="Nom">Modifier</button>
             </div>
             <div class="flex items-center gap-4 bg-white px-6 py-5 justify-between">
                 <div>
                     <dt id="fieldLastname" class="font-medium text-gray-500">Prénom</dt>
                     <dd id="user_prenom" class="mt-1 mb-3 text-gray-900 mt-0 col-span-2"></dd>
                 </div>
-                <button class="data_modify text-indigo-600 font-bold" data-id="Prenom">Modify</button>
+                <button class="data_modify text-indigo-600 font-bold" data-id="Prenom">Modifier</button>
             </div>
             <div class="flex items-center gap-4 bg-gray-50 px-6 py-5 justify-between">
                 <div>
                     <dt id="fieldLogin" class="font-medium text-gray-500">Login / Email</dt>
                     <dd class="user_login mt-1 mb-3 text-gray-900 mt-0 col-span-2"></dd>
                 </div>
-                <button class="data_modify text-indigo-600 font-bold" data-id="Login">Modify</button>
+                <button class="data_modify text-indigo-600 font-bold" data-id="Login">Modifier</button>
             </div>
             <div class="flex items-center gap-4 bg-white px-6 py-5 justify-between">
                 <div>
                     <dt id="fieldPwd" class="font-medium text-gray-500">Mot de passe</dt>
                     <dd id="pwd" class="mt-1 mb-3 text-gray-900 mt-0 col-span-2"></dd>
                 </div>
-                <button class="data_modify text-indigo-600 font-bold" data-id="Password">Modify</button>
+                <button class="data_modify text-indigo-600 font-bold" data-id="Password">Modifier</button>
             </div>
 
             <div class="flex items-center gap-4 bg-gray-50 px-6 py-5 justify-between">
@@ -64,7 +64,7 @@
                     <dt id="fieldAbout" class=" font-medium text-gray-500">à propos de <span class="user_login"></span></dt>
                     <dd class="mt-1 text-gray-900 mt-0 col-span-2"></dd>
                 </div>
-                <button class="data_modify text-indigo-600 font-bold" data-id="About">Modify</button>
+                <button class="data_modify text-indigo-600 font-bold" data-id="About">Modifier</button>
             </div>
         </div>
     </div>

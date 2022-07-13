@@ -1,6 +1,6 @@
 <?php
-require_once '../Entity/function.php';
-require_once '../Entity/Database.php';
+require_once 'function.php';
+require_once 'Database.php';
 
 $db = new Database();
 $GLOBALS['db'] = $db->checkDb();
@@ -98,20 +98,31 @@ class Command {
 
     }
 
-    static public function checkAllCmd($off7)
+    static public function cmdPerPages($off7)
     {
-        $AllCmdCheck = false;
+        $cmdPerPages = false;
         try {
-            error_log(1);
+
             $query = $GLOBALS['db']->prepare('SELECT * FROM `command` ORDER BY id DESC LIMIT 10 OFFSET :off7');
             $query->bindValue(':off7', $off7, PDO::PARAM_INT);
             $query->execute();
-            $AllCmdCheck = $query->fetchAll(PDO::FETCH_ASSOC);
+            $cmdPerPages = $query->fetchAll(PDO::FETCH_ASSOC);
 
         } catch (PDOException $e) {
             /*            $msg = "Erreur : ".$e->getMessage();*/
         }
-        return $AllCmdCheck;
+        return $cmdPerPages;
+
+    }
+
+    static public function checkAllCmd()
+    {
+
+        $query = $GLOBALS['db']->prepare('SELECT count(*) AS nbCmd FROM `command`');
+        $query->execute();
+        $result = $query->fetch();
+
+        return (int) $result['nbCmd'];
 
     }
 

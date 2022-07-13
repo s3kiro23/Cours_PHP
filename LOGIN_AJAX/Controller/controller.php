@@ -317,26 +317,39 @@ switch ($_POST['request']){
     case 'listCommands':
 
         $msg = "";
-        $html ="";
-        $off7 = $_POST['off7'];
-        $allCmd = Command::checkAllCmd($off7);
-        error_log(json_encode($allCmd));
+        $html = "";
+        $paginationHTML = "";
+        $currentPage = $_POST['page'];
+        error_log("Page ".$_POST['page']);
+        $off7 = ($currentPage - 1) * 10;
+        error_log('Calcul off7 = '.$off7);
+        $cmdPage = Command::cmdPerPages($off7);
+        $allCmd = Command::checkAllCmd();
+/*      error_log(json_encode($cmdPage));
+        error_log(json_encode($allCmd));*/
+        $totalPages = ceil($allCmd / 10);
+        error_log("Total pages = ".$totalPages);
 
-        if (is_array($allCmd) || is_object($allCmd))
+        if (is_array($cmdPage) || is_object($cmdPage))
         {
-            // If yes, then foreach() will iterate over it.
-            foreach ($allCmd as $cmd){
+            foreach ($cmdPage as $cmd){
 
                 $html .= HTML::displayAllCmd($cmd);
 
             }
         }
-        else // If $myList was not an array, then this block is executed.
+        else
         {
-            $msg = "Erreur lors de la récupération du tableau";
+            $msg = "Erreur lors de la récupération de la liste des commandes";
         }
 
-        echo json_encode(array("html" => $html, "msg" => $msg));
+        for ($i = 1; $i <= $totalPages; $i++){
+
+            $paginationHTML .= HTML::pages($i, $i);
+
+        }
+
+        echo json_encode(array("html" => $html, "msg" => $msg, "paginationHTML" => $paginationHTML));
 
     break;
 
