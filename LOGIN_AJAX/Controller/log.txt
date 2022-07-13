@@ -62,3 +62,14 @@
  12-07-2022 17:07:40  s'est déconnecté
  12-07-2022 17:08:46 59 a créé un nouveau compte.
  12-07-2022 17:08:52 59 s'est connecté
+ 13-07-2022 11:41:58  s'est déconnecté
+ 13-07-2022 11:41:59  s'est déconnecté
+ 13-07-2022 11:42:06  s'est déconnecté
+ 13-07-2022 09:42:24 72 a créé un nouveau compte.
+ 13-07-2022 09:42:38 72 s'est connecté
+ 13-07-2022 09:50:58 72 s'est déconnecté
+ 13-07-2022 09:52:39 72 s'est connecté
+ 13-07-2022 09:56:45 72 s'est déconnecté
+ 13-07-2022 09:57:24 72 s'est connecté
+ 13-07-2022 09:57:44 72 s'est déconnecté
+ 13-07-2022 10:00:28  s'est déconnecté

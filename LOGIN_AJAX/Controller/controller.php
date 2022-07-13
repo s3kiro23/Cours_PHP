@@ -122,17 +122,19 @@ switch ($_POST['request']){
         $status = 1;
         $msg = "Mise à jour réussi, Enjoy :D !";
         $currenPwdExp = date("Y-m-d H:i:s", mktime(0, 0, 0, date("m")  , date("d")+1, date("Y")));
-        $user = new User($_POST['user']);
+        $user = User::checkUser($_POST['user']);
+        $currentUser = new User($user['id']);
 
-        if (!checkPasswdLenght($_POST['password'])){
+/*        if (!checkPasswdLenght($_POST['password'])){
             $status = 0;
             $msg = "Condition de création du mot de passe non remplies!";
-        }
-        else {
-            $user->setPassword($_POST['password']);
-            $user->setPwdExp($currenPwdExp);
-            $user->update();
-        }
+        }*/
+        /*else {*/
+        $currentUser->setPassword($_POST['password']);
+        $currentUser->setPwdExp($currenPwdExp);
+        $currentUser->update();
+        $_SESSION['id'] = encrypt($user['id']);
+       /* }*/
 
         echo json_encode(array("status" => $status, "msg" => $msg));
 
