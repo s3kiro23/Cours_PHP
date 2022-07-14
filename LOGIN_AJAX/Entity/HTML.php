@@ -235,7 +235,7 @@ class HTML
 
         return "
 
-            <a class='page-link' onclick=listCommands($page)>$numb</a></li>
+            <li class='page-item' id='page$numb'><a class='page-link' onclick='listCommands($page);'>$numb</a></li>
             
 		";
     }

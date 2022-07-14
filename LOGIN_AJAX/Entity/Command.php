@@ -5,7 +5,8 @@ require_once 'Database.php';
 $db = new Database();
 $GLOBALS['db'] = $db->checkDb();
 
-class Command {
+class Command
+{
 
     private $id;
     private $title;
@@ -13,7 +14,8 @@ class Command {
     private $date;
     private $user_id;
 
-    public function __construct($id) {
+    public function __construct($id)
+    {
 
         $GLOBALS['db']->beginTransaction();
         $query = $GLOBALS['db']->prepare('SELECT * FROM `command` WHERE id=?');
@@ -33,31 +35,38 @@ class Command {
 
     }
 
-    public function getTitle(){
+    public function getTitle()
+    {
         return $this->title;
     }
 
-    public function setTitle($title){
+    public function setTitle($title)
+    {
         $this->title = $title;
     }
 
-    public function getLabel(){
+    public function getLabel()
+    {
         return $this->label;
     }
 
-    public function setLabel($label){
+    public function setLabel($label)
+    {
         $this->label = $label;
     }
 
-    public function getUser_id(){
+    public function getUser_id()
+    {
         return $this->user_id;
     }
 
-    public function setUser_id($user_id){
+    public function setUser_id($user_id)
+    {
         $this->user_id = $user_id;
     }
 
-    static public function createCmd($title, $label, $user_id){
+    static public function createCmd($title, $label, $user_id)
+    {
 
         try {
 
@@ -122,7 +131,7 @@ class Command {
         $query->execute();
         $result = $query->fetch();
 
-        return (int) $result['nbCmd'];
+        return (int)$result['nbCmd'];
 
     }
 

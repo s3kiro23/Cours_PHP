@@ -5,7 +5,8 @@ require_once '../Entity/Database.php';
 $db = new Database();
 $GLOBALS['db'] = $db->checkDb();
 
-class User {
+class User
+{
 
     private $id;
     private $login;
@@ -16,14 +17,15 @@ class User {
     private $pwdExp;
     private $created_date;
 
-    public function __construct($id){
+    public function __construct($id)
+    {
 
         $this->id = 0;
 
-/*        $GLOBALS['db']->beginTransaction();*/
+        /*        $GLOBALS['db']->beginTransaction();*/
         $query = $GLOBALS['db']->prepare('SELECT * FROM `user` WHERE id=?');
         $query->execute([$id]);
-/*        error_log('test');*/
+        /*        error_log('test');*/
         if ($user = $query->fetch(PDO::FETCH_ASSOC)) {
             $this->id = $user['id'];
             $this->login = $user['login'];
@@ -38,41 +40,43 @@ class User {
 
     public function getLogin()
     {
-		return $this->login;
-	}
+        return $this->login;
+    }
 
-	public function setLogin($login)
+    public function setLogin($login)
     {
-		$this->login = $login;
-	}
+        $this->login = $login;
+    }
 
-    public function getPwdExp(){
+    public function getPwdExp()
+    {
         return $this->pwdExp;
     }
 
-    public function setPwdExp($pwdExp){
+    public function setPwdExp($pwdExp)
+    {
         $this->pwdExp = $pwdExp;
     }
 
-	public function getPassword()
+    public function getPassword()
     {
-		return $this->password;
-	}
+        return $this->password;
+    }
 
-	public function setPassword($password)
+    public function setPassword($password)
     {
-		$this->password = password_hash($password, PASSWORD_BCRYPT);
-	}
+        $this->password = password_hash($password, PASSWORD_BCRYPT);
+    }
 
-	public function getPrenom()
+    public function getPrenom()
     {
-		return $this->prenom;
-	}
+        return $this->prenom;
+    }
 
-	public function setPrenom($prenom)
+    public function setPrenom($prenom)
     {
-		$this->prenom = $prenom;
-	}
+        $this->prenom = $prenom;
+    }
 
     public function getType()
     {
@@ -84,17 +88,17 @@ class User {
         $this->type = $type;
     }
 
-	public function getNom()
+    public function getNom()
     {
-		return $this->nom;
-	}
+        return $this->nom;
+    }
 
-	public function setNom($nom)
+    public function setNom($nom)
     {
-		$this->nom = $nom;
-	}
+        $this->nom = $nom;
+    }
 
-	static public function create($login, $nom, $prenom, $type, $password, $pwdExp, $created_date, $hash)
+    static public function create($login, $nom, $prenom, $type, $password, $pwdExp, $created_date, $hash)
     {
 
         try {
@@ -119,9 +123,10 @@ class User {
         } catch (PDOException $e) {
             // echo "Erreur : ".$e->getMessage();
         }
-	}
+    }
 
-     static public function random_hash(){
+    static public function random_hash()
+    {
 
         $longueur = 30;
         $listeCar = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!%@$#?';
@@ -154,8 +159,10 @@ class User {
 
     }
 
-    public function delete($ID){
+    public function delete($ID)
+    {
         error_log('deleteFct');
+        $GLOBALS['db']->beginTransaction();
         $query = $GLOBALS['db']->prepare('DELETE FROM `user` WHERE id=:id');
         $query->bindValue(':id', $ID);
         $query->execute();
@@ -163,30 +170,30 @@ class User {
 
     }
 
-/*    public function generate(){
-        try {
+    /*    public function generate(){
+            try {
 
-            $GLOBALS['db']->beginTransaction();
+                $GLOBALS['db']->beginTransaction();
 
-            $preparedSql = $GLOBALS['db']->prepare('INSERT INTO user (`login`, `nom`, `prenom`, `password`)
-                VALUES (:login, :nom, :prenom, :password)');
+                $preparedSql = $GLOBALS['db']->prepare('INSERT INTO user (`login`, `nom`, `prenom`, `password`)
+                    VALUES (:login, :nom, :prenom, :password)');
 
-            $preparedSql->execute(array(
-                'login' => $this->login,
-                'nom' => $this->nom,
-                'prenom' => $this->prenom,
-                'password' => $this->password,
-            ));
-            error_log(json_encode(array('login' => $this->login, 'nom' => $this->nom, 'prenom' => $this->prenom, 'password' => $this->password)));
-            // $dbco->exec($sql);
+                $preparedSql->execute(array(
+                    'login' => $this->login,
+                    'nom' => $this->nom,
+                    'prenom' => $this->prenom,
+                    'password' => $this->password,
+                ));
+                error_log(json_encode(array('login' => $this->login, 'nom' => $this->nom, 'prenom' => $this->prenom, 'password' => $this->password)));
+                // $dbco->exec($sql);
 
-            $GLOBALS['db']->commit();
+                $GLOBALS['db']->commit();
 
-        } catch (PDOException $e) {
-            // echo "Erreur : ".$e->getMessage();
-        }
+            } catch (PDOException $e) {
+                // echo "Erreur : ".$e->getMessage();
+            }
 
-    }*/
+        }*/
 
     static public function checkUser($login)
     {
@@ -199,13 +206,14 @@ class User {
             $userCheck = $query->fetch(PDO::FETCH_ASSOC);
 
         } catch (PDOException $e) {
-/*            $msg = "Erreur : ".$e->getMessage();*/
+            /*            $msg = "Erreur : ".$e->getMessage();*/
         }
         return $userCheck;
 
     }
 
-    static public function sms($user_id){
+    static public function sms($user_id)
+    {
 
         $code = random_int(1000, 10000);
 
@@ -221,7 +229,8 @@ class User {
 
     }
 
-    static public function checkSmsCode($user_id, $input){
+    static public function checkSmsCode($user_id, $input)
+    {
         $smsCheck = false;
 
         try {
@@ -251,7 +260,8 @@ class User {
 
     }
 
-    static public function request($user_id){
+    static public function request($user_id)
+    {
 
         $hash = random_hash();
 
@@ -269,7 +279,8 @@ class User {
 
     }
 
-    static public function checkRequest($hash){
+    static public function checkRequest($hash)
+    {
         $requestCheck = false;
 
         try {
@@ -289,7 +300,7 @@ class User {
             $query = $GLOBALS['db']->prepare('UPDATE `request` SET state=:state WHERE user_id=:user_id');
             $query->bindValue(':state', 1);
             $query->bindValue(':user_id', $user_id);
-/*            $query->bindValue(':hash', $hash);*/
+            /*            $query->bindValue(':hash', $hash);*/
             $query->execute();
             $GLOBALS['db']->commit();
 
@@ -298,7 +309,6 @@ class User {
         }
 
     }
-
 
 
 }

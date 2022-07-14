@@ -13,7 +13,7 @@ class Log
     public function __construct($user_id)
     {
         $this->user_id = $user_id;
-/*        $this->date = $date;*/
+        /*        $this->date = $date;*/
         error_log('ObjectLog');
     }
 
@@ -47,7 +47,7 @@ class Log
         $LogCheck = false;
         try {
 
-/*            $GLOBALS['db']->beginTransaction();*/
+            /*            $GLOBALS['db']->beginTransaction();*/
             $query = $GLOBALS['db']->prepare('SELECT * FROM `log` WHERE user_id=?');
             $query->execute([$user_id]);
             $LogCheck = $query->rowCount();
@@ -77,19 +77,23 @@ class Log
 
         }*/
 
-    public function getUser_id(){
+    public function getUser_id()
+    {
         return $this->user_id;
     }
 
-    public function setUser_id($user_id){
+    public function setUser_id($user_id)
+    {
         $this->user_id = $user_id;
     }
 
-    public function getDate(){
+    public function getDate()
+    {
         return $this->date;
     }
 
-    public function setDate($date){
+    public function setDate($date)
+    {
         $this->date = $date;
     }
 
