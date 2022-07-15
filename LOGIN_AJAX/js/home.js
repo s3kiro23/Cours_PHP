@@ -10,9 +10,34 @@ function load() {
     listCommands(1);
     $("#logout").on('click', logout);
     $("#to_profil").on('click', toProfil);
+    $("#to_delivery").on('click', toDelivery);
     $('.showInfo').on('click', showInfo);
 
 }
+
+let toDelivery = function () {
+
+    console.log('delivery');
+    $.ajax({
+
+        url: 'Controller/commandController.php',
+        dataType: 'JSON',
+        type: 'POST',
+        data: {
+            request: 'to_delivery',
+        },
+        success: function (response) {
+            console.log('successDeliver');
+            window.location.replace('livraison.php')
+
+        },
+        error: function () {
+            console.log('errorDeliver');
+        }
+    });
+
+}
+
 
 /*Opération sur les commandes*/
 
@@ -35,6 +60,8 @@ let showInfo = function (id) {
             $('#modal-cmdID').html(response['cmdID'])
             $('#modal-cmdTitle').html(response['title'])
             $('#modal-cmdLabel').html(response['label'])
+            $('#modal-cmdType').html(response['type'])
+            $('#modal-cmdPayment').html(response['allPayment'])
             $('#modal-cmdDate').html(response['date'])
             $('#modal-cmdClient').html(response['client'])
 
@@ -48,6 +75,17 @@ let showInfo = function (id) {
 let newCommand = function () {
 
     console.log('newcmd');
+
+    var checkboxes_value = [];
+
+    $('.checkbox').each(function () {
+        if ($(this).is(':checked')) {
+            checkboxes_value.push($(this).val());
+        }
+    })
+
+    console.log(checkboxes_value);
+
     $.ajax({
 
         url: 'Controller/commandController.php',
@@ -57,22 +95,41 @@ let newCommand = function () {
             request: 'newCommand',
             title: $('#titre').val(),
             label: $('#label').val(),
+            payment: JSON.stringify(checkboxes_value),
+            type: $('#type-select').val(),
             login: $(".user_login").html()
+
         },
         success: function (response) {
 
-            iziToast.success({
+            if (response['status'] === 0) {
 
-                timeout: 2000,
-                progressBar: true,
-                message: response['msg'],
-                position: 'topRight',
+                iziToast.error({
 
-            });
+                    timeout: 2000,
+                    progressBar: true,
+                    message: response['msg'],
+                    position: 'topRight',
+
+                });
+
+            } else {
+
+                iziToast.success({
+
+                    timeout: 2000,
+                    progressBar: true,
+                    message: response['msg'],
+                    position: 'topRight',
+
+                });
+
+            }
+
 
         },
         error: function () {
-
+            console.log('errorNewcmd');
         }
     });
 }

@@ -21,7 +21,7 @@
     <title>Connexion à votre compte</title>
 </head>
 
-<body class="bg-[url('img/logIn_pic.jpg')] bg-cover bg-no-repeat">
+<body class="bg-[url('img/logIn_pic.jpg')] bg-cover bg-no-repeat align-items-center">
 
 <div class="min-h-full flex mt-14 justify-center py-5 px-4 sm:px-6 lg:px-8">
     <div id="contentLogIn" class="bg-white rounded px-4 py-5 bg-opacity-50">

@@ -8,7 +8,8 @@ class Header extends HTMLElement {
         <header>
             <nav class="bg-indigo-600 px-12 py-3 flex text-lg">
                 <div class="flex flex-grow gap-5">
-                    <a id="to_home" class="text-white hover:text-green-500 cursor-pointer">Home</a>
+                    <a id="to_home" class="text-white hover:text-green-500 cursor-pointer">Commandes</a>
+                    <a id="to_delivery" class="text-white hover:text-green-500 cursor-pointer">Livraison</a>
                     <button id='logout' class="text-white hover:text-green-500">Logout</button>
                 </div>
                 <div

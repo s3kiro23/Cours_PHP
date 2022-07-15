@@ -11,6 +11,8 @@ class Command
     private $id;
     private $title;
     private $label;
+    private $type;
+    private $payment;
     private $date;
     private $user_id;
 
@@ -28,6 +30,8 @@ class Command
             $this->id = $cmd['id'];
             $this->title = $cmd['title'];
             $this->label = $cmd['label'];
+            $this->type = $cmd['type'];
+            $this->payment = $cmd['payment'];
             $this->date = $cmd['date'];
             $this->user_id = $cmd['user_id'];
 
@@ -55,6 +59,26 @@ class Command
         $this->label = $label;
     }
 
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    public function setPayment($payment)
+    {
+        $this->payment = $payment;
+    }
+
+    public function getPayment()
+    {
+        return $this->payment;
+    }
+
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
     public function getUser_id()
     {
         return $this->user_id;
@@ -65,17 +89,19 @@ class Command
         $this->user_id = $user_id;
     }
 
-    static public function createCmd($title, $label, $user_id)
+    static public function createCmd($title, $label, $type, $payment, $user_id)
     {
 
         try {
 
-            $query = $GLOBALS['db']->prepare('INSERT INTO command (`title`, `label`, `user_id`)
-                VALUES (:title, :label, :user_id)');
+            $query = $GLOBALS['db']->prepare('INSERT INTO command (`title`, `label`, `type`, `payment`, `user_id`)
+                VALUES (:title, :label, :type, :payment, :user_id)');
 
             $query->execute(array(
                 'title' => $title,
                 'label' => $label,
+                'type' => $type,
+                'payment' => $payment,
                 'user_id' => $user_id,
             ));
             // $dbco->exec($sql);
