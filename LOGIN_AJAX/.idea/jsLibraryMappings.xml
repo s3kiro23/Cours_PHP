@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="PROJECT" libraries="{@popperjs/core, @types/bootpag, @types/jquery, bootpag, bootstrap, izitoast, jquery-3.6.0, jquery-bootpag, jquery.bootpag, popper.js}" />
+    <file url="PROJECT" libraries="{9414e04596, @popperjs/core, @types/bootpag, @types/jquery, bootpag, bootstrap, izitoast, jquery-3.6.0, jquery-bootpag, jquery.bootpag, popper.js}" />
   </component>
 </project>

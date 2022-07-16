@@ -13,12 +13,25 @@ switch ($_POST['request']) {
 
     case 'newCommand':
 
-        $newCmd = Command::createCmd($_POST['title'], $_POST['label'], decrypt($_SESSION['id']));
-        $msg = "Nouvelle commande créée avec l'ID de commande n° " . $newCmd . " !";
-        error_log($_POST['login']);
-        write_logs(($_POST['login']), 5);
+        /*        error_log($_POST['payment']);*/
 
-        echo json_encode(array("msg" => $msg));
+        if (empty($_POST['type'])) {
+
+            $status = 0;
+            $msg = "Veuillez sélectioner un type de commande!";
+
+        } else {
+
+            $newCmd = Command::createCmd($_POST['title'], $_POST['label'], $_POST['type'], $_POST['payment'], decrypt($_SESSION['id']));
+            $status = 1;
+            $msg = "Nouvelle commande créée avec l'ID de commande n° " . $newCmd . " !";
+
+            error_log($_POST['login']);
+            write_logs(($_POST['login']), 5);
+
+        }
+
+        echo json_encode(array("msg" => $msg, "status" => $status));
 
         break;
 
@@ -28,15 +41,15 @@ switch ($_POST['request']) {
         $html = "";
         $paginationHTML = "";
         $currentPage = $_POST['page'];
-        error_log("Page " . $_POST['page']);
+        /*        error_log("Page " . $_POST['page']);*/
         $off7 = ($currentPage - 1) * 10;
-        error_log('Calcul off7 = ' . $off7);
+        /*        error_log('Calcul off7 = ' . $off7);*/
         $cmdPage = Command::cmdPerPages($off7);
         $allCmd = Command::checkAllCmd();
-        /*      error_log(json_encode($cmdPage));
-                error_log(json_encode($allCmd));*/
+        /*              error_log(json_encode($cmdPage));*/
+        /*                error_log(json_encode($allCmd));*/
         $totalPages = ceil($allCmd / 10);
-        error_log("Total pages = " . $totalPages);
+        /*        error_log("Total pages = " . $totalPages);*/
 
         if (is_array($cmdPage) || is_object($cmdPage)) {
             foreach ($cmdPage as $cmd) {
@@ -50,7 +63,7 @@ switch ($_POST['request']) {
 
         for ($i = 1; $i <= $totalPages; $i++) {
 
-            $paginationHTML .= HTML::pages($i, $i);
+            $paginationHTML .= HTML::cmdPages($i, $i);
 
         }
 
@@ -66,10 +79,31 @@ switch ($_POST['request']) {
         $cmdID = $currentCmd['id'];
         $title = $currentCmd['title'];
         $label = $currentCmd['label'];
+        $type = $currentCmd['type'];
+
+        $checkPayment = json_decode($currentCmd['payment'], true);
+        $allPayment = "";
+
+        if (is_array($checkPayment) || is_object($checkPayment)) {
+            foreach ($checkPayment as $payment) {
+                $allPayment .= $payment . " ";
+            }
+        } else {
+            $msg = "Erreur lors de la récupération de la liste des commandes";
+        }
+
         $date = $currentCmd['date'];
         $client = $user->getLogin();
 
-        echo json_encode(array("cmdID" => $cmdID, "title" => $title, "label" => $label, "date" => $date, "client" => $client));
+        echo json_encode(array("cmdID" => $cmdID, "title" => $title, "label" => $label, "type" => $type, "allPayment" => $allPayment, "date" => $date, "client" => $client));
+
+        break;
+
+    case 'to_delivery':
+
+        $msg = "Redirection vers la page de Livraison!";
+
+        echo json_encode(array("msg" => $msg));
 
         break;
 

@@ -4,7 +4,8 @@
 class HTML
 {
 
-	public static function newPwd(){
+    public static function newPwd()
+    {
 
         return "
             <div>
@@ -69,10 +70,11 @@ class HTML
                 </div>
             </form>
             ";
-	}
+    }
 
 
-	public static function secondAuth(){
+    public static function secondAuth()
+    {
 
         return "
             <div>
@@ -128,9 +130,10 @@ class HTML
             </div>
         </form>
         ";
-	}
+    }
 
-    public static function toRequestMail(){
+    public static function toRequestMail()
+    {
 
         return "
             <div>
@@ -186,7 +189,8 @@ class HTML
             ";
     }
 
-    public static function genToken(){
+    public static function genToken()
+    {
 
         return "
             <div>
@@ -211,16 +215,17 @@ class HTML
         ";
     }
 
-    public static function displayAllCmd($cmd){
+    public static function displayAllCmd($cmd)
+    {
 
-		return "
+        return "
             <div class='flex mb-2 py-3 justify-between items-center w-full border-2 border-gray-100 rounded'>
                 <span class='pl-4 font-semibold text-gray-700 white:text-dark'>N° de commande : </span>
-                <span id='cmdID'>".$cmd['id']."</span>
+                <span id='cmdID'>" . $cmd['id'] . "</span>
                 <span class='pl-4 font-semibold text-gray-700 white:text-dark'>Date de commande : </span>
-                <span id='cmdDate'>".$cmd['date']."</span>
+                <span id='cmdDate'>" . $cmd['date'] . "</span>
                 <div class='flex justify-between items-center'>
-                    <button id='showInfo' onclick='showInfo(\"".$cmd['id']."\")' class='col-span-3 px-4 font-medium text-indigo-600 hover:text-indigo-500'
+                    <button id='showInfo' onclick='showInfo(\"" . $cmd['id'] . "\")' class='col-span-3 px-4 font-medium text-indigo-600 hover:text-indigo-500'
                             type='button'>
                         <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-search' viewBox='0 0 16 16'>
                             <path d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'/>
@@ -229,14 +234,60 @@ class HTML
                 </div>
             </div>
 		";
-	}
+    }
 
-    public static function pages($page, $numb){
+    public static function cmdPages($page, $numb)
+    {
 
         return "
 
             <li class='page-item' id='page$numb'><a class='page-link' onclick='listCommands($page);'>$numb</a></li>
             
+		";
+    }
+
+    public static function rdvPages($page, $numb)
+    {
+        return "
+            
+            <li class='page-item' id='page$numb'><a class='page-link' onclick='rdvCases($page);'>$numb</a></li>
+            
+		";
+    }
+
+    public static function dayCases()
+    {
+
+        return "
+
+            <div id='flip' class='flex rounded-t bg-indigo-100'>Jour - mois - année</div>
+            <div id='panel' class='bg-indigo-100'>
+                <button id='slot1' class='slot rounded bg-white border-1' onclick='slotTimeClick();'>8:00</button>
+                <button id='slot2' class='slot rounded bg-white border-1' onclick='slotTimeClick();'>8:20</button>
+                <button id='slot3' class='slot rounded bg-white border-1' onclick='slotTimeClick();'>8:40</button>
+                <button id='slot4' class='slot rounded bg-white border-1' onclick='slotTimeClick();'>9:00</button>
+            </div>
+            
+		";
+    }
+
+    public static function displayAllRDV($rdv)
+    {
+        return "
+            <div class='flex mb-2 py-3 justify-between items-center w-full border-2 border-gray-100 rounded'>
+                <span class='pl-4 font-semibold text-gray-700 white:text-dark'>N° de rdv : </span>
+                <span id='rdvID'>" . $rdv['id'] . "</span>
+                <span class='pl-4 font-semibold text-gray-700 white:text-dark'>Date de rdv : </span>
+                <span id='rdvDate'>" . $rdv['booked_date'] . "</span>
+                <div class='flex justify-between items-center'>
+                    <button id='showInfo' onclick='showInfo(\"" . $rdv['id'] . "\")' class='col-span-3 px-4 font-medium text-indigo-600 hover:text-indigo-500'
+                            type='button'>
+                        <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-search' viewBox='0 0 16 16'>
+                            <path d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
 		";
     }
 

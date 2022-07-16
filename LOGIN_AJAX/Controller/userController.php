@@ -13,7 +13,7 @@ switch ($_POST['request']) {
 
     case 'to_home' :
 
-        $msg = "Redirection vers la page Home!";
+        $msg = "Redirection vers la page de Commandes!";
 
         echo json_encode(array("msg" => $msg));
 

@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "bootpag": "^1.0.7"
+    "bootpag": "^1.0.7",
+    "tw-elements": "^1.0.0-alpha12"
   },
   "devDependencies": {
     "tailwindcss": "^3.1.6"
