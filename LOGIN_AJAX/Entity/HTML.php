@@ -255,21 +255,33 @@ class HTML
 		";
     }
 
-    public static function dayCases()
+    public static function dayCases($date)
     {
+/*        <button id='slot1' class='slot rounded bg-white border-1' onclick='slotTimeClick();'>8:00</button>
+                <button id='slot2' class='slot rounded bg-white border-1' onclick='slotTimeClick();'>8:20</button>
+                <button id='slot3' class='slot rounded bg-white border-1' onclick='slotTimeClick();'>8:40</button>
+                <button id='slot4' class='slot rounded bg-white border-1' onclick='slotTimeClick();'>9:00</button>*/
 
         return "
 
-            <div id='flip' class='flex rounded-t bg-indigo-100'>Jour - mois - année</div>
+            <div id='flip' class='flex rounded-t bg-indigo-100'>$date</div>
             <div id='panel' class='bg-indigo-100'>
-                <button id='slot1' class='slot rounded bg-white border-1' onclick='slotTimeClick();'>8:00</button>
-                <button id='slot2' class='slot rounded bg-white border-1' onclick='slotTimeClick();'>8:20</button>
-                <button id='slot3' class='slot rounded bg-white border-1' onclick='slotTimeClick();'>8:40</button>
-                <button id='slot4' class='slot rounded bg-white border-1' onclick='slotTimeClick();'>9:00</button>
+            
             </div>
             
 		";
     }
+
+    public static function timeSlot($weekID, $slotInterval)
+    {
+
+        return "
+
+                <button id='$weekID' class='slot rounded bg-white border-1' onclick='slotTimeClick();'>$slotInterval</button>
+            
+		";
+    }
+
 
     public static function displayAllRDV($rdv)
     {

@@ -75,7 +75,7 @@ let connect = function () {
                 console.log('Success');
 
                 setTimeout(() => {
-                    window.location.replace("home.php");
+                    window.location.replace("commands.php");
                 }, 2300);
 
             }
@@ -110,7 +110,7 @@ let newPwd = function () {
                 });
                 console.log('Success');
                 setTimeout(() => {
-                    window.location.replace('home.php')
+                    window.location.replace('commands.php')
                 }, 1500);
             } else {
                 Swal.fire({
@@ -259,7 +259,7 @@ let smsVerif = function () {
                 });
                 console.log('Success');
                 setTimeout(() => {
-                    window.location.replace('home.php')
+                    window.location.replace('commands.php')
                 }, 1500);
             } else {
                 Swal.fire({
@@ -316,7 +316,7 @@ let signIn = function () {
             })
 
             setTimeout(() => {
-                window.location.replace('inscription.php')
+                window.location.replace('signIn.php')
             }, 1500);
 
         },

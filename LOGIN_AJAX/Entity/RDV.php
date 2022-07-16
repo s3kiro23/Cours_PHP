@@ -58,6 +58,32 @@ class RDV
 
     }
 
+    static public function createSlotTime($hour)
+    {
+
+        try {
+
+            $GLOBALS['db']->beginTransaction();
+            $query = $GLOBALS['db']->prepare('INSERT INTO time_slot (`hour`)
+                VALUES (:hour)');
+
+            $query->execute(array(
+                'hour' => $hour,
+            ));
+            // $dbco->exec($sql);
+
+            $GLOBALS['db']->commit();
+
+        } catch (PDOException $e) {
+            error_log("Erreur : " . $e->getMessage());
+        }
+
+        error_log($GLOBALS['db']->lastInsertId());
+        return $GLOBALS['db']->lastInsertId();
+
+    }
+
+
     static public function rdvPerPages($off7)
     {
         $rdvPerPages = false;
@@ -108,6 +134,7 @@ class RDV
     {
 
         $timeSlotCheck = false;
+
         try {
 
             $query = $GLOBALS['db']->prepare('SELECT * FROM `time_slot` WHERE id=?');

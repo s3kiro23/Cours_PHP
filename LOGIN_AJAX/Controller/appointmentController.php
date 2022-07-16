@@ -12,7 +12,7 @@ $GLOBALS['db'] = $db->checkDb();
 
 switch ($_POST['request']) {
 
-    case 'dateRDV':
+/*    case 'dateRDV':
 
         setlocale(LC_TIME, "fr_FR", "French");
         $dateToConvert = date('Y-m-d'); // Date du jour
@@ -21,13 +21,37 @@ switch ($_POST['request']) {
 
         echo json_encode(array("date" => $dateF));
 
-        break;
+        break;*/
 
     case 'dayCases':
 
-        $html = HTML::dayCases();
+        setlocale(LC_TIME, "fr_FR", "French");
+        $currentDate = date('Y-m-d'); // Date du jour
+        $week = [0,1,2,3,4,5,6,7]; // lien BDD champ weekday compte le nombre de jours?
+        $weekday = 0;
+        $html = "";
+        $htmlSlot = "";
+        $timeSlotCheck = RDV::checkCurrentTimeSlot(2);
+        $allTimeSlot = json_decode($timeSlotCheck['hour'], true);
+        error_log($allTimeSlot[0]);
+        $slotInterval = 0;
 
-        echo json_encode(array("html" => $html));
+        foreach ($week as $day) {
+
+            $updatedDate = strftime("%A %d %B %G", strtotime($currentDate.'+'.$weekday.' day'));
+            $html .= HTML::dayCases($updatedDate);
+            $weekday++;
+
+
+        }
+        foreach ($allTimeSlot as $timeSlot){
+
+            $htmlSlot .= HTML::timeSlot($timeSlotCheck['id'], $allTimeSlot[$slotInterval]);
+            $slotInterval++;
+
+        }
+
+        echo json_encode(array("html" => $html, "htmlSlot" => $htmlSlot));
 
         break;
 
@@ -79,13 +103,13 @@ switch ($_POST['request']) {
         $html = "";
         $paginationHTML = "";
         $currentPage = $_POST['page'];
-                error_log("Page " . $_POST['page']);
+        error_log("Page " . $_POST['page']);
         $off7 = ($currentPage - 1) * 10;
-                error_log('Calcul off7 = ' . $off7);
+        error_log('Calcul off7 = ' . $off7);
         $rdvPage = RDV::rdvPerPages($off7);
         $allRdv = RDV::checkAllRdv();
-                      error_log(json_encode($rdvPage));
-                        error_log(json_encode($allRdv));
+        error_log(json_encode($rdvPage));
+        error_log(json_encode($allRdv));
         $totalPages = ceil($allRdv / 10);
         /*        error_log("Total pages = " . $totalPages);*/
 
@@ -119,7 +143,7 @@ switch ($_POST['request']) {
         $timeSlotID = $currentRdv['time_slot_id'];
         $bookedDate = $currentRdv['booked_date'];
 
-/*        $checkPayment = json_decode($currentRdv['payment'], true);*/
+        /*        $checkPayment = json_decode($currentRdv['payment'], true);*/
 
         echo json_encode(array("rdvID" => $rdvID, "expertID" => $expertID, "timeslotID" => $timeSlotID, "bookedDate" => $bookedDate, "userID" => $userID, "userLogin" => $user->getLogin()));
 

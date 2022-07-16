@@ -18,7 +18,7 @@ switch ($_POST['request']) {
         if (empty($_POST['type'])) {
 
             $status = 0;
-            $msg = "Veuillez sélectioner un type de commande!";
+            $msg = "Veuillez sélectionner un type de commande!";
 
         } else {
 

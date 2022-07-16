@@ -69,7 +69,7 @@ let dayCases = function () {
         success: function (response) {
             console.log('SuccesssdayCases');
             $("#rdvContainer").html(response['html']);
-
+            $("#panel").html(response['htmlSlot'])
         },
         error: function () {
             console.log('errordayCases');
