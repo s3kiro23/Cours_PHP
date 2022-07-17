@@ -42,7 +42,7 @@
     <navbar-component></navbar-component>
 </header>
 
-<body >
+<body>
 
 <div class="container mt-5">
     <div class="row">
@@ -63,24 +63,59 @@
             </div>
             <nav class="mt-3" aria-label="Page navigation">
                 <ul class="pagination justify-content-center" id="pages">
-                    Pages
+
                 </ul>
             </nav>
 
         </div>
         <div id="rdvContainer" class="col-6 mt-10">
+            <div id="panel" class="bg-indigo-100">
 
-            <!--    <div id="flip" class="flex rounded-t bg-indigo-100">Jour - mois - année</div>
-                <div id="panel" class="bg-indigo-100">
-                    <button id="slot1" class="slot rounded bg-white border-1" value="">8:00</button>
-                    <button id="slot2" class="slot rounded bg-white border-1" value="">8:20</button>
-                    <button id="slot3" class="slot rounded bg-white border-1" value="">8:40</button>
-                    <button id="slot4" class="slot rounded bg-white border-1" value="">9:00</button>
-                </div>-->
+                <!--Contenu des créneaux ici, généré avec class HTML -->
 
+            </div>
         </div>
     </div>
 </div>
+
+<?php
+
+
+setlocale(LC_TIME, "fr_FR", "French");
+$currentDate = date('Y-m-d H:i'); // Date du jour
+$weekday = 0;
+$weekday1 = 1;
+/*$updateDate = date("H:i", strtotime($currentDate.'+'.$weekday1.' day')); // Date du jour +1*/
+/*$updateDate = mktime(8, 0, 0, date("m"), date("d") + $weekday1, date("Y")); // Date du jour +1*/
+$limit = 31;
+$interval = 0;
+$slotTime = "";
+$updateDate = "";
+
+while ($limit != 0) {
+
+    if ($slotTime == 1657965600) {
+        $slotTime .= 'nope';
+    } else {
+
+        $slotTime .= date("H:i", mktime(8, $interval, 0)) . "<br>";
+        $slotTime .= strtotime(date("H:i", mktime(8, $interval, 0))) . "<br>";
+
+        $updateDate .= date("H:i", mktime(8, $interval, 0, date("m"), date("d") + 1, date("Y"))) . "<br>";
+        $updateDate .= mktime(8, $interval, 0, date("m"), date("d") + 1, date("Y")) . "<br>";
+
+    }
+    $limit--;
+    $interval += 20;
+
+}
+echo "Date courante = " . strftime("%A %d %B %G", strtotime($currentDate . '+' . $weekday . ' day')) . "<br><br>";
+echo $slotTime . "<br><br>";
+
+echo "Date courante +1 = " . strftime("%A %d %B %G", strtotime($currentDate . '+' . $weekday1 . ' day')) . "<br><br>";
+echo $updateDate;
+
+?>
 
 <!-- Modal rdv -->
 <div class="modal fade" id="modalRdv" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
@@ -132,7 +167,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Créneau horaire sélectionné : </h5>
-                <span id="modal-cmdID" class="pl-4">Slot ID</span>
+                <span id="modal-slotID" class="pl-4">Slot ID</span>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

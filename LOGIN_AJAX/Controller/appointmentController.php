@@ -12,29 +12,24 @@ $GLOBALS['db'] = $db->checkDb();
 
 switch ($_POST['request']) {
 
-/*    case 'dateRDV':
-
-        setlocale(LC_TIME, "fr_FR", "French");
-        $dateToConvert = date('Y-m-d'); // Date du jour
-        $dateF = strftime("%A %d %B %G", strtotime($dateToConvert));
-        error_log($dateF);
-
-        echo json_encode(array("date" => $dateF));
-
-        break;*/
-
     case 'dayCases':
 
         setlocale(LC_TIME, "fr_FR", "French");
         $currentDate = date('Y-m-d'); // Date du jour
+        $nbWeek = date('W',strtotime($currentDate));
+        error_log($nbWeek);
         $week = [0,1,2,3,4,5,6,7]; // lien BDD champ weekday compte le nombre de jours?
         $weekday = 0;
         $html = "";
         $htmlSlot = "";
-        $timeSlotCheck = RDV::checkCurrentTimeSlot(2);
-        $allTimeSlot = json_decode($timeSlotCheck['hour'], true);
-        error_log($allTimeSlot[0]);
+/*        $timeSlotCheck = RDV::checkCurrentTimeSlot(2);*/
+/*        $allTimeSlot = json_decode($timeSlotCheck['hour'], true);*/
+/*        error_log($allTimeSlot[0]);*/
         $slotInterval = 0;
+        $limit = 31;
+        $interval = 0;
+        $slotTime = "";
+        $updateDate = "";
 
         foreach ($week as $day) {
 
@@ -44,12 +39,32 @@ switch ($_POST['request']) {
 
 
         }
-        foreach ($allTimeSlot as $timeSlot){
+
+        while ($limit != 0) {
+
+            $slotTime = date("H:i", mktime(8, $interval, 0));
+            $timeStampID = strtotime(date("H:i", mktime(8, $interval, 0)));
+            /*            $updateDate = date("H:i", mktime(8, $interval, 0, date("m"), date("d") + $weekday, date("Y"))) . "<br>";*/
+
+            if ($limit%4 == 0){
+
+                $htmlSlot .= HTML::timeSlot($timeStampID, $slotTime).'<br>';
+
+            } else {
+
+                $htmlSlot .= HTML::timeSlot($timeStampID, $slotTime);
+
+            }
+            $limit--;
+            $interval += 20;
+
+        }
+/*        foreach ($allTimeSlot as $timeSlot){
 
             $htmlSlot .= HTML::timeSlot($timeSlotCheck['id'], $allTimeSlot[$slotInterval]);
             $slotInterval++;
 
-        }
+        }*/
 
         echo json_encode(array("html" => $html, "htmlSlot" => $htmlSlot));
 
@@ -59,10 +74,10 @@ switch ($_POST['request']) {
 
         /*        $currentTimeSlot = RDV::checkCurrentTimeSlot($_POST['timeSlotID']);*/
         $user = new User(decrypt($_SESSION['id']));
-
-
         /*        $timeSlotID = $currentTimeSlot['id'];*/
         $user = $user->getLogin();
+
+
 
         echo json_encode(array("user" => $user));
 

@@ -272,12 +272,11 @@ class HTML
 		";
     }
 
-    public static function timeSlot($weekID, $slotInterval)
+    public static function timeSlot($timeStampID, $slotInterval)
     {
-
         return "
 
-                <button id='$weekID' class='slot rounded bg-white border-1' onclick='slotTimeClick();'>$slotInterval</button>
+                <button id='$timeStampID' class='px-2 slot rounded bg-white border-1' onclick='slotTimeClick();'>$slotInterval</button>
             
 		";
     }

@@ -9,18 +9,18 @@ $idS = [$(".b").map(function () {
 }).get()];
 console.log($idS);
 
+var id = $(this).attr('id');
+console.log(id);
+
 let load = function () {
     login();
     dayCases();
-    dateRDV();
     rdvCases(1);
-    $("#flip").on('click', toggleSlide);
+    $("#rdvContainer").on('click', toggleSlide);
     $("#logout").on('click', logout);
     $("#to_profil").on('click', toProfil);
     $("#to_home").on('click', toHome);
-    /*
-        $(".slot").on('click', slotTimeClick);
-    */
+
 }
 
 
@@ -31,28 +31,6 @@ let toggleSlide = function () {
     /*
         $("#d").slideToggle();
     */
-
-}
-
-let dateRDV = function () {
-
-    console.log('dateRDV');
-    $.ajax({
-
-        url: 'Controller/appointmentController.php',
-        dataType: 'JSON',
-        type: 'POST',
-        data: {
-            request: 'dateRDV',
-        },
-        success: function (response) {
-            console.log('SuccessslotdateRDV');
-            $("#flip").html(response['date'])
-        },
-        error: function () {
-            console.log('errordateRDV');
-        }
-    });
 
 }
 
@@ -154,6 +132,9 @@ let showInfo = function (id) {
 
 let slotTimeClick = function () {
 
+    var id = $(this).attr('id');
+    console.log(id);
+
     console.log('slotTime');
     $.ajax({
 
@@ -167,6 +148,7 @@ let slotTimeClick = function () {
             console.log('SuccessslotTimeClick');
 
             $('#modalSlot').modal('show');
+            $('.modal-slotID').html(id);
 
         },
         error: function () {
