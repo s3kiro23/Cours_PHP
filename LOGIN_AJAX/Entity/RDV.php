@@ -130,16 +130,16 @@ class RDV
     }
 
 
-    static public function checkCurrentTimeSlot($id)
+    static public function checkTimeSlotReserved()
     {
 
         $timeSlotCheck = false;
 
         try {
 
-            $query = $GLOBALS['db']->prepare('SELECT * FROM `time_slot` WHERE id=?');
-            $query->execute([($id)]);
-            $timeSlotCheck = $query->fetch(PDO::FETCH_ASSOC);
+            $query = $GLOBALS['db']->prepare('SELECT time_slot_id FROM `rdv`');
+            $query->execute();
+            $timeSlotCheck = $query->fetchAll(PDO::FETCH_NUM);
 
         } catch (PDOException $e) {
             error_log("Erreur : " . $e->getMessage());

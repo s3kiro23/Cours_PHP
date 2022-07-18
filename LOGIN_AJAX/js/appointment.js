@@ -4,13 +4,14 @@ $(function () {
 
 });
 
-$idS = [$(".b").map(function () {
+/*$idS = [$(".b").map(function () {
     return this.id;
 }).get()];
-console.log($idS);
+console.log($idS);*/
 
-var id = $(this).attr('id');
-console.log(id);
+
+
+
 
 let load = function () {
     login();
@@ -130,10 +131,10 @@ let showInfo = function (id) {
 }
 
 
-let slotTimeClick = function () {
+let slotTimeClick = function (thisId) {
 
-    var id = $(this).attr('id');
-    console.log(id);
+/*    var id = $(this).attr('id');
+    console.log(id);*/
 
     console.log('slotTime');
     $.ajax({
@@ -143,12 +144,14 @@ let slotTimeClick = function () {
         type: 'POST',
         data: {
             request: 'slotTimeClick',
+            slotID: thisId
         },
         success: function (response) {
             console.log('SuccessslotTimeClick');
 
             $('#modalSlot').modal('show');
-            $('.modal-slotID').html(id);
+            $('#modal-slotTime').html(response['slotTime']);
+            $('#modal-dateSelect').html(response['dateSelect']);
 
         },
         error: function () {
@@ -178,7 +181,8 @@ let newAppointment = function () {
                 data: {
                     request: 'newAppointment',
                     expertID: $('#expertID').val(),
-                    timeslotID: $('#timeslotID').val(),
+                    timeslotID: $('#modal-slotTime').html(),
+
                 },
                 success: function (response) {
                     console.log('SuccessssnewAppointment');
@@ -194,9 +198,11 @@ let newAppointment = function () {
 
                         });
 
+/*
                         setTimeout(() => {
                             window.location.replace('appointment.php')
                         }, 2300);
+*/
 
                     } else {
 

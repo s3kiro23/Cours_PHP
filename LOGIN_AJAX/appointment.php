@@ -55,6 +55,7 @@
     </div>
     <div class="row">
         <div class="col-6 col-md-6 max-w-4xl px-6 py-4 mx-auto">
+            <button class="btn btn-secondary" onclick="rdvCases(1);">Actualiser</button>
             <div id="show_paginator" class="flex justify-content-center mb-3"></div>
             <div class="rounded-lg" id="rdvCases">
 
@@ -66,14 +67,11 @@
 
                 </ul>
             </nav>
-
         </div>
         <div id="rdvContainer" class="col-6 mt-10">
-            <div id="panel" class="bg-indigo-100">
 
-                <!--Contenu des créneaux ici, généré avec class HTML -->
+            <!--Contenu des créneaux ici, généré avec class HTML -->
 
-            </div>
         </div>
     </div>
 </div>
@@ -167,7 +165,9 @@ echo $updateDate;
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Créneau horaire sélectionné : </h5>
-                <span id="modal-slotID" class="pl-4">Slot ID</span>
+                <span id="modal-dateSelect" class="px-2">Date sélectionnée</span>
+                <span>à</span>
+                <span id="modal-slotTime" class="px-2"></span>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -187,14 +187,14 @@ echo $updateDate;
                                    required
                                    placeholder="Expert ID"
                             />
-                            <label for="timeslotID" class="sr-only">Time Slot ID</label>
-                            <input id="timeslotID"
-                                   name="timeslotID"
-                                   class="appearance-none rounded relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                   type="text"
-                                   required
-                                   placeholder="Time Slot ID"
-                            />
+                            <!--                         <label for="timeslotID" class="sr-only">Time Slot ID</label>
+                                                     <input id="timeslotID"
+                                                            name="timeslotID"
+                                                            class="appearance-none rounded relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                                            type="text"
+                                                            required
+                                                            placeholder="Time Slot ID"
+                                                     />-->
                         </div>
                     </div>
                     <div class="flex flex-column justify-content-center">
