@@ -139,7 +139,7 @@ class RDV
 
             $query = $GLOBALS['db']->prepare('SELECT time_slot_id FROM `rdv`');
             $query->execute();
-            $timeSlotCheck = $query->fetchAll(PDO::FETCH_NUM);
+            $timeSlotCheck = $query->fetchAll(PDO::FETCH_ASSOC);
 
         } catch (PDOException $e) {
             error_log("Erreur : " . $e->getMessage());

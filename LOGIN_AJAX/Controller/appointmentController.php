@@ -17,65 +17,65 @@ switch ($_POST['request']) {
         setlocale(LC_TIME, "fr_FR", "French");
         $currentDate = date('Y-m-d'); // Date du jour
         $nbWeek = date('W', strtotime($currentDate));
-        error_log($nbWeek);
+        /*        error_log($nbWeek);*/
         $week = [0, 1, 2, 3, 4, 5, 6, 7]; // lien BDD champ weekday compte le nombre de jours?
         $weekday = 0;
         $html = "";
         $htmlSlot = "";
         $timeSlotCheck = RDV::checkTimeSlotReserved();
+
         $tab_reserved = [];
         /*        $timeSlotCheck = ['320'];*/
-               error_log(json_encode($timeSlotCheck[0]));
-        $tab_reserved[] = $timeSlotCheck[0];
-        error_log(json_encode($tab_reserved));
-
-        foreach ($tab_reserved as $reserved)
-
-            while (in_array(json_encode($timeSlotCheck), (array)$tab_reserved)) {
-
-                error_log('Trouvé!');
-
-            }
+        /*        error_log($timeSlotCheck[0]['time_slot_id']);*/
+        /*        $tab_reserved[] = $timeSlotCheck;
+                error_log(json_encode($tab_reserved));*/
+/*        error_log(json_encode($timeSlotCheck[0]['time_slot_id']));*/
 
 
         /*        for ($i = 0; $i <= $timeSlotCheck; $i++){
 
-                    $tab_reserved[] = $timeSlotCheck[$i];
+                    $tab_reserved[] = $timeSlotCheck;
 
                 }
                 error_log(json_encode($tab_reserved));*/
-/*                error_log(json_encode($timeSlotCheck['time_slot_id']));*/
+        /*                error_log(json_encode($timeSlotCheck['time_slot_id']));*/
 
         /*        error_log(json_encode($tab_slotTime));*/
         /*        $allTimeSlot = json_decode($timeSlotCheck['hour'], true);*/
         /*        error_log($allTimeSlot[0]);*/
         $slotInterval = 0;
-        $limit = 31;
         $interval = 0;
         $intervalTest = 0;
         $slotTime = "";
         $updateDate = "";
-        $tab_slotTime = [];
 
-        for ($i = 0; $i <= $limit; $i++) {
+        for ($e = 0; $e <= 240; $e=$e+20) {
 
-            $timeStampIDTest = strtotime(date("H:i", mktime(8, $interval, 0)));
-            $tab_slotTime[] = $timeStampIDTest;
+            $timeSlotAM = strtotime(date("H:i", mktime(8, $e, 0)));
+            $tab_available[] = (int)$timeSlotAM;
 
-            $intervalTest += 20;
         }
-        error_log(json_encode($tab_slotTime));
 
+        for ($i = 0; $i <= 240; $i=$i+20){
 
-        /*        if (is_array($timeSlotCheck) || is_object($timeSlotCheck)) {
+            $timeSlotPM = strtotime(date("H:i", mktime(14, $i, 0)));
+            $tab_available[] = (int)$timeSlotPM;
 
-                    foreach ($timeSlotCheck as $tab) {*/
+        }
+        error_log(json_encode($tab_available));
+        error_log(count($tab_available));
 
+        for ($a = 0; $a <= count($timeSlotCheck) - 1; $a++) {
 
-        /*            }
-                }*/
+            $tab_reserved[] = (int)$timeSlotCheck[$a]['time_slot_id'];
+
+        }
+        error_log(json_encode($tab_reserved));
+
 
         foreach ($week as $day) {
+
+            //foreach day?
 
             $updatedDate = strftime("%A %d %B %G", strtotime($currentDate . '+' . $weekday . ' day'));
             $html .= HTML::dayCases($updatedDate);
@@ -83,32 +83,33 @@ switch ($_POST['request']) {
 
         }
 
-        while ($limit != 0) {
+        /*        $slotTime = date("H:i", mktime(8, $interval, 0));
+                $timeStampID = strtotime(date("H:i", mktime(8, $interval, 0)));*/
+        /*            error_log($timeStampID);*/
+        /*            $updateDate = date("H:i", mktime(8, $interval, 0, date("m"), date("d") + $weekday, date("Y"))) . "<br>";*/
 
-            $slotTime = date("H:i", mktime(8, $interval, 0));
-            $timeStampID = strtotime(date("H:i", mktime(8, $interval, 0)));
-            error_log($timeStampID);
-            /*            $updateDate = date("H:i", mktime(8, $interval, 0, date("m"), date("d") + $weekday, date("Y"))) . "<br>";*/
+/*        $slotTime = date("H:i", mktime(8, $interval, 0));
+        $timeStampID = strtotime(date("H:i", mktime(8, $interval, 0)));*/
 
-/*            if (in_array($tab_slotTime[], (array)$timeSlotCheck)) {
-
+        if (in_array("$tab_reserved[0]", (array)$tab_available)) {
+            foreach ($tab_reserved as $item) {
                 error_log('Trouvé!');
-
-            } else {*/
-
-                $htmlSlot .= HTML::timeSlot($timeStampID, $slotTime);
-
-            /*}*/
-            $limit--;
-            $interval += 20;
-
+                error_log($item);
+/*                unset($item->tab_available);*/
+                error_log(json_encode($tab_available));
+                $tab_available = array_diff($tab_available, array($item));
+/*                $htmlSlot .= HTML::timeSlotDisabled($item, date("H:i", $item));*/
+            }
         }
-        /*        foreach ($allTimeSlot as $timeSlot){
 
-                    $htmlSlot .= HTML::timeSlot($timeSlotCheck['id'], $allTimeSlot[$slotInterval]);
-                    $slotInterval++;
+        foreach ($tab_available as $item){
+            $tab_display[] = $item;
 
-                }*/
+            $htmlSlot .= HTML::timeSlot($item, date("H:i", $item));
+
+            $interval += 20;
+        }
+        error_log(json_encode($tab_display));
 
         echo json_encode(array("html" => $html, "htmlSlot" => $htmlSlot));
 

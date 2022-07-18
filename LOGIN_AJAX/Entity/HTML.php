@@ -257,10 +257,10 @@ class HTML
 
     public static function dayCases($date)
     {
-/*        <button id='slot1' class='slot rounded bg-white border-1' onclick='slotTimeClick();'>8:00</button>
-                <button id='slot2' class='slot rounded bg-white border-1' onclick='slotTimeClick();'>8:20</button>
-                <button id='slot3' class='slot rounded bg-white border-1' onclick='slotTimeClick();'>8:40</button>
-                <button id='slot4' class='slot rounded bg-white border-1' onclick='slotTimeClick();'>9:00</button>*/
+        /*        <button id='slot1' class='slot rounded bg-white border-1' onclick='slotTimeClick();'>8:00</button>
+                        <button id='slot2' class='slot rounded bg-white border-1' onclick='slotTimeClick();'>8:20</button>
+                        <button id='slot3' class='slot rounded bg-white border-1' onclick='slotTimeClick();'>8:40</button>
+                        <button id='slot4' class='slot rounded bg-white border-1' onclick='slotTimeClick();'>9:00</button>*/
 
         return "
 
@@ -276,6 +276,13 @@ class HTML
     {
         return "
             <button id='$timeStampID' class='px-2 slot rounded bg-white border-1' onclick='slotTimeClick(this.id);'>$slotInterval</button>                
+		";
+    }
+
+    public static function timeSlotDisabled($timeStampID, $slotInterval)
+    {
+        return "
+            <button id='$timeStampID' class='px-2 slot rounded bg-grey border-1' onclick='slotTimeClick(this.id);'>$slotInterval</button>                
 		";
     }
 
