@@ -17,7 +17,7 @@
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
     <title>Récupération du compte</title>
 </head>
 
@@ -88,7 +88,7 @@
     </div>
 </div>
 
-<script src="js/changePassword.js"></script>
+<script src="../public/js/changePassword.js"></script>
 
 </body>
 </html>

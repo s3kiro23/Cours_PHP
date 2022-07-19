@@ -20,7 +20,7 @@
     <title>Inscription</title>
 </head>
 
-<body class="bg-[url('img/signIn_pic.jpg')] bg-cover bg-no-repeat align-items-center">
+<body class="bg-[url('../assets/img/signIn_pic.jpg')] bg-cover bg-no-repeat align-items-center">
 
 <div class="min-h-full flex items-center justify-center pt-12 pb-4 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full bg-white bg-opacity-50 py-4 px-4 rounded">
@@ -155,7 +155,7 @@
     </a>
 </div>
 
-<script src="js/signIn.js"></script>
+<script src="../public/js/signIn.js"></script>
 
 </body>
 </html>

@@ -22,7 +22,7 @@ let toDelivery = function () {
     console.log('delivery');
     $.ajax({
 
-        url: 'Controller/commandController.php',
+        url: '../src/Controller/commandController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -48,7 +48,7 @@ let showInfo = function (id) {
     console.log(id);
     $.ajax({
 
-        url: 'Controller/commandController.php',
+        url: '../src/Controller/commandController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -90,7 +90,7 @@ let newCommand = function () {
 
     $.ajax({
 
-        url: 'Controller/commandController.php',
+        url: '../src/Controller/commandController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -140,7 +140,7 @@ function listCommands(page) {
 
     $.ajax({
 
-        url: 'Controller/commandController.php',
+        url: '../src/Controller/commandController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -186,7 +186,7 @@ let logout = function () {
     console.log(1);
     $.ajax({
 
-        url: 'Controller/userController.php',
+        url: '../src/Controller/userController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -220,7 +220,7 @@ function login() {
     // console.log(1);
     $.ajax({
 
-        url: 'Controller/userController.php',
+        url: '../src/Controller/userController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -240,7 +240,7 @@ function login() {
 let toProfil = function () {
     console.log("toprof");
     $.ajax({
-        url: 'Controller/userController.php',
+        url: '../src/Controller/userController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {

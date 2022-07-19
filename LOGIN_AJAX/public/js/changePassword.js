@@ -18,7 +18,7 @@ function changePassword() {
 
     console.log("changePasswordAjax");
     $.ajax({
-        url: 'Controller/recoveryController.php',
+        url: '../src/Controller/recoveryController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {

@@ -26,23 +26,23 @@ function write_logs($login, $state)
 
     if ($state == 1) {
 
-        file_put_contents("../Logs/login_logout.txt", "\n " . $dateJour . " " . $login . " s'est connecté!", FILE_APPEND);
+        file_put_contents("../../Logs/login_logout.txt", "\n " . $dateJour . " " . $login . " s'est connecté!", FILE_APPEND);
 
     } elseif ($state == 2) {
 
-        file_put_contents("../Logs/login_logout.txt", "\n " . $dateJour . " " . $login . " s'est déconnecté!", FILE_APPEND);
+        file_put_contents("../../Logs/login_logout.txt", "\n " . $dateJour . " " . $login . " s'est déconnecté!", FILE_APPEND);
 
     } elseif ($state == 3) {
 
-        file_put_contents("../Logs/recovery.txt", "\n " . $dateJour . " " . $login . " a récupéré son compte suite à une RAZ du pwd!", FILE_APPEND);
+        file_put_contents("../../Logs/recovery.txt", "\n " . $dateJour . " " . $login . " a récupéré son compte suite à une RAZ du pwd!", FILE_APPEND);
 
     } elseif ($state == 4) {
 
-        file_put_contents("../Logs/login_logout.txt", "\n " . $dateJour . " l'utilisateur avec l'ID " . $login . " a supprimé son compte!", FILE_APPEND);
+        file_put_contents("../../Logs/login_logout.txt", "\n " . $dateJour . " l'utilisateur avec l'ID " . $login . " a supprimé son compte!", FILE_APPEND);
 
     } elseif ($state == 5) {
 
-        file_put_contents("../Logs/newCommand.txt", "\n " . $dateJour . " " . $login . " a créé une nouvelle commande!", FILE_APPEND);
+        file_put_contents("../src/Entity/Logs/newCommand.txt", "\n " . $dateJour . " " . $login . " a créé une nouvelle commande!", FILE_APPEND);
 
     }
 

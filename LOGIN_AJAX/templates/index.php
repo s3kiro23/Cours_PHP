@@ -17,11 +17,11 @@
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
     <title>Connexion à votre compte</title>
 </head>
 
-<body class="bg-[url('img/logIn_pic.jpg')] bg-cover bg-no-repeat align-items-center">
+<body class="bg-[url('../assets/img/logIn_pic.jpg')] bg-cover bg-no-repeat align-items-center">
 
 <div class="min-h-full flex mt-14 justify-center py-5 px-4 sm:px-6 lg:px-8">
     <div id="contentLogIn" class="bg-white rounded px-4 py-5 bg-opacity-50">
@@ -114,7 +114,7 @@
     </div>
 </div>
 
-<script src="js/login.js"></script>
+<script src="../public/js/login.js"></script>
 
 </body>
 </html>

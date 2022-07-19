@@ -14,7 +14,7 @@ let toDelivery = function () {
     console.log('delivery');
     $.ajax({
 
-        url: 'Controller/commandController.php',
+        url: '../src/Controller/commandController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -50,7 +50,7 @@ let deleteAccount = function () {
                 'success',
                 $.ajax({
 
-                    url: 'Controller/userController.php',
+                    url: '../src/Controller/userController.php',
                     dataType: 'JSON',
                     type: 'POST',
                     data: {
@@ -87,7 +87,7 @@ let modify = function () {
             console.log('query_ajax');
             $.ajax({
 
-                url: 'Controller/userController.php',
+                url: '../src/Controller/userController.php',
                 dataType: 'JSON',
                 type: 'POST',
                 data: {
@@ -124,7 +124,7 @@ let logout = function () {
     console.log(1);
     $.ajax({
 
-        url: 'Controller/userController.php',
+        url: '../src/Controller/userController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -157,7 +157,7 @@ function load() {
     // console.log(1);
     $.ajax({
 
-        url: 'Controller/userController.php',
+        url: '../src/Controller/userController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -185,7 +185,7 @@ function load() {
 let toHome = function () {
     console.log("tohome");
     $.ajax({
-        url: 'Controller/userController.php',
+        url: '../src/Controller/userController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {

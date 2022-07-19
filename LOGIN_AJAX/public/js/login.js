@@ -15,7 +15,7 @@ function load() {
 let connect = function () {
 
     $.ajax({
-        url: 'Controller/loginController.php',
+        url: '../src/Controller/loginController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -90,7 +90,7 @@ let connect = function () {
 let newPwd = function () {
     console.log("newPwdAjax");
     $.ajax({
-        url: 'Controller/loginController.php',
+        url: '../src/Controller/loginController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -134,7 +134,7 @@ let newPwd = function () {
 let toRequestMail = function () {
     console.log("requestMail");
     $.ajax({
-        url: 'Controller/RecoveryController.php',
+        url: '../src/Controller/RecoveryController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -165,7 +165,7 @@ let genToken = function () {
 
     console.log("genTokenAjax");
     $.ajax({
-        url: 'Controller/RecoveryController.php',
+        url: '../src/Controller/RecoveryController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -217,7 +217,7 @@ let tokenLink = function () {
 
     console.log("tokenLinkAjax");
     $.ajax({
-        url: 'Controller/RecoveryController.php',
+        url: '../src/Controller/RecoveryController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -240,7 +240,7 @@ let tokenLink = function () {
 let smsVerif = function () {
     console.log("smsVerif");
     $.ajax({
-        url: 'Controller/loginController.php',
+        url: '../src/Controller/loginController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -283,7 +283,7 @@ let smsVerif = function () {
 let signIn = function () {
     console.log("sign1");
     $.ajax({
-        url: 'Controller/loginController.php',
+        url: '../src/Controller/loginController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {

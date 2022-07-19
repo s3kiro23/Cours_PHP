@@ -1,6 +1,6 @@
 <?php
 
-require_once 'function.php';
+require_once '../Controller/shared.php';
 require_once 'Database.php';
 
 $db = new Database();

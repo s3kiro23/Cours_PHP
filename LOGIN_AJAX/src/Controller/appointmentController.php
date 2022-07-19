@@ -1,5 +1,5 @@
 <?php session_start();
-require_once '../Entity/function.php';
+require_once '../Controller/shared.php';
 require_once '../Entity/User.php';
 require_once '../Entity/Database.php';
 require_once '../Entity/Log.php';

@@ -39,7 +39,7 @@ let dayCases = function () {
 
     $.ajax({
 
-        url: 'Controller/appointmentController.php',
+        url: '../src/Controller/appointmentController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -60,7 +60,7 @@ let rdvCases = function (page) {
 
     $.ajax({
 
-        url: 'Controller/appointmentController.php',
+        url: '../src/Controller/appointmentController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -105,7 +105,7 @@ let showInfo = function (id) {
     console.log('shoin');
     $.ajax({
 
-        url: 'Controller/appointmentController.php',
+        url: '../src/Controller/appointmentController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -139,7 +139,7 @@ let slotTimeClick = function (thisId) {
     console.log('slotTime');
     $.ajax({
 
-        url: 'Controller/appointmentController.php',
+        url: '../src/Controller/appointmentController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -175,7 +175,7 @@ let newAppointment = function () {
         if (result.isConfirmed) {
             $.ajax({
 
-                url: 'Controller/appointmentController.php',
+                url: '../src/Controller/appointmentController.php',
                 dataType: 'JSON',
                 type: 'POST',
                 data: {
@@ -230,7 +230,7 @@ let slotTime = function () {
 
     $.ajax({
 
-        url: 'Controller/appointmentController.php',
+        url: '../src/Controller/appointmentController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -253,7 +253,7 @@ let logout = function () {
     console.log(1);
     $.ajax({
 
-        url: 'Controller/userController.php',
+        url: '../src/Controller/userController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -287,7 +287,7 @@ function login() {
     // console.log(1);
     $.ajax({
 
-        url: 'Controller/userController.php',
+        url: '../src/Controller/userController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -307,7 +307,7 @@ function login() {
 let toHome = function () {
     console.log("tohome");
     $.ajax({
-        url: 'Controller/userController.php',
+        url: '../src/Controller/userController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -329,7 +329,7 @@ let toHome = function () {
 let toProfil = function () {
     console.log("toprof");
     $.ajax({
-        url: 'Controller/userController.php',
+        url: '../src/Controller/userController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {

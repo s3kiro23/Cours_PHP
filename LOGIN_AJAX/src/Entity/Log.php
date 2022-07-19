@@ -1,5 +1,5 @@
 <?php
-require_once '../Entity/function.php';
+require_once '../Controller/shared.php';
 require_once '../Entity/Database.php';
 
 $db = new Database();
