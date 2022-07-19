@@ -264,8 +264,8 @@ class HTML
 
         return "
 
-            <div id='flip' class='flex rounded-t bg-indigo-100'>$date</div>
-            <div id='panel' class='bg-indigo-100'>
+            <div id='flip' class='flex py-3 px-4 mt-2 rounded-t bg-indigo-700 w-full text-white border-solid border-grey'>$date</div>
+            <div id='panel' class='bg-white p-3'>
             
             </div>
             
@@ -275,22 +275,22 @@ class HTML
     public static function timeSlot($timeStampID, $slotInterval)
     {
         return "
-            <button id='$timeStampID' class='px-2 slot rounded bg-white border-1' onclick='slotTimeClick(this.id);'>$slotInterval</button>                
+            <button id='$timeStampID' class='p-2 my-2 slot rounded bg-indigo-100 border-1' onclick='slotTimeClick(this.id);'>$slotInterval</button>                
 		";
     }
 
-    public static function timeSlotDisabled($timeStampID, $slotInterval)
+/*    public static function timeSlotDisabled($timeStampID, $slotInterval)
     {
         return "
             <button id='$timeStampID' class='px-2 slot rounded bg-grey border-1' onclick='slotTimeClick(this.id);'>$slotInterval</button>                
 		";
-    }
+    }*/
 
 
     public static function displayAllRDV($rdv)
     {
         return "
-            <div class='flex mb-2 py-3 justify-between items-center w-full border-2 border-gray-100 rounded'>
+            <div class='flex bg-white mb-2 py-3 justify-between items-center w-full border-2 border-gray-100 rounded'>
                 <span class='pl-4 font-semibold text-gray-700 white:text-dark'>N° de rdv : </span>
                 <span id='rdvID'>" . $rdv['id'] . "</span>
                 <span class='pl-4 font-semibold text-gray-700 white:text-dark'>Date de rdv : </span>

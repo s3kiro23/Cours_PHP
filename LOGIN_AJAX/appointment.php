@@ -42,22 +42,14 @@
     <navbar-component></navbar-component>
 </header>
 
-<body>
+<body class="bg-indigo-100">
 
 <div class="container mt-5">
     <div class="row">
-        <div class="col-12 col-md-6">
-            <h1 class="text-4xl font-semibold text-center text-gray-800 white:text-dark">Rdv programmés</h1>
-        </div>
-        <div class="col-12 col-md-6">
-            <h1 class="text-4xl font-semibold text-center text-gray-800 white:text-dark">Créneaux disponibles</h1>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6 col-md-6 max-w-4xl px-6 py-4 mx-auto">
+        <div class="col-12 col-md-6 max-w-4xl px-6 py-4 mx-auto">
+            <h1 class="mb-4 text-4xl font-semibold text-center text-gray-800 white:text-dark">Rdv programmés</h1>
             <button class="btn btn-secondary" onclick="rdvCases(1);">Actualiser</button>
-            <div id="show_paginator" class="flex justify-content-center mb-3"></div>
-            <div class="rounded-lg" id="rdvCases">
+            <div class="rounded-lg mt-2" id="rdvCases">
 
                 <!--Contenu des rdv ici, généré avec class HTML -->
 
@@ -68,11 +60,20 @@
                 </ul>
             </nav>
         </div>
-        <div id="rdvContainer" class="col-6 mt-10">
+        <div class="col-12 col-md-6 max-w-4xl px-6 py-4 mx-auto">
+            <h1 class="mb-4 text-4xl font-semibold text-center text-gray-800 white:text-dark">Créneaux disponibles</h1>
+            <button class="btn btn-secondary" onclick="dayCases();">Actualiser</button>
+            <div id="rdvContainer" class="mt-2 w-full justify-content-center">
 
-            <!--Contenu des créneaux ici, généré avec class HTML -->
+                <!--Contenu des créneaux ici, généré avec class HTML -->
 
-        </div>
+            </div>
+<!--            <nav class="mt-3" aria-label="Page navigation">
+                <ul class="pagination justify-content-center" id="pages">
+
+                </ul>
+            </nav>
+-->        </div>
     </div>
 </div>
 

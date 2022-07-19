@@ -96,9 +96,9 @@ switch ($_POST['request']) {
                 error_log('Trouvé!');
                 error_log($item);
 /*                unset($item->tab_available);*/
-                error_log(json_encode($tab_available));
                 $tab_available = array_diff($tab_available, array($item));
 /*                $htmlSlot .= HTML::timeSlotDisabled($item, date("H:i", $item));*/
+                error_log(json_encode($tab_available));
             }
         }
 
