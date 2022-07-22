@@ -35,6 +35,55 @@ let toggleSlide = function () {
 
 }
 
+let createNews = function (){
+
+    $.ajax({
+
+        url: '../src/Controller/appointmentController.php',
+        dataType: 'JSON',
+        type: 'POST',
+        data: {
+            request: 'createNews',
+            content: $('#newsContent').val(),
+            title: $('#titleNews').val()
+        },
+        success: function (response) {
+
+            console.log('SuccesssdayNews');
+            if (response['status'] === 1) {
+
+                iziToast.success({
+
+                    timeout: 2000,
+                    progressBar: true,
+                    message: response['msg'],
+                    position: 'topRight',
+
+                });
+
+            } else {
+
+                iziToast.error({
+
+                    timeout: 2000,
+                    progressBar: true,
+                    message: response['msg'],
+                    position: 'topRight',
+
+                });
+
+            }
+
+
+        },
+        error: function () {
+            console.log('errordayCases');
+        }
+    });
+
+
+}
+
 let dayCases = function () {
 
     $.ajax({
@@ -163,6 +212,16 @@ let slotTimeClick = function (thisId) {
 
 let newAppointment = function () {
 
+/*    let checkboxes_value = false;
+
+    $('.checkbox').each(function () {
+        if ($(this).is(':checked')) {
+            checkboxes_value = true;
+        }
+    })
+
+    console.log(checkboxes_value);*/
+
     Swal.fire({
         title: 'Confirmez vous le rdv?',
         text: "",
@@ -182,7 +241,7 @@ let newAppointment = function () {
                     request: 'newAppointment',
                     expertID: $('#expertID').val(),
                     timeslotID: $('#modal-slotTime').html(),
-
+                    newsletter: $('.checkbox').is(':checked'),
                 },
                 success: function (response) {
                     console.log('SuccessssnewAppointment');

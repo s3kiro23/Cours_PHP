@@ -16,6 +16,8 @@ class RDV
 
     public function __construct($id)
     {
+        $this->id = 0;
+
         $GLOBALS['db']->beginTransaction();
         $query = $GLOBALS['db']->prepare('SELECT * FROM `command` WHERE id=?');
         $query->execute([$id]);
@@ -58,7 +60,7 @@ class RDV
 
     }
 
-    static public function createSlotTime($hour)
+/*    static public function createSlotTime($hour)
     {
 
         try {
@@ -81,7 +83,7 @@ class RDV
         error_log($GLOBALS['db']->lastInsertId());
         return $GLOBALS['db']->lastInsertId();
 
-    }
+    }*/
 
 
     static public function rdvPerPages($off7)
@@ -147,7 +149,6 @@ class RDV
         return $timeSlotCheck;
 
     }
-
 
     public function getId(){
         return $this->id;

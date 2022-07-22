@@ -1,10 +1,9 @@
 <?php session_start();
 require_once '../Controller/shared.php';
-require_once '../Entity/User.php';
-require_once '../Entity/Database.php';
-require_once '../Entity/Log.php';
-require_once '../Entity/HTML.php';
-require_once '../Entity/Command.php';
+
+spl_autoload_register(function ($classe) {
+    require '../Entity/' . $classe . '.php';
+});
 
 $db = new Database();
 $GLOBALS['db'] = $db->checkDb();

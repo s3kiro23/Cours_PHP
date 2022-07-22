@@ -1,11 +1,9 @@
 <?php session_start();
 require_once '../Controller/shared.php';
-require_once '../Entity/User.php';
-require_once '../Entity/Database.php';
-require_once '../Entity/Log.php';
-require_once '../Entity/HTML.php';
-require_once '../Entity/Command.php';
-require_once '../Entity/RDV.php';
+
+spl_autoload_register(function ($classe) {
+    require '../Entity/' . $classe . '.php';
+});
 
 $db = new Database();
 $GLOBALS['db'] = $db->checkDb();
@@ -23,13 +21,11 @@ switch ($_POST['request']) {
         $html = "";
         $htmlSlot = "";
         $timeSlotCheck = RDV::checkTimeSlotReserved();
-
-        $tab_reserved = [];
         /*        $timeSlotCheck = ['320'];*/
         /*        error_log($timeSlotCheck[0]['time_slot_id']);*/
         /*        $tab_reserved[] = $timeSlotCheck;
                 error_log(json_encode($tab_reserved));*/
-/*        error_log(json_encode($timeSlotCheck[0]['time_slot_id']));*/
+        /*        error_log(json_encode($timeSlotCheck[0]['time_slot_id']));*/
 
 
         /*        for ($i = 0; $i <= $timeSlotCheck; $i++){
@@ -49,14 +45,14 @@ switch ($_POST['request']) {
         $slotTime = "";
         $updateDate = "";
 
-        for ($e = 0; $e <= 240; $e=$e+20) {
+        for ($e = 0; $e <= 240; $e = $e + 20) {
 
             $timeSlotAM = strtotime(date("H:i", mktime(8, $e, 0)));
             $tab_available[] = (int)$timeSlotAM;
 
         }
 
-        for ($i = 0; $i <= 240; $i=$i+20){
+        for ($i = 0; $i <= 240; $i = $i + 20) {
 
             $timeSlotPM = strtotime(date("H:i", mktime(14, $i, 0)));
             $tab_available[] = (int)$timeSlotPM;
@@ -67,7 +63,12 @@ switch ($_POST['request']) {
 
         for ($a = 0; $a <= count($timeSlotCheck) - 1; $a++) {
 
-            $tab_reserved[] = (int)$timeSlotCheck[$a]['time_slot_id'];
+            if ((int)$timeSlotCheck[$a]['time_slot_id'] > strtotime($currentDate)) {
+
+                $tab_reserved[] = (int)$timeSlotCheck[$a]['time_slot_id'];
+
+            }
+
 
         }
         error_log(json_encode($tab_reserved));
@@ -88,21 +89,21 @@ switch ($_POST['request']) {
         /*            error_log($timeStampID);*/
         /*            $updateDate = date("H:i", mktime(8, $interval, 0, date("m"), date("d") + $weekday, date("Y"))) . "<br>";*/
 
-/*        $slotTime = date("H:i", mktime(8, $interval, 0));
-        $timeStampID = strtotime(date("H:i", mktime(8, $interval, 0)));*/
+        /*        $slotTime = date("H:i", mktime(8, $interval, 0));
+                $timeStampID = strtotime(date("H:i", mktime(8, $interval, 0)));*/
 
         if (in_array("$tab_reserved[0]", (array)$tab_available)) {
             foreach ($tab_reserved as $item) {
                 error_log('Trouvé!');
                 error_log($item);
-/*                unset($item->tab_available);*/
+                /*                unset($item->tab_available);*/
                 $tab_available = array_diff($tab_available, array($item));
-/*                $htmlSlot .= HTML::timeSlotDisabled($item, date("H:i", $item));*/
+                /*                $htmlSlot .= HTML::timeSlotDisabled($item, date("H:i", $item));*/
                 error_log(json_encode($tab_available));
             }
         }
 
-        foreach ($tab_available as $item){
+        foreach ($tab_available as $item) {
             $tab_display[] = $item;
 
             $htmlSlot .= HTML::timeSlot($item, date("H:i", $item));
@@ -129,6 +130,18 @@ switch ($_POST['request']) {
 
         break;
 
+    case 'createNews':
+
+        error_log($_POST['content']);
+        error_log($_POST['title']);
+        Newsletter::createNews($_POST['title'], [], $_POST['content']);
+        $msg = "Success!";
+        $status = 1;
+
+        echo json_encode(array("msg" => $msg, "status" => $status));
+
+        break;
+
     case 'newAppointment':
 
         $newRDV = "";
@@ -136,6 +149,7 @@ switch ($_POST['request']) {
         error_log($_POST['timeslotID']);
         error_log(strtotime($_POST['timeslotID']));
         error_log($_SESSION['id']);
+        error_log($_POST['newsletter']);
 
         if (empty($_POST['expertID'])) {
 
@@ -152,6 +166,29 @@ switch ($_POST['request']) {
             $newRDV = RDV::createRdv($_POST['expertID'], decrypt($_SESSION['id']), strtotime($_POST['timeslotID']));
             $status = 1;
             $msg = "Nouveau rendez-vous créé avec l'ID n° " . $newRDV . " !";
+
+            if ($_POST['newsletter']) {
+
+                $newsLetter = new Newsletter(10);
+                $checkedSubs = Newsletter::checkSubs();
+/*                error_log(json_encode($checkedSubs));*/
+/*                $tableau = $newsLetter->getTab_user();*/
+                $user = decrypt($_SESSION['id']);
+                error_log($user);
+                $checkedSubs[] = (int)$user;
+                $newsLetter->setTab_user($checkedSubs);
+                $newsLetter->addSub();
+/*                error_log(json_encode($checkedSubs));*/
+
+
+/*                error_log(json_encode($newsLetter->getTab_user()));*/
+/*                $newsLetter->setTab_user($_SESSION['id']);*/
+
+                /*$newsLetter->addSub();*/
+/*                error_log(json_encode($newsLetter->getTab_user()));*/
+
+
+            }
 
         }
 

@@ -3,7 +3,7 @@
 class Database
 {
 
-    private $dbco;
+    private PDO $dbco;
 
     public function __construct()
     {
@@ -18,7 +18,7 @@ class Database
         }
     }
 
-    public function checkDb()
+    public function checkDb(): PDO
     {
         return $this->dbco;
     }

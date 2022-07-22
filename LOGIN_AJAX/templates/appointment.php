@@ -44,6 +44,58 @@
 
 <body class="bg-indigo-100">
 
+<div class="container">
+    <div class="row">
+        <div class="col-12 mx-auto">
+            <form class=" flex gap-20 justify-content-center w-50 py-3 mt-4 mx-auto rounded shadow border border-gray-300 bg-indigo-100 bg-gradient"
+                  action="javascript:createNews();" method="POST">
+                <div class="flex-column justify-center align-items-center">
+                    <div>
+                        <h1 class="text-dark mb-3 text-center font-weight-bold hover:text-green-500 border-r-50">Créer
+                            Newsletter
+                        </h1>
+                    </div>
+                    <div>
+                        <label for="titleNews" class="sr-only">Titre Newsletter</label>
+                        <input id="titleNews"
+                               name="titleNews"
+                               class="appearance-none rounded relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                               type="text"
+                               required
+                               placeholder="Titre Newsletter"
+                        />
+                    </div>
+                    <div>
+                        <label for="newsContent" class="sr-only">Newsletter</label>
+                        <textarea
+                                id="newsContent"
+                                name="newsContent"
+                                class="appearance-none mb-3 rounded relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                required
+                                placeholder="Contenu newsletter"
+                        ></textarea>
+                    </div>
+                    <div class="flex justify-center mt-3 mx-auto">
+                        <button
+                                type="submit"
+                                class="group relative flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        >
+                            <span class="flex items-center">
+                               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                               </svg>
+                            </span>
+                            <span class="ml-4 mt-0.5">Créer</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div class="container mt-5">
     <div class="row">
         <div class="col-12 col-md-6 max-w-4xl px-6 py-4 mx-auto">
@@ -68,12 +120,12 @@
                 <!--Contenu des créneaux ici, généré avec class HTML -->
 
             </div>
-<!--            <nav class="mt-3" aria-label="Page navigation">
-                <ul class="pagination justify-content-center" id="pages">
+            <!--            <nav class="mt-3" aria-label="Page navigation">
+                            <ul class="pagination justify-content-center" id="pages">
 
-                </ul>
-            </nav>
--->        </div>
+                            </ul>
+                        </nav>
+            -->        </div>
     </div>
 </div>
 
@@ -165,7 +217,7 @@ echo $updateDate;
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Créneau horaire sélectionné : </h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Créneau horaire : </h5>
                 <span id="modal-dateSelect" class="px-2">Date sélectionnée</span>
                 <span>à</span>
                 <span id="modal-slotTime" class="px-2"></span>
@@ -200,17 +252,14 @@ echo $updateDate;
                     </div>
                     <div class="flex flex-column justify-content-center">
 
-                        <div class="flex justify-content-center"><label for="type-select" class="sr-only">Type
-                                Livraison</label>
-
+                        <div class="flex justify-content-center">
+                            <label for="type-select" class="sr-only">Type</label>
                             <select class="appearance-none mb-3 rounded px-3 border border-gray-300 justify-content-center"
                                     name="type" id="type-select">
 
                                 <option value="">-- Type --</option>
-                                <option value="sur-place">Sur place</option>
-                                <option value="a-emporter">A emporter</option>
-                                <option value="livraison">Livraison</option>
-
+                                <option value="sur-place">Auto</option>
+                                <option value="a-emporter">Moto</option>
                             </select>
 
                         </div>
@@ -219,13 +268,8 @@ echo $updateDate;
                             <fieldset id="indexCheck">
 
                                 <div>
-                                    <input type="checkbox" class="checkbox" name="checkbox" value="paye">
-                                    <label for="paye" class="pr-3 cb">Payé</label>
-                                </div>
-
-                                <div>
-                                    <input type="checkbox" class="checkbox" name="checkbox" value="non-paye">
-                                    <label for="non-paye" class="pr-3">Non Payé</label>
+                                    <input type="checkbox" class="checkbox" name="checkbox" value="newsletters">
+                                    <label for="newsletters" class="pr-3 cb">Newsletters</label>
                                 </div>
 
                             </fieldset>
