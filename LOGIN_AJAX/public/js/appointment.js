@@ -98,6 +98,9 @@ let dayCases = function () {
             $.each(response['tab_dateTS'], function (i, l){
                 $("." + l).html(response['htmlSlot'])
             })
+/*            $.each(response['tab_dateTSTest'], function (i, l){
+                alert("Index du 1er tableau : " + i)
+            })*/
 
         },
         error: function () {

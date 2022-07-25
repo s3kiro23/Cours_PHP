@@ -14,42 +14,28 @@ switch ($_POST['request']) {
 
         setlocale(LC_TIME, "fr_FR", "French");
         $currentDate = date('Y-m-d'); // Date du jour
-/*        $nbWeek = date('W', strtotime($currentDate));*/
+        /*        $nbWeek = date('W', strtotime($currentDate));*/
         /*        error_log($nbWeek);*/
-        $week = [0, 1, 2, 3, 4, 5, 6]; // lien BDD champ weekday compte le nombre de jours?
-        $weekday = 0;
-        $html = "";
-        $htmlSlot = "";
-        $timeSlotCheck = RDV::checkTimeSlotReserved();
-        /*        $timeSlotCheck = ['320'];*/
-        /*        error_log($timeSlotCheck[0]['time_slot_id']);*/
-        /*        $tab_reserved[] = $timeSlotCheck;
-                error_log(json_encode($tab_reserved));*/
-        /*        error_log(json_encode($timeSlotCheck[0]['time_slot_id']));*/
 
+        /*Récupération des créneaux réservés en BDD*/
 
-        /*        for ($i = 0; $i <= $timeSlotCheck; $i++){
-
-                    $tab_reserved[] = $timeSlotCheck;
-
-                }
-                error_log(json_encode($tab_reserved));*/
-        /*                error_log(json_encode($timeSlotCheck['time_slot_id']));*/
-
-        /*        error_log(json_encode($tab_slotTime));*/
-        /*        $allTimeSlot = json_decode($timeSlotCheck['hour'], true);*/
-        /*        error_log($allTimeSlot[0]);*/
-        $slotInterval = 0;
-        $interval = 0;
-        $intervalTest = 0;
-        $slotTime = "";
-        $updateDate = "";
         $tab_reserved = [];
+        $timeSlotCheck = RDV::checkTimeSlotReserved();
+
+        for ($a = 0; $a <= count($timeSlotCheck) - 1; $a++) {
+            if ((int)$timeSlotCheck[$a]['time_slot_id'] > strtotime($currentDate)) {
+                $tab_reserved[] = (int)$timeSlotCheck[$a]['time_slot_id'];
+            }
+        }
 
         /*Génération des jours de la semaine*/
 
-        foreach ($week as $day){
+        $html = "";
+        $updateDate = "";
+        $week = [0, 1, 2, 3, 4, 5, 6]; // lien BDD champ weekday compte le nombre de jours?
+        $weekday = 0;
 
+        foreach ($week as $day) {
             $updatedDate = strftime("%A %d %B %G", strtotime($currentDate . '+' . $weekday . ' day'));
             $tab_dateTS[] = strtotime($currentDate . '+' . $weekday . ' day');
             $timeStampDate = strtotime($currentDate . '+' . $weekday . ' day');
@@ -57,7 +43,11 @@ switch ($_POST['request']) {
             $weekday++;
         }
 
-        foreach ($tab_dateTS as $day => $n){
+        /*Test génération des créneaux horaires par date*/
+
+        foreach ($tab_dateTS as $day => $n) {
+
+            $tab_availableTest = [];
 
             for ($e = 0; $e <= 240; $e = $e + 20) {
 
@@ -66,12 +56,19 @@ switch ($_POST['request']) {
                 $tab_dateTSTest[$day] = [$n => $tab_availableTest];
             }
 
+            for ($i = 0; $i <= 240; $i = $i + 20) {
+
+                $timeSlotPMTest = mktime(14, $i, 0, date("m"), date("d") + $day, date("Y"));
+                $tab_availableTest[] = (int)$timeSlotPMTest;
+                $tab_dateTSTest[$day] = [$n => $tab_availableTest];
+            }
+
         }
         error_log(json_encode($tab_availableTest));
         error_log(json_encode($tab_dateTSTest));
-/*        error_log($tab_dateTSTest[0][1658700000][0]);*/
+        error_log($tab_dateTSTest[0][1658700000][7]);
 
-        /*Génération des créneaux horaires dispo*/
+        /*Génération des créneaux horaires dispo | date courante uniquement */
 
         for ($e = 0; $e <= 240; $e = $e + 20) {
 
@@ -86,60 +83,37 @@ switch ($_POST['request']) {
             $tab_available[] = (int)$timeSlotPM;
 
         }
-/*        error_log(json_encode($tab_available));
-        error_log(count($tab_available));*/
+        /*        error_log(json_encode($tab_available));
+                error_log(count($tab_available));*/
 
-        /*Récupération des créneaux réservés en BDD*/
-
-        for ($a = 0; $a <= count($timeSlotCheck) - 1; $a++) {
-
-            if ((int)$timeSlotCheck[$a]['time_slot_id'] > strtotime($currentDate)) {
-
-                $tab_reserved[] = (int)$timeSlotCheck[$a]['time_slot_id'];
-
-            }
-
-
-        }
         error_log(json_encode($tab_reserved));
-
-
-
-
-        /*        $slotTime = date("H:i", mktime(8, $interval, 0));
-                $timeStampID = strtotime(date("H:i", mktime(8, $interval, 0)));*/
-        /*            error_log($timeStampID);*/
-        /*            $updateDate = date("H:i", mktime(8, $interval, 0, date("m"), date("d") + $weekday, date("Y"))) . "<br>";*/
-
-        /*        $slotTime = date("H:i", mktime(8, $interval, 0));
-                $timeStampID = strtotime(date("H:i", mktime(8, $interval, 0)));*/
 
         if (in_array($tab_reserved[0], (array)$tab_available)) {
             foreach ($tab_reserved as $item) {
-/*                error_log('Trouvé!');
-                error_log($item);*/
+                /*                error_log('Trouvé!');
+                                error_log($item);*/
                 /*                unset($item->tab_available);*/
                 $tab_available = array_diff($tab_available, array($item));
                 /*                $htmlSlot .= HTML::timeSlotDisabled($item, date("H:i", $item));*/
-/*                error_log(json_encode($tab_available));*/
+                /*                error_log(json_encode($tab_available));*/
             }
         }
 
         /*Génération des slots dispos suite comparaison des tab_available et reserved*/
 
+        $htmlSlot = "";
+
         foreach ($tab_available as $item) {
+
             $tab_display[] = $item;
 
             $htmlSlot .= HTML::timeSlot($item, date("H:i", $item));
 
-            $interval += 20;
         }
-/*        error_log(json_encode($htmlSlot));*/
+        /*        error_log(json_encode($htmlSlot));*/
+        /*        error_log($html);*/
 
-
-/*        error_log($html);*/
-
-        echo json_encode(array("html" => $html, "htmlSlot" => $htmlSlot, "tab_dateTS" => $tab_dateTS));
+        echo json_encode(array("html" => $html, "htmlSlot" => $htmlSlot, "tab_dateTS" => $tab_dateTS, "tab_dateTSTest" => $tab_dateTSTest));
 
         break;
 
@@ -148,8 +122,10 @@ switch ($_POST['request']) {
         setlocale(LC_TIME, "fr_FR", "French");
         /*        $currentTimeSlot = RDV::checkCurrentTimeSlot($_POST['timeSlotID']);*/
         $user = new User(decrypt($_SESSION['id']));
+
         /*        $timeSlotID = $currentTimeSlot['id'];*/
         $user = $user->getLogin();
+        error_log($user);
         $slotTime = date("H:i", $_POST['slotID']);
         $dateSelect = strftime("%A %d %B %G", $_POST['slotID']);
 
