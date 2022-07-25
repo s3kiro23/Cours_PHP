@@ -14,9 +14,9 @@ switch ($_POST['request']) {
 
         setlocale(LC_TIME, "fr_FR", "French");
         $currentDate = date('Y-m-d'); // Date du jour
-        $nbWeek = date('W', strtotime($currentDate));
+/*        $nbWeek = date('W', strtotime($currentDate));*/
         /*        error_log($nbWeek);*/
-        $week = [0, 1, 2, 3, 4, 5, 6, 7]; // lien BDD champ weekday compte le nombre de jours?
+        $week = [0, 1, 2, 3, 4, 5, 6]; // lien BDD champ weekday compte le nombre de jours?
         $weekday = 0;
         $html = "";
         $htmlSlot = "";
@@ -44,6 +44,34 @@ switch ($_POST['request']) {
         $intervalTest = 0;
         $slotTime = "";
         $updateDate = "";
+        $tab_reserved = [];
+
+        /*Génération des jours de la semaine*/
+
+        foreach ($week as $day){
+
+            $updatedDate = strftime("%A %d %B %G", strtotime($currentDate . '+' . $weekday . ' day'));
+            $tab_dateTS[] = strtotime($currentDate . '+' . $weekday . ' day');
+            $timeStampDate = strtotime($currentDate . '+' . $weekday . ' day');
+            $html .= HTML::dayCases($updatedDate, $timeStampDate);
+            $weekday++;
+        }
+
+        foreach ($tab_dateTS as $day => $n){
+
+            for ($e = 0; $e <= 240; $e = $e + 20) {
+
+                $timeSlotAMTest = mktime(8, $e, 0, date("m"), date("d") + $day, date("Y"));
+                $tab_availableTest[] = (int)$timeSlotAMTest;
+                $tab_dateTSTest[$day] = [$n => $tab_availableTest];
+            }
+
+        }
+        error_log(json_encode($tab_availableTest));
+        error_log(json_encode($tab_dateTSTest));
+/*        error_log($tab_dateTSTest[0][1658700000][0]);*/
+
+        /*Génération des créneaux horaires dispo*/
 
         for ($e = 0; $e <= 240; $e = $e + 20) {
 
@@ -58,8 +86,10 @@ switch ($_POST['request']) {
             $tab_available[] = (int)$timeSlotPM;
 
         }
-        error_log(json_encode($tab_available));
-        error_log(count($tab_available));
+/*        error_log(json_encode($tab_available));
+        error_log(count($tab_available));*/
+
+        /*Récupération des créneaux réservés en BDD*/
 
         for ($a = 0; $a <= count($timeSlotCheck) - 1; $a++) {
 
@@ -74,15 +104,7 @@ switch ($_POST['request']) {
         error_log(json_encode($tab_reserved));
 
 
-        foreach ($week as $day) {
 
-            //foreach day?
-
-            $updatedDate = strftime("%A %d %B %G", strtotime($currentDate . '+' . $weekday . ' day'));
-            $html .= HTML::dayCases($updatedDate);
-            $weekday++;
-
-        }
 
         /*        $slotTime = date("H:i", mktime(8, $interval, 0));
                 $timeStampID = strtotime(date("H:i", mktime(8, $interval, 0)));*/
@@ -92,16 +114,18 @@ switch ($_POST['request']) {
         /*        $slotTime = date("H:i", mktime(8, $interval, 0));
                 $timeStampID = strtotime(date("H:i", mktime(8, $interval, 0)));*/
 
-        if (in_array("$tab_reserved[0]", (array)$tab_available)) {
+        if (in_array($tab_reserved[0], (array)$tab_available)) {
             foreach ($tab_reserved as $item) {
-                error_log('Trouvé!');
-                error_log($item);
+/*                error_log('Trouvé!');
+                error_log($item);*/
                 /*                unset($item->tab_available);*/
                 $tab_available = array_diff($tab_available, array($item));
                 /*                $htmlSlot .= HTML::timeSlotDisabled($item, date("H:i", $item));*/
-                error_log(json_encode($tab_available));
+/*                error_log(json_encode($tab_available));*/
             }
         }
+
+        /*Génération des slots dispos suite comparaison des tab_available et reserved*/
 
         foreach ($tab_available as $item) {
             $tab_display[] = $item;
@@ -110,9 +134,12 @@ switch ($_POST['request']) {
 
             $interval += 20;
         }
-        error_log(json_encode($tab_display));
+/*        error_log(json_encode($htmlSlot));*/
 
-        echo json_encode(array("html" => $html, "htmlSlot" => $htmlSlot));
+
+/*        error_log($html);*/
+
+        echo json_encode(array("html" => $html, "htmlSlot" => $htmlSlot, "tab_dateTS" => $tab_dateTS));
 
         break;
 
@@ -169,24 +196,12 @@ switch ($_POST['request']) {
 
             if ($_POST['newsletter']) {
 
-                $newsLetter = new Newsletter(10);
-                $checkedSubs = Newsletter::checkSubs();
-/*                error_log(json_encode($checkedSubs));*/
-/*                $tableau = $newsLetter->getTab_user();*/
-                $user = decrypt($_SESSION['id']);
-                error_log($user);
-                $checkedSubs[] = (int)$user;
+                $newsLetter = new Newsletter(1);
+                $checkedSubs = $newsLetter->getTab_user();
+                $user = new User(decrypt($_SESSION['id']));
+                $checkedSubs[] = $user->getLogin();
                 $newsLetter->setTab_user($checkedSubs);
                 $newsLetter->addSub();
-/*                error_log(json_encode($checkedSubs));*/
-
-
-/*                error_log(json_encode($newsLetter->getTab_user()));*/
-/*                $newsLetter->setTab_user($_SESSION['id']);*/
-
-                /*$newsLetter->addSub();*/
-/*                error_log(json_encode($newsLetter->getTab_user()));*/
-
 
             }
 

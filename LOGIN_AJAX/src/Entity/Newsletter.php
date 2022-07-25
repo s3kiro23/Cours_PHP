@@ -68,7 +68,7 @@ class Newsletter
             $query->execute();*/
 
             $query->execute(array(
-                'tab_user' => json_encode($this->tab_user),
+                'tab_user' => $this->tab_user,
                 'id' =>  $this->id,
             ));
 
@@ -89,12 +89,12 @@ class Newsletter
 
             $query = $GLOBALS['db']->prepare('SELECT tab_user FROM `newsletters`');
             $query->execute();
-            $checkSubs = $query->fetchAll(PDO::FETCH_ASSOC);
+            $checkSubs = $query->fetch(PDO::FETCH_ASSOC);
 
         } catch (PDOException $e) {
             error_log("Erreur : " . $e->getMessage());
         }
-        return $checkSubs;
+        return $checkSubs['tab_user'];
 
     }
 

@@ -42,7 +42,7 @@ function write_logs($login, $state)
 
     } elseif ($state == 5) {
 
-        file_put_contents("../src/Entity/Logs/newCommand.txt", "\n " . $dateJour . " " . $login . " a créé une nouvelle commande!", FILE_APPEND);
+        file_put_contents("../../Logs/newCommand.txt", "\n " . $dateJour . " " . $login . " a créé une nouvelle commande!", FILE_APPEND);
 
     }
 

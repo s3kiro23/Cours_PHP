@@ -216,7 +216,7 @@ class User
     {
 
         $code = random_int(1000, 10000);
-
+        $GLOBALS['db']->beginTransaction();
         $query = $GLOBALS['db']->prepare('INSERT INTO log_sms (`user_id`, `code`)
                 VALUES (:user_id, :code)');
 

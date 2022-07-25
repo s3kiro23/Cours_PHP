@@ -10,9 +10,6 @@ $(function () {
 console.log($idS);*/
 
 
-
-
-
 let load = function () {
     login();
     dayCases();
@@ -35,7 +32,7 @@ let toggleSlide = function () {
 
 }
 
-let createNews = function (){
+let createNews = function () {
 
     $.ajax({
 
@@ -98,6 +95,10 @@ let dayCases = function () {
             console.log('SuccesssdayCases');
             $("#rdvContainer").html(response['html']);
             $("#panel").html(response['htmlSlot'])
+            $.each(response['tab_dateTS'], function (i, l){
+                $("." + l).html(response['htmlSlot'])
+            })
+
         },
         error: function () {
             console.log('errordayCases');
@@ -182,8 +183,8 @@ let showInfo = function (id) {
 
 let slotTimeClick = function (thisId) {
 
-/*    var id = $(this).attr('id');
-    console.log(id);*/
+    /*    var id = $(this).attr('id');
+        console.log(id);*/
 
     console.log('slotTime');
     $.ajax({
@@ -212,15 +213,15 @@ let slotTimeClick = function (thisId) {
 
 let newAppointment = function () {
 
-/*    let checkboxes_value = false;
+    /*    let checkboxes_value = false;
 
-    $('.checkbox').each(function () {
-        if ($(this).is(':checked')) {
-            checkboxes_value = true;
-        }
-    })
+        $('.checkbox').each(function () {
+            if ($(this).is(':checked')) {
+                checkboxes_value = true;
+            }
+        })
 
-    console.log(checkboxes_value);*/
+        console.log(checkboxes_value);*/
 
     Swal.fire({
         title: 'Confirmez vous le rdv?',
@@ -257,11 +258,11 @@ let newAppointment = function () {
 
                         });
 
-/*
-                        setTimeout(() => {
-                            window.location.replace('appointment.php')
-                        }, 2300);
-*/
+                        /*
+                                                setTimeout(() => {
+                                                    window.location.replace('appointment.php')
+                                                }, 2300);
+                        */
 
                     } else {
 

@@ -93,7 +93,6 @@ class Command
     {
 
         try {
-
             $query = $GLOBALS['db']->prepare('INSERT INTO command (`title`, `label`, `type`, `payment`, `user_id`)
                 VALUES (:title, :label, :type, :payment, :user_id)');
 
