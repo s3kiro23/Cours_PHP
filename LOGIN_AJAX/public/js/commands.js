@@ -10,36 +10,59 @@ function load() {
     listCommands(1);
     $("#logout").on('click', logout);
     $("#to_profil").on('click', toProfil);
-    $("#to_delivery").on('click', toDelivery);
+    $("#to_beta").on('click', toBeta);
+    $("#to_alpha").on('click', toAlpha);
 /*
     $('.showInfo').on('click', showInfo);
 */
 
 }
 
-let toDelivery = function () {
+let toBeta = function () {
 
-    console.log('delivery');
+    console.log('beta');
     $.ajax({
 
         url: '../src/Controller/commandController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
-            request: 'to_delivery',
+            request: 'to_beta',
         },
         success: function (response) {
-            console.log('successDeliver');
-            window.location.replace('appointment.php')
+            console.log('successBeta');
+            window.location.replace('appointmentBeta.php')
 
         },
         error: function () {
-            console.log('errorDeliver');
+            console.log('errorBeta');
         }
     });
 
 }
 
+let toAlpha = function () {
+
+    console.log('Alpha');
+    $.ajax({
+
+        url: '../src/Controller/commandController.php',
+        dataType: 'JSON',
+        type: 'POST',
+        data: {
+            request: 'to_alpha',
+        },
+        success: function (response) {
+            console.log('successAlpha');
+            window.location.replace('appointmentAlpha.php')
+
+        },
+        error: function () {
+            console.log('errorAlpha');
+        }
+    });
+
+}
 
 /*Opération sur les commandes*/
 

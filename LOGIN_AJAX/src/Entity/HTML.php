@@ -257,15 +257,31 @@ class HTML
 
     public static function dayCases($date, $timeStampDate)
     {
+        $currentDate = strtotime(date('Y-m-d'));
+        error_log($currentDate);
+        error_log($timeStampDate);
+        $nextDate = $timeStampDate+86400;
+        $previousDate = $timeStampDate-86400;
 
-        return "
+        $dayCase =  "<div id='flip' class='flex justify-between py-3 px-4 mt-2 rounded-t bg-indigo-700 w-full text-white border-solid border-grey'>";
 
-            <div id='flip' class='flex py-3 px-4 mt-2 rounded-t bg-indigo-700 w-full text-white border-solid border-grey'>$date</div>
+            if($timeStampDate != $currentDate){
+                $dayCase .=  "<svg onClick='changeDate($previousDate);' xmlns='http://www.w3.org/2000/svg' class='h-6 w-6 cursor-pointer' fill='none' viewBox='0 24 24' stroke='currentColor' stroke-width='2'>
+                  <path stroke-linecap='round' stroke-linejoin='round' d='M15 19l-7-7 7-7' />
+                </svg>";
+            }
+            $dayCase .= "
+                <span id='$timeStampDate' class='currentDate'>$date</span>
+                <svg onClick='changeDate($nextDate);' xmlns='http://www.w3.org/2000/svg' class='h-6 w-6 cursor-pointer' fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='2'>
+                  <path stroke-linecap='round' stroke-linejoin='round' d='M9 5l7 7-7 7' />
+                </svg>
+            </div>
             <div id='panel' class='$timeStampDate bg-white p-3'>
             
-            </div>
-            
-		";
+            </div>";
+
+            return $dayCase;
+
     }
 
     public static function timeSlot($timeStampID, $slotInterval)

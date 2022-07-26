@@ -1,4 +1,5 @@
 <?php session_start();
+
 require_once '../Controller/shared.php';
 
 spl_autoload_register(function ($classe) {
@@ -14,108 +15,99 @@ switch ($_POST['request']) {
 
         setlocale(LC_TIME, "fr_FR", "French");
         $currentDate = date('Y-m-d'); // Date du jour
-        /*        $nbWeek = date('W', strtotime($currentDate));*/
-        /*        error_log($nbWeek);*/
+        $htmlSlot = "";
 
-        /*Récupération des créneaux réservés en BDD*/
+        if (empty($_POST['currentDate'])) {
 
-        $tab_reserved = [];
-        $timeSlotCheck = RDV::checkTimeSlotReserved();
-
-        for ($a = 0; $a <= count($timeSlotCheck) - 1; $a++) {
-            if ((int)$timeSlotCheck[$a]['time_slot_id'] > strtotime($currentDate)) {
-                $tab_reserved[] = (int)$timeSlotCheck[$a]['time_slot_id'];
-            }
-        }
-
-        /*Génération des jours de la semaine*/
-
-        $html = "";
-        $updateDate = "";
-        $week = [0, 1, 2, 3, 4, 5, 6]; // lien BDD champ weekday compte le nombre de jours?
-        $weekday = 0;
-
-        foreach ($week as $day) {
-            $updatedDate = utf8_encode(strftime("%A %d %B %G", strtotime($currentDate . '+' . $weekday . ' day')));
-            $tab_dateTS[] = strtotime($currentDate . '+' . $weekday . ' day');
-            $timeStampDate = strtotime($currentDate . '+' . $weekday . ' day');
-            $html .= HTML::dayCases($updatedDate, $timeStampDate);
-            $weekday++;
-        }
-
-        /*Test génération des créneaux horaires par date*/
-
-        foreach ($tab_dateTS as $day => $n) {
-
-            $tab_availableTest = [];
+            $html = HTML::dayCases(utf8_encode(strftime("%A %d %B %G", strtotime($currentDate))), strtotime($currentDate));
 
             for ($e = 0; $e <= 240; $e = $e + 20) {
 
-                $timeSlotAMTest = mktime(8, $e, 0, date("m"), date("d") + $day, date("Y"));
-                $tab_availableTest[] = (int)$timeSlotAMTest;
-                $tab_dateTSTest[$day] = [$n => $tab_availableTest];
+                $timeSlotAM = strtotime(date("H:i", mktime(8, $e, 0)));
+                $tab_available[] = (int)$timeSlotAM;
+
             }
 
             for ($i = 0; $i <= 240; $i = $i + 20) {
 
-                $timeSlotPMTest = mktime(14, $i, 0, date("m"), date("d") + $day, date("Y"));
-                $tab_availableTest[] = (int)$timeSlotPMTest;
-                $tab_dateTSTest[$day] = [$n => $tab_availableTest];
+                $timeSlotPM = strtotime(date("H:i", mktime(14, $i, 0)));
+                $tab_available[] = (int)$timeSlotPM;
+
             }
 
-        }
-        error_log(json_encode($tab_availableTest));
-        error_log(json_encode($tab_dateTSTest));
-/*        error_log($tab_dateTSTest[0][1658700000][7]);*/
+            foreach ($tab_available as $item) {
 
-        /*Génération des créneaux horaires dispo | date courante uniquement */
+                $tab_display[] = $item;
 
-        for ($e = 0; $e <= 240; $e = $e + 20) {
+                $htmlSlot .= HTML::timeSlot($item, date("H:i", $item));
 
-            $timeSlotAM = strtotime(date("H:i", mktime(8, $e, 0)));
-            $tab_available[] = (int)$timeSlotAM;
-
-        }
-
-        for ($i = 0; $i <= 240; $i = $i + 20) {
-
-            $timeSlotPM = strtotime(date("H:i", mktime(14, $i, 0)));
-            $tab_available[] = (int)$timeSlotPM;
-
-        }
-        /*        error_log(json_encode($tab_available));
-                error_log(count($tab_available));*/
-
-        error_log(json_encode($tab_reserved));
-
-        if (in_array($tab_reserved, (array)$tab_available)) {
-            foreach ($tab_reserved as $item) {
-                /*                error_log('Trouvé!');
-                                error_log($item);*/
-                /*                unset($item->tab_available);*/
-                $tab_available = array_diff($tab_available, array($item));
-                /*                $htmlSlot .= HTML::timeSlotDisabled($item, date("H:i", $item));*/
-                /*                error_log(json_encode($tab_available));*/
             }
+
+        } else {
+
+            /*Récupération des créneaux réservés en BDD*/
+
+            /*        $tab_reserved = [];
+                    $timeSlotCheck = RDV::checkTimeSlotReserved();
+
+                    for ($a = 0; $a <= count($timeSlotCheck) - 1; $a++) {
+                        if ((int)$timeSlotCheck[$a]['time_slot_id'] > strtotime($currentDate)) {
+                            $tab_reserved[] = (int)$timeSlotCheck[$a]['time_slot_id'];
+                        }
+                    }*/
+
+            /*Génération des jours de la semaine*/
+
+            /*        $weekday = 0;*/
+
+            $updatedDate = utf8_encode(strftime("%A %d %B %G", $_POST['currentDate']));
+            /*        $timeStampDate = strtotime($currentDate . '+' . $weekday . ' day');*/
+            $html = HTML::dayCases($updatedDate, $_POST['currentDate']);
+            /*        error_log($html);*/
+
+            /*Génération des créneaux horaires dispo | date courante uniquement */
+
+            for ($e = $_POST['currentDate'] + 28800; $e <= $_POST['currentDate'] + 28800 + (240 * 60); $e = $e + 20 * 60) {
+                error_log($e);
+                /*            $timeSlotAM = strtotime(date("H:i", mktime(8, $e, 0, $_POST['currentDate'])));*/
+                $tab_available[] = $e;
+
+            }
+
+            /*for ($i = $_POST['currentDate'] + 240*60; $i <= $_POST['currentDate']+ 480*60; $i = $i + 20*60) {*/
+
+            /* $timeSlotPM = strtotime(date("H:i", mktime(14, $i, 0, $_POST['currentDate'])));*/
+            /*$tab_available[] = $i;*/
+
+            /*}*/
+            /*        error_log(json_encode($tab_available));
+                    error_log(count($tab_available));*/
+
+            /*        error_log(json_encode($tab_reserved));
+
+                    if (in_array($tab_reserved, (array)$tab_available)) {
+                        foreach ($tab_reserved as $item) {
+                            $tab_available = array_diff($tab_available, array($item));
+                        }
+                    }*/
+
+            /*Génération des slots dispos suite comparaison des tab_available et reserved*/
+
+            foreach ($tab_available as $item) {
+
+                $tab_display[] = $item;
+
+                $htmlSlot .= HTML::timeSlot($item, date("H:i", $item));
+
+            }
+            /*        error_log(json_encode($htmlSlot));*/
+            /*        error_log($html);*/
         }
 
-        /*Génération des slots dispos suite comparaison des tab_available et reserved*/
-
-        $htmlSlot = "";
-
-        foreach ($tab_available as $item) {
-
-            $tab_display[] = $item;
-
-            $htmlSlot .= HTML::timeSlot($item, date("H:i", $item));
-
-        }
-        /*        error_log(json_encode($htmlSlot));*/
-        /*        error_log($html);*/
-
-        echo json_encode(array("html" => $html, "htmlSlot" => $htmlSlot, "tab_dateTS" => $tab_dateTS, "tab_dateTSTest" => $tab_dateTSTest));
+        echo json_encode(array("html" => $html, "htmlSlot" => $htmlSlot));
 
         break;
+
 
     case 'slotTimeClick':
 
@@ -240,11 +232,52 @@ switch ($_POST['request']) {
 
         break;
 
-    case 'to_alpha':
+    case 'to_beta':
 
         $msg = "Redirection vers la page de rdv beta!";
 
         echo json_encode(array("msg" => $msg));
 
         break;
+
+    case 'to_profil' :
+
+        $msg = "Redirection vers la page de profil!";
+
+        echo json_encode(array("msg" => $msg));
+
+        break;
+
+    case 'logout':
+
+        $status = 1;
+        $msg = "Déconnexion réussi!";
+        write_logs(($_POST['login']), 2);
+        session_destroy();
+        unset($_SESSION);
+
+        echo json_encode(array("status" => $status, "msg" => $msg));
+
+        break;
+
+    case 'user_login' :
+
+        $login = "Vous n'êtes pas connecté ! ";
+        $user = false;
+        if (is_logged()) {
+            $user = new User(decrypt($_SESSION['id']));
+
+        }
+        if (!$user) {
+            echo json_encode(1);
+
+        } else {
+            echo json_encode(array("login" => $user->getLogin(), "nom" => $user->getNom(), "prenom" => $user->getPrenom(), "password" => $user->getPassword()));
+        }
+
+
+        break;
+
+
 }
+

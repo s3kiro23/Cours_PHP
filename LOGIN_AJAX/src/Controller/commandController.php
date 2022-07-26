@@ -98,9 +98,17 @@ switch ($_POST['request']) {
 
         break;
 
-    case 'to_delivery':
+    case 'to_beta':
 
-        $msg = "Redirection vers la page de Livraison!";
+        $msg = "Redirection vers la page de rdv beta!";
+
+        echo json_encode(array("msg" => $msg));
+
+        break;
+
+    case 'to_alpha':
+
+        $msg = "Redirection vers la page de rdv alpha!";
 
         echo json_encode(array("msg" => $msg));
 

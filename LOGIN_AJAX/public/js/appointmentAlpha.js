@@ -4,6 +4,29 @@ $(function () {
 
 });
 
+ function dayCases (timestampID = null) {
+    console.log(timestampID);
+    $.ajax({
+
+        url: '../src/Controller/appointmentalphaController.php',
+        dataType: 'JSON',
+        type: 'POST',
+        data: {
+            request: 'dayCases',
+            currentDate: timestampID,
+        },
+        success: function (response) {
+            console.log('SuccesssdayCases');
+            $("#rdvContainer").html(response['html']);
+            $("#panel").html(response['htmlSlot']);
+
+        },
+        error: function () {
+            console.log('errordayCases');
+        }
+    });
+}
+
 /*$idS = [$(".b").map(function () {
     return this.id;
 }).get()];
@@ -14,22 +37,80 @@ let load = function () {
     login();
     dayCases();
     rdvCases(1);
+/*
     $("#rdvContainer").on('click', toggleSlide);
+*/
     $("#logout").on('click', logout);
     $("#to_profil").on('click', toProfil);
     $("#to_home").on('click', toHome);
-    $("#to_alpha").on('click', toAlpha);
+    $("#to_beta").on('click', toBeta);
 
 }
 
 
-let toggleSlide = function () {
+/*let toggleSlide = function () {
     console.log('toggle');
     $("#panel").slideToggle();
 
-    /*
+    /!*
         $("#d").slideToggle();
-    */
+    *!/
+
+}*/
+
+function changeDate(timestamp){
+
+    dayCases(timestamp);
+
+}
+
+
+/*
+let changeDate = function (){
+
+    $.ajax({
+
+        url: '../src/Controller/appointmentalphaController.php',
+        dataType: 'JSON',
+        type: 'POST',
+        data: {
+            request: 'nextDate',
+            currentDate: $('.currentDate').attr("id")
+        },
+        success: function (response) {
+
+            console.log(response['msg']);
+            dayCases(response['nextDate'])
+
+        },
+        error: function () {
+            console.log('errornextDate');
+        }
+    });
+
+}
+*/
+
+let previousDate = function (){
+
+    $.ajax({
+
+        url: '../src/Controller/appointmentalphaController.php',
+        dataType: 'JSON',
+        type: 'POST',
+        data: {
+            request: 'previousDate',
+            currentDate: $('#newsContent').val(),
+        },
+        success: function (response) {
+
+            console.log('SuccesspreviousDate');
+
+        },
+        error: function () {
+            console.log('errorpreviousDate');
+        }
+    });
 
 }
 
@@ -37,7 +118,7 @@ let createNews = function () {
 
     $.ajax({
 
-        url: '../src/Controller/appointmentController.php',
+        url: '../src/Controller/appointmentalphaController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -82,39 +163,34 @@ let createNews = function () {
 
 }
 
-let dayCases = function () {
+/*let dayCases = function (timestampID = null) {
 
     $.ajax({
 
-        url: '../src/Controller/appointmentController.php',
+        url: '../src/Controller/appointmentalphaController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
             request: 'dayCases',
+            currentDate: timestampID,
         },
         success: function (response) {
             console.log('SuccesssdayCases');
             $("#rdvContainer").html(response['html']);
-            $("#panel").html(response['htmlSlot'])
-            $.each(response['tab_dateTS'], function (i, l){
-                $("." + l).html(response['htmlSlot'])
-            })
-/*            $.each(response['tab_dateTSTest'], function (i, l){
-                alert("Index du 1er tableau : " + i)
-            })*/
+            $("#panel").html(response['htmlSlot']);
 
         },
         error: function () {
             console.log('errordayCases');
         }
     });
-}
+}*/
 
 let rdvCases = function (page) {
 
     $.ajax({
 
-        url: '../src/Controller/appointmentController.php',
+        url: '../src/Controller/appointmentalphaController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -159,7 +235,7 @@ let showInfo = function (id) {
     console.log('shoin');
     $.ajax({
 
-        url: '../src/Controller/appointmentController.php',
+        url: '../src/Controller/appointmentalphaController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -193,7 +269,7 @@ let slotTimeClick = function (thisId) {
     console.log('slotTime');
     $.ajax({
 
-        url: '../src/Controller/appointmentController.php',
+        url: '../src/Controller/appointmentalphaController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -239,7 +315,7 @@ let newAppointment = function () {
         if (result.isConfirmed) {
             $.ajax({
 
-                url: '../src/Controller/appointmentController.php',
+                url: '../src/Controller/appointmentalphaController.php',
                 dataType: 'JSON',
                 type: 'POST',
                 data: {
@@ -294,7 +370,7 @@ let slotTime = function () {
 
     $.ajax({
 
-        url: '../src/Controller/appointmentController.php',
+        url: '../src/Controller/appointmentalphaController.php',
         dataType: 'JSON',
         type: 'POST',
         data: {
@@ -346,6 +422,29 @@ let logout = function () {
     });
 }
 
+let toBeta = function () {
+
+    console.log('beta');
+    $.ajax({
+
+        url: '../src/Controller/appointmentalphaController.php',
+        dataType: 'JSON',
+        type: 'POST',
+        data: {
+            request: 'to_beta',
+        },
+        success: function (response) {
+            console.log('successBeta');
+            window.location.replace('appointmentBeta.php')
+        },
+        error: function () {
+            console.log('errorBeta');
+        }
+    });
+
+}
+
+
 function login() {
 
     // console.log(1);
@@ -367,30 +466,6 @@ function login() {
         }
     });
 }
-
-let toAlpha = function () {
-
-    console.log('Alpha');
-    $.ajax({
-
-        url: '../src/Controller/commandController.php',
-        dataType: 'JSON',
-        type: 'POST',
-        data: {
-            request: 'to_alpha',
-        },
-        success: function (response) {
-            console.log('successAlpha');
-            window.location.replace('appointmentAlpha.php')
-
-        },
-        error: function () {
-            console.log('errorAlpha');
-        }
-    });
-
-}
-
 
 let toHome = function () {
     console.log("tohome");
