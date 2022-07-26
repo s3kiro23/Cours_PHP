@@ -17,91 +17,66 @@ switch ($_POST['request']) {
         $currentDate = date('Y-m-d'); // Date du jour
         $htmlSlot = "";
 
+        /*Récupération des créneaux réservés en BDD*/
+
+        $timeSlotCheck = RDV::checkTimeSlotReserved();
+
+        for ($a = 0; $a <= count($timeSlotCheck) - 1; $a++) {
+            if ((int)$timeSlotCheck[$a]['time_slot_id'] > strtotime($currentDate)) {
+                $tab_reserved[] = (int)$timeSlotCheck[$a]['time_slot_id'];
+            }
+        }
+
         if (empty($_POST['currentDate'])) {
+
+            /*Génération du jour en cours*/
 
             $html = HTML::dayCases(utf8_encode(strftime("%A %d %B %G", strtotime($currentDate))), strtotime($currentDate));
 
-            for ($e = 0; $e <= 240; $e = $e + 20) {
+            /*Génération des créneaux horaires dispo | date courante uniquement */
 
-                $timeSlotAM = strtotime(date("H:i", mktime(8, $e, 0)));
-                $tab_available[] = (int)$timeSlotAM;
+            $tab_available = RDV::generateSlotAvailable($currentDate);
 
+            /*Comparaison des slot dispo avec ceux réservés et suppression des match*/
+
+            foreach ($tab_reserved as $item) {
+                if (in_array($item, (array)$tab_available)) {
+                    $tab_available = array_diff($tab_available, array($item));
+                }
             }
 
-            for ($i = 0; $i <= 240; $i = $i + 20) {
-
-                $timeSlotPM = strtotime(date("H:i", mktime(14, $i, 0)));
-                $tab_available[] = (int)$timeSlotPM;
-
-            }
+            /*Génération des slots dispos suite comparaison des tab_available et reserved*/
 
             foreach ($tab_available as $item) {
-
-                $tab_display[] = $item;
-
                 $htmlSlot .= HTML::timeSlot($item, date("H:i", $item));
-
             }
 
         } else {
 
-            /*Récupération des créneaux réservés en BDD*/
-
-            /*        $tab_reserved = [];
-                    $timeSlotCheck = RDV::checkTimeSlotReserved();
-
-                    for ($a = 0; $a <= count($timeSlotCheck) - 1; $a++) {
-                        if ((int)$timeSlotCheck[$a]['time_slot_id'] > strtotime($currentDate)) {
-                            $tab_reserved[] = (int)$timeSlotCheck[$a]['time_slot_id'];
-                        }
-                    }*/
-
-            /*Génération des jours de la semaine*/
-
-            /*        $weekday = 0;*/
+            /*Génération du jour en cours*/
 
             $updatedDate = utf8_encode(strftime("%A %d %B %G", $_POST['currentDate']));
-            /*        $timeStampDate = strtotime($currentDate . '+' . $weekday . ' day');*/
             $html = HTML::dayCases($updatedDate, $_POST['currentDate']);
-            /*        error_log($html);*/
 
             /*Génération des créneaux horaires dispo | date courante uniquement */
 
-            for ($e = $_POST['currentDate'] + 28800; $e <= $_POST['currentDate'] + 28800 + (240 * 60); $e = $e + 20 * 60) {
-                error_log($e);
-                /*            $timeSlotAM = strtotime(date("H:i", mktime(8, $e, 0, $_POST['currentDate'])));*/
-                $tab_available[] = $e;
+            $tab_available = RDV::generateSlotUpdate($_POST['currentDate']);
 
+            /*Comparaison des slot dispo avec ceux réservés et suppression des match*/
+
+            foreach ($tab_reserved as $item) {
+                if (in_array($item, (array)$tab_available)) {
+                    $tab_available = array_diff($tab_available, array($item));
+                }
             }
-
-            /*for ($i = $_POST['currentDate'] + 240*60; $i <= $_POST['currentDate']+ 480*60; $i = $i + 20*60) {*/
-
-            /* $timeSlotPM = strtotime(date("H:i", mktime(14, $i, 0, $_POST['currentDate'])));*/
-            /*$tab_available[] = $i;*/
-
-            /*}*/
-            /*        error_log(json_encode($tab_available));
-                    error_log(count($tab_available));*/
-
-            /*        error_log(json_encode($tab_reserved));
-
-                    if (in_array($tab_reserved, (array)$tab_available)) {
-                        foreach ($tab_reserved as $item) {
-                            $tab_available = array_diff($tab_available, array($item));
-                        }
-                    }*/
 
             /*Génération des slots dispos suite comparaison des tab_available et reserved*/
 
             foreach ($tab_available as $item) {
 
-                $tab_display[] = $item;
-
                 $htmlSlot .= HTML::timeSlot($item, date("H:i", $item));
 
             }
-            /*        error_log(json_encode($htmlSlot));*/
-            /*        error_log($html);*/
         }
 
         echo json_encode(array("html" => $html, "htmlSlot" => $htmlSlot));
@@ -121,7 +96,7 @@ switch ($_POST['request']) {
         $slotTime = date("H:i", $_POST['slotID']);
         $dateSelect = strftime("%A %d %B %G", $_POST['slotID']);
 
-        echo json_encode(array("user" => $user, "slotTime" => $slotTime, "dateSelect" => $dateSelect));
+        echo json_encode(array("user" => $user, "slotTime" => $slotTime, "dateSelect" => $dateSelect, "slotTimeStamp" => $_POST['slotID']));
 
         break;
 
@@ -142,7 +117,6 @@ switch ($_POST['request']) {
         $newRDV = "";
         error_log($_POST['expertID']);
         error_log($_POST['timeslotID']);
-        error_log(strtotime($_POST['timeslotID']));
         error_log($_SESSION['id']);
         error_log($_POST['newsletter']);
 
@@ -158,7 +132,7 @@ switch ($_POST['request']) {
 
         } else {
 
-            $newRDV = RDV::createRdv($_POST['expertID'], decrypt($_SESSION['id']), strtotime($_POST['timeslotID']));
+            $newRDV = RDV::createRdv($_POST['expertID'], decrypt($_SESSION['id']), $_POST['timeslotID']);
             $status = 1;
             $msg = "Nouveau rendez-vous créé avec l'ID n° " . $newRDV . " !";
 

@@ -258,8 +258,6 @@ class HTML
     public static function dayCases($date, $timeStampDate)
     {
         $currentDate = strtotime(date('Y-m-d'));
-        error_log($currentDate);
-        error_log($timeStampDate);
         $nextDate = $timeStampDate+86400;
         $previousDate = $timeStampDate-86400;
 

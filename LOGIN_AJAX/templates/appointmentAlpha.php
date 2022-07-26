@@ -181,7 +181,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="">
                 <form class="flex gap-20 justify-content-center py-4 mx-auto rounded shadow border border-gray-300 bg-indigo-100 bg-gradient"
                       action="javascript:newAppointment();" method="POST">
                     <div class="flex justify-center align-items-center">

@@ -60,30 +60,35 @@ class RDV
 
     }
 
-/*    static public function createSlotTime($hour)
+    static public function generateSlotAvailable($currentDate)
     {
+        $tab_available = [];
 
-        try {
-
-            $GLOBALS['db']->beginTransaction();
-            $query = $GLOBALS['db']->prepare('INSERT INTO time_slot (`hour`)
-                VALUES (:hour)');
-
-            $query->execute(array(
-                'hour' => $hour,
-            ));
-            // $dbco->exec($sql);
-
-            $GLOBALS['db']->commit();
-
-        } catch (PDOException $e) {
-            error_log("Erreur : " . $e->getMessage());
+        for ($e = strtotime($currentDate) + 28800; $e <= strtotime($currentDate) + 28800 + (240 * 60); $e = $e + 20 * 60) {
+            $tab_available[] = $e;
         }
 
-        error_log($GLOBALS['db']->lastInsertId());
-        return $GLOBALS['db']->lastInsertId();
+        for ($i = strtotime($currentDate) + 50400; $i <= strtotime($currentDate) + 50400 + (240 * 60); $i = $i + 20 * 60) {
+            $tab_available[] = $i;
+        }
 
-    }*/
+        return $tab_available;
+    }
+
+    static public function generateSlotUpdate($updateDate)
+    {
+        $tab_available = [];
+
+        for ($a = $_POST['currentDate'] + 28800; $a <= $_POST['currentDate'] + 28800 + (240 * 60); $a = $a + 20 * 60) {
+            $tab_available[] = $a;
+        }
+
+        for ($u = $_POST['currentDate'] + 50400; $u <= $_POST['currentDate'] + 50400 + (240 * 60); $u = $u + 20 * 60) {
+            $tab_available[] = $u;
+        }
+
+        return $tab_available;
+    }
 
 
     static public function rdvPerPages($off7)
@@ -97,7 +102,7 @@ class RDV
             $rdvPerPages = $query->fetchAll(PDO::FETCH_ASSOC);
 
         } catch (PDOException $e) {
-            error_log("Erreur : ".$e->getMessage());
+            error_log("Erreur : " . $e->getMessage());
         }
         return $rdvPerPages;
 
@@ -150,43 +155,53 @@ class RDV
 
     }
 
-    public function getId(){
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function setId($id){
+    public function setId($id)
+    {
         $this->id = $id;
     }
 
-    public function getExpert_id(){
+    public function getExpert_id()
+    {
         return $this->expert_id;
     }
 
-    public function setExpert_id($expert_id){
+    public function setExpert_id($expert_id)
+    {
         $this->expert_id = $expert_id;
     }
 
-    public function getUser_id(){
+    public function getUser_id()
+    {
         return $this->user_id;
     }
 
-    public function setUser_id($user_id){
+    public function setUser_id($user_id)
+    {
         $this->user_id = $user_id;
     }
 
-    public function getTime_slot_id(){
+    public function getTime_slot_id()
+    {
         return $this->time_slot_id;
     }
 
-    public function setTime_slot_id($time_slot_id){
+    public function setTime_slot_id($time_slot_id)
+    {
         $this->time_slot_id = $time_slot_id;
     }
 
-    public function getBooked_date(){
+    public function getBooked_date()
+    {
         return $this->booked_date;
     }
 
-    public function setBooked_date($booked_date){
+    public function setBooked_date($booked_date)
+    {
         $this->booked_date = $booked_date;
     }
 

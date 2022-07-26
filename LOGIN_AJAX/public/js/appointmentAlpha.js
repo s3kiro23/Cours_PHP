@@ -282,6 +282,7 @@ let slotTimeClick = function (thisId) {
             $('#modalSlot').modal('show');
             $('#modal-slotTime').html(response['slotTime']);
             $('#modal-dateSelect').html(response['dateSelect']);
+            $('.modal-body').attr('id', response['slotTimeStamp'])
 
         },
         error: function () {
@@ -321,7 +322,7 @@ let newAppointment = function () {
                 data: {
                     request: 'newAppointment',
                     expertID: $('#expertID').val(),
-                    timeslotID: $('#modal-slotTime').html(),
+                    timeslotID: $('.modal-body').attr('id'),
                     newsletter: $('.checkbox').is(':checked'),
                 },
                 success: function (response) {
@@ -364,28 +365,6 @@ let newAppointment = function () {
             })
         }
     })
-}
-
-let slotTime = function () {
-
-    $.ajax({
-
-        url: '../src/Controller/appointmentalphaController.php',
-        dataType: 'JSON',
-        type: 'POST',
-        data: {
-            request: 'slotTime',
-        },
-        success: function (response) {
-            console.log('SuccesssslotTime');
-
-
-        },
-        error: function () {
-            console.log('errorslotTime');
-        }
-    });
-
 }
 
 let logout = function () {
