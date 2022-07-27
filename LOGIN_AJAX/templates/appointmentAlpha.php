@@ -100,8 +100,8 @@
     <div class="row">
         <div class="col-12 col-md-6 max-w-4xl px-6 py-4 mx-auto">
             <h1 class="mb-4 text-4xl font-semibold text-center text-gray-800 white:text-dark">Rdv programmés</h1>
-            <button class="btn btn-secondary" onclick="rdvCases(1);">Actualiser</button>
-            <div class="rounded-lg mt-2" id="rdvCases">
+<!--            <button class="btn btn-secondary" onclick="rdvCases(1);">Actualiser</button>
+-->            <div class="rounded-lg mt-2" id="rdvCases">
 
                 <!--Contenu des rdv ici, généré avec class HTML -->
 
@@ -114,8 +114,8 @@
         </div>
         <div class="col-12 col-md-6 max-w-4xl px-6 py-4 mx-auto">
             <h1 class="mb-4 text-4xl font-semibold text-center text-gray-800 white:text-dark">Créneaux disponibles</h1>
-            <button class="btn btn-secondary" onclick="dayCases();">Actualiser</button>
-            <div id="rdvContainer" class="mt-2 w-full justify-content-center">
+<!--            <button class="btn btn-secondary" onclick="dayCases();">Actualiser</button>
+-->            <div id="rdvContainer" class="mt-2 w-full justify-content-center">
 
                 <!--Contenu des créneaux ici, généré avec class HTML -->
 

@@ -47,7 +47,6 @@ class RDV
                 'user_id' => $user_id,
                 'time_slot_id' => $time_slot_id,
             ));
-            // $dbco->exec($sql);
 
             $GLOBALS['db']->commit();
 
@@ -79,25 +78,47 @@ class RDV
     {
         $tab_available = [];
 
-        for ($a = $_POST['currentDate'] + 28800; $a <= $_POST['currentDate'] + 28800 + (240 * 60); $a = $a + 20 * 60) {
+        for ($a = $updateDate + 28800; $a <= $updateDate + 28800 + (240 * 60); $a = $a + 20 * 60) {
             $tab_available[] = $a;
         }
 
-        for ($u = $_POST['currentDate'] + 50400; $u <= $_POST['currentDate'] + 50400 + (240 * 60); $u = $u + 20 * 60) {
+        for ($u = $updateDate + 50400; $u <= $updateDate + 50400 + (240 * 60); $u = $u + 20 * 60) {
             $tab_available[] = $u;
         }
 
         return $tab_available;
     }
 
+    static public function checkTimeSlotReserved($date)
+    {
+        $timeSlotCheck = false;
+        error_log($date);
 
-    static public function rdvPerPages($off7)
+        try {
+            $query = $GLOBALS['db']->prepare('SELECT time_slot_id FROM `rdv` WHERE time_slot_id BETWEEN :date + 28800 AND :date + 64800');
+            $query->execute(array(
+                'date' => $date,
+                error_log($date)
+            ));
+            $timeSlotCheck = $query->fetchAll(PDO::FETCH_ASSOC);
+            error_log(json_encode($timeSlotCheck));
+
+        } catch (PDOException $e) {
+            error_log("Erreur : " . $e->getMessage());
+        }
+        return $timeSlotCheck;
+    }
+
+
+
+    static public function rdvPerPages($off7, $user_id)
     {
         $rdvPerPages = false;
         try {
-
-            $query = $GLOBALS['db']->prepare('SELECT * FROM `rdv` ORDER BY id DESC LIMIT 10 OFFSET :off7');
+            error_log($user_id);
+            $query = $GLOBALS['db']->prepare('SELECT * FROM `rdv` WHERE `user_id` = :user_id ORDER BY id DESC LIMIT 10 OFFSET :off7');
             $query->bindValue(':off7', $off7, PDO::PARAM_INT);
+            $query->bindValue(':user_id', $user_id, PDO::PARAM_INT);
             $query->execute();
             $rdvPerPages = $query->fetchAll(PDO::FETCH_ASSOC);
 
@@ -127,32 +148,11 @@ class RDV
 
     static public function checkAllRdv()
     {
-
         $query = $GLOBALS['db']->prepare('SELECT count(*) AS nbRdv FROM `rdv`');
         $query->execute();
         $result = $query->fetch();
 
         return (int)$result['nbRdv'];
-
-    }
-
-
-    static public function checkTimeSlotReserved()
-    {
-
-        $timeSlotCheck = false;
-
-        try {
-
-            $query = $GLOBALS['db']->prepare('SELECT time_slot_id FROM `rdv`');
-            $query->execute();
-            $timeSlotCheck = $query->fetchAll(PDO::FETCH_ASSOC);
-
-        } catch (PDOException $e) {
-            error_log("Erreur : " . $e->getMessage());
-        }
-        return $timeSlotCheck;
-
     }
 
     public function getId()
@@ -177,7 +177,7 @@ class RDV
 
     public function getUser_id()
     {
-        return $this->user_id;
+        return decrypt($this->user_id);
     }
 
     public function setUser_id($user_id)

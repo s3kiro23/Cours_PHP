@@ -64,56 +64,6 @@ function changeDate(timestamp){
 
 }
 
-
-/*
-let changeDate = function (){
-
-    $.ajax({
-
-        url: '../src/Controller/appointmentalphaController.php',
-        dataType: 'JSON',
-        type: 'POST',
-        data: {
-            request: 'nextDate',
-            currentDate: $('.currentDate').attr("id")
-        },
-        success: function (response) {
-
-            console.log(response['msg']);
-            dayCases(response['nextDate'])
-
-        },
-        error: function () {
-            console.log('errornextDate');
-        }
-    });
-
-}
-*/
-
-let previousDate = function (){
-
-    $.ajax({
-
-        url: '../src/Controller/appointmentalphaController.php',
-        dataType: 'JSON',
-        type: 'POST',
-        data: {
-            request: 'previousDate',
-            currentDate: $('#newsContent').val(),
-        },
-        success: function (response) {
-
-            console.log('SuccesspreviousDate');
-
-        },
-        error: function () {
-            console.log('errorpreviousDate');
-        }
-    });
-
-}
-
 let createNews = function () {
 
     $.ajax({
@@ -163,29 +113,6 @@ let createNews = function () {
 
 }
 
-/*let dayCases = function (timestampID = null) {
-
-    $.ajax({
-
-        url: '../src/Controller/appointmentalphaController.php',
-        dataType: 'JSON',
-        type: 'POST',
-        data: {
-            request: 'dayCases',
-            currentDate: timestampID,
-        },
-        success: function (response) {
-            console.log('SuccesssdayCases');
-            $("#rdvContainer").html(response['html']);
-            $("#panel").html(response['htmlSlot']);
-
-        },
-        error: function () {
-            console.log('errordayCases');
-        }
-    });
-}*/
-
 let rdvCases = function (page) {
 
     $.ajax({
@@ -202,25 +129,6 @@ let rdvCases = function (page) {
             $("#rdvCases").html(response['html']);
             $("#pages").html(response['paginationHTML'])
             $('#page' + page).addClass('active')
-
-            /*$('#show_paginator').bootpag({
-                total: response['totalPages'],
-                page: 1,
-                maxVisible: 10,
-                leaps: true,
-                firstLastUse: true,
-                first: '←',
-                last: '→',
-                wrapClass: 'pagination',
-                activeClass: 'active',
-                disabledClass: 'disabled',
-                nextClass: 'next',
-                prevClass: 'prev',
-                lastClass: 'last',
-                firstClass: 'first'
-            }).on('page', function (event, num) {
-                $("#").html("Page " + num); // or some ajax content loading...
-            });*/
 
         },
         error: function () {
@@ -339,11 +247,8 @@ let newAppointment = function () {
 
                         });
 
-                        /*
-                                                setTimeout(() => {
-                                                    window.location.replace('appointmentBeta.php')
-                                                }, 2300);
-                        */
+                        dayCases();
+                        rdvCases(1);
 
                     } else {
 

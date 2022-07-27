@@ -16,18 +16,22 @@ switch ($_POST['request']) {
         setlocale(LC_TIME, "fr_FR", "French");
         $currentDate = date('Y-m-d'); // Date du jour
         $htmlSlot = "";
-
-        /*Récupération des créneaux réservés en BDD*/
-
-        $timeSlotCheck = RDV::checkTimeSlotReserved();
-
-        for ($a = 0; $a <= count($timeSlotCheck) - 1; $a++) {
-            if ((int)$timeSlotCheck[$a]['time_slot_id'] > strtotime($currentDate)) {
-                $tab_reserved[] = (int)$timeSlotCheck[$a]['time_slot_id'];
-            }
-        }
+        $tab_reserved = [];
 
         if (empty($_POST['currentDate'])) {
+
+            /*Récupération des créneaux réservés en BDD*/
+
+            $timeSlotCheck = RDV::checkTimeSlotReserved(strtotime($currentDate));
+            error_log(json_encode($timeSlotCheck));
+
+
+            for ($a = 0; $a <= count($timeSlotCheck) - 1; $a++) {
+                if ((int)$timeSlotCheck[$a]['time_slot_id'] > strtotime($currentDate)) {
+                    $tab_reserved[] = (int)$timeSlotCheck[$a]['time_slot_id'];
+                }
+            }
+            error_log(json_encode($tab_reserved));
 
             /*Génération du jour en cours*/
 
@@ -52,6 +56,17 @@ switch ($_POST['request']) {
             }
 
         } else {
+
+            /*Récupération des créneaux réservés en BDD*/
+
+            $timeSlotCheck = RDV::checkTimeSlotReserved($_POST['currentDate']);
+            error_log(json_encode($timeSlotCheck));
+
+            for ($a = 0; $a <= count($timeSlotCheck) - 1; $a++) {
+                if ((int)$timeSlotCheck[$a]['time_slot_id'] > strtotime($currentDate)) {
+                    $tab_reserved[] = (int)$timeSlotCheck[$a]['time_slot_id'];
+                }
+            }
 
             /*Génération du jour en cours*/
 
@@ -87,23 +102,19 @@ switch ($_POST['request']) {
     case 'slotTimeClick':
 
         setlocale(LC_TIME, "fr_FR", "French");
-        /*        $currentTimeSlot = RDV::checkCurrentTimeSlot($_POST['timeSlotID']);*/
         $user = new User(decrypt($_SESSION['id']));
 
-        /*        $timeSlotID = $currentTimeSlot['id'];*/
-        $user = $user->getLogin();
-        error_log($user);
-        $slotTime = date("H:i", $_POST['slotID']);
-        $dateSelect = strftime("%A %d %B %G", $_POST['slotID']);
-
-        echo json_encode(array("user" => $user, "slotTime" => $slotTime, "dateSelect" => $dateSelect, "slotTimeStamp" => $_POST['slotID']));
+        echo json_encode(array(
+                "user" => $user->getLogin(),
+                "slotTime" => date("H:i", $_POST['slotID']),
+                "dateSelect" => strftime("%A %d %B %G", $_POST['slotID']),
+                "slotTimeStamp" => $_POST['slotID'])
+        );
 
         break;
 
     case 'createNews':
 
-        error_log($_POST['content']);
-        error_log($_POST['title']);
         Newsletter::createNews($_POST['title'], [], $_POST['content']);
         $msg = "Success!";
         $status = 1;
@@ -115,10 +126,6 @@ switch ($_POST['request']) {
     case 'newAppointment':
 
         $newRDV = "";
-        error_log($_POST['expertID']);
-        error_log($_POST['timeslotID']);
-        error_log($_SESSION['id']);
-        error_log($_POST['newsletter']);
 
         if (empty($_POST['expertID'])) {
 
@@ -159,15 +166,11 @@ switch ($_POST['request']) {
         $html = "";
         $paginationHTML = "";
         $currentPage = $_POST['page'];
-        /*        error_log("Page " . $_POST['page']);*/
         $off7 = ($currentPage - 1) * 10;
-        /*        error_log('Calcul off7 = ' . $off7);*/
-        $rdvPage = RDV::rdvPerPages($off7);
+        $rdvPage = RDV::rdvPerPages($off7, decrypt($_SESSION['id']));
+        error_log(json_encode($rdvPage));
         $allRdv = RDV::checkAllRdv();
-        /*        error_log(json_encode($rdvPage));
-                error_log(json_encode($allRdv));*/
         $totalPages = ceil($allRdv / 10);
-        /*        error_log("Total pages = " . $totalPages);*/
 
         if (is_array($rdvPage) || is_object($rdvPage)) {
             foreach ($rdvPage as $rdv) {
@@ -190,19 +193,21 @@ switch ($_POST['request']) {
         break;
 
     case 'showInfo':
+
         setlocale(LC_TIME, "fr_FR", "French");
         $currentRdv = RDV::checkCurrentRdv($_POST['rdvID']);
-        $user = new User(decrypt($_SESSION['id']));
+        $user = new User($currentRdv['user_id']);
 
-        $rdvID = $currentRdv['id'];
-        $expertID = $currentRdv['expert_id'];
-        $userID = $currentRdv['user_id'];
         $timeSlotID = strftime("%A %d %B %G" . " à " . "%H" . "h" . "%M", $currentRdv['time_slot_id']);
-        $bookedDate = $currentRdv['booked_date'];
 
-        /*        $checkPayment = json_decode($currentRdv['payment'], true);*/
-
-        echo json_encode(array("rdvID" => $rdvID, "expertID" => $expertID, "timeslotID" => $timeSlotID, "bookedDate" => $bookedDate, "userID" => $userID, "userLogin" => $user->getLogin()));
+        echo json_encode(array(
+                "rdvID" => $currentRdv['id'],
+                "expertID" => $currentRdv['expert_id'],
+                "timeslotID" => strftime("%A %d %B %G" . " à " . "%H" . "h" . "%M", $currentRdv['time_slot_id']),
+                "bookedDate" => $currentRdv['booked_date'],
+                "userID" => $currentRdv['user_id'],
+                "userLogin" => $user->getLogin())
+        );
 
         break;
 
@@ -238,6 +243,7 @@ switch ($_POST['request']) {
 
         $login = "Vous n'êtes pas connecté ! ";
         $user = false;
+
         if (is_logged()) {
             $user = new User(decrypt($_SESSION['id']));
 
@@ -249,9 +255,7 @@ switch ($_POST['request']) {
             echo json_encode(array("login" => $user->getLogin(), "nom" => $user->getNom(), "prenom" => $user->getPrenom(), "password" => $user->getPassword()));
         }
 
-
         break;
-
 
 }
 
