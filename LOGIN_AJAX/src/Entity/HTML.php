@@ -261,7 +261,7 @@ class HTML
         $nextDate = $timeStampDate+86400;
         $previousDate = $timeStampDate-86400;
 
-        $dayCase =  "<div id='flip' class='flex justify-between py-3 px-4 mt-2 rounded-t bg-indigo-700 w-full text-white border-solid border-grey'>";
+        $dayCase =  "<div id='flip' class='flex justify-content-center py-3 mt-2 rounded-t bg-indigo-700 w-full text-white border-solid border-grey'>";
 
             if($timeStampDate != $currentDate){
                 $dayCase .=  "<svg onClick='changeDate($previousDate);' xmlns='http://www.w3.org/2000/svg' class='h-6 w-6 cursor-pointer' fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='2'>
@@ -269,7 +269,7 @@ class HTML
                 </svg>";
             }
             $dayCase .= "
-                <span id='$timeStampDate' class='currentDate'>$date</span>
+                <span id='$timeStampDate' class='currentDate mx-5'>$date</span>
                 <svg onClick='changeDate($nextDate);' xmlns='http://www.w3.org/2000/svg' class='h-6 w-6 cursor-pointer' fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='2'>
                   <path stroke-linecap='round' stroke-linejoin='round' d='M9 5l7 7-7 7' />
                 </svg>
