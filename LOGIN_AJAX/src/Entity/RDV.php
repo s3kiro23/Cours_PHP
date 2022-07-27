@@ -62,12 +62,14 @@ class RDV
     static public function generateSlotAvailable($currentDate)
     {
         $tab_available = [];
+        $timeSettings = Settings::timeSetting();
 
-        for ($e = strtotime($currentDate) + 28800; $e <= strtotime($currentDate) + 28800 + (240 * 60); $e = $e + 20 * 60) {
+
+        for ($e = strtotime($currentDate) + $timeSettings['start_time_am']; $e <= strtotime($currentDate) + $timeSettings['end_time_am']; $e = $e + $timeSettings['slot_interval']) {
             $tab_available[] = $e;
         }
 
-        for ($i = strtotime($currentDate) + 50400; $i <= strtotime($currentDate) + 50400 + (240 * 60); $i = $i + 20 * 60) {
+        for ($i = strtotime($currentDate) + $timeSettings['start_time_pm']; $i <= strtotime($currentDate) + $timeSettings['end_time_pm']; $i = $i + $timeSettings['slot_interval']) {
             $tab_available[] = $i;
         }
 
@@ -77,12 +79,13 @@ class RDV
     static public function generateSlotUpdate($updateDate)
     {
         $tab_available = [];
+        $timeSettings = Settings::timeSetting();
 
-        for ($a = $updateDate + 28800; $a <= $updateDate + 28800 + (240 * 60); $a = $a + 20 * 60) {
+        for ($a = $updateDate + $timeSettings['start_time_am']; $a <= $updateDate + $timeSettings['end_time_am']; $a = $a + $timeSettings['slot_interval']) {
             $tab_available[] = $a;
         }
 
-        for ($u = $updateDate + 50400; $u <= $updateDate + 50400 + (240 * 60); $u = $u + 20 * 60) {
+        for ($u = $updateDate + $timeSettings['start_time_pm']; $u <= $updateDate + $timeSettings['end_time_pm']; $u = $u + $timeSettings['slot_interval']) {
             $tab_available[] = $u;
         }
 

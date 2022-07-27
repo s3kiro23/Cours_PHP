@@ -8,8 +8,7 @@
           integrity="sha512-O03ntXoVqaGUTAeAmvQ2YSzkCvclZEcPQu1eqloPaHfJ5RuNGiS4l+3duaidD801P50J28EHyonCV06CUlTSag=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css"
           integrity="sha512-O03ntXoVqaGUTAeAmvQ2YSzkCvclZEcPQu1eqloPaHfJ5RuNGiS4l+3duaidD801P50J28EHyonCV06CUlTSag=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
@@ -22,10 +21,7 @@
             integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
             crossorigin="anonymous">
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous">
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootpag/1.0.7/jquery.bootpag.min.js"
             integrity="sha512-9PnpJ6p3yWEYYgxG+BrwRkKxaVaziAYmugw4aDWI3Olbp5IJWhHDKXNZTI4DRqEF3LxtXZr/L9jZT1b7D6HTHQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -96,12 +92,13 @@
     </div>
 </div>
 
-<div class="container mt-5">
+<div class="container mt-4">
     <div class="row">
         <div class="col-12 col-md-6 max-w-4xl px-6 py-4 mx-auto">
             <h1 class="mb-4 text-4xl font-semibold text-center text-gray-800 white:text-dark">Rdv programmés</h1>
-<!--            <button class="btn btn-secondary" onclick="rdvCases(1);">Actualiser</button>
--->            <div class="rounded-lg mt-2" id="rdvCases">
+            <!--            <button class="btn btn-secondary" onclick="rdvCases(1);">Actualiser</button>
+            -->
+            <div class="rounded-lg mt-2" id="rdvCases">
 
                 <!--Contenu des rdv ici, généré avec class HTML -->
 
@@ -114,8 +111,9 @@
         </div>
         <div class="col-12 col-md-6 max-w-4xl px-6 py-4 mx-auto">
             <h1 class="mb-4 text-4xl font-semibold text-center text-gray-800 white:text-dark">Créneaux disponibles</h1>
-<!--            <button class="btn btn-secondary" onclick="dayCases();">Actualiser</button>
--->            <div id="rdvContainer" class="col-12 mt-2">
+            <!--            <button class="btn btn-secondary" onclick="dayCases();">Actualiser</button>
+            -->
+            <div id="rdvContainer" class="col-12 mt-2">
 
                 <!--Contenu des créneaux ici, généré avec class HTML -->
 

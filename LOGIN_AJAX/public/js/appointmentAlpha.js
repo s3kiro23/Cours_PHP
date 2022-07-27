@@ -2,6 +2,7 @@ $(function () {
 
     load();
 
+
 });
 
  function dayCases (timestampID = null) {

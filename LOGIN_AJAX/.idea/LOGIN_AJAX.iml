@@ -16,5 +16,9 @@
     <orderEntry type="library" name="@popperjs/core" level="application" />
     <orderEntry type="library" name="bootpag" level="application" />
     <orderEntry type="library" name="9414e04596" level="application" />
+    <orderEntry type="library" name="flowbite" level="application" />
+    <orderEntry type="library" name="mdb-ui-kit" level="application" />
+    <orderEntry type="library" name="bootstrap-datepicker" level="application" />
+    <orderEntry type="library" name="jquery-3.5.1.slim" level="application" />
   </component>
 </module>

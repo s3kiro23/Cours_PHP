@@ -20,11 +20,13 @@ switch ($_POST['request']) {
 
         if (empty($_POST['currentDate'])) {
 
+            $timeSettings = Settings::timeSetting();
+            error_log($timeSettings['slot_interval']);
+
             /*Récupération des créneaux réservés en BDD*/
 
             $timeSlotCheck = RDV::checkTimeSlotReserved(strtotime($currentDate));
             error_log(json_encode($timeSlotCheck));
-
 
             for ($a = 0; $a <= count($timeSlotCheck) - 1; $a++) {
                 if ((int)$timeSlotCheck[$a]['time_slot_id'] > strtotime($currentDate)) {

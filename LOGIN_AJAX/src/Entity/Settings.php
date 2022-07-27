@@ -8,15 +8,20 @@ $GLOBALS['db'] = $db->checkDb();
 
 class Settings
 {
+    static public function timeSetting()
+    {
+        $timeSetting = false;
 
-    static public function changeSlotAM () {
+        try {
+            $query = $GLOBALS['db']->prepare('SELECT * FROM `settings`');
+            $query->execute();
+            $timeSetting = $query->fetch(PDO::FETCH_ASSOC);
+            error_log(json_encode($timeSetting));
 
-
-    }
-
-    static public function changeSlotPM () {
-
-
+        } catch (PDOException $e) {
+            error_log("Erreur : " . $e->getMessage());
+        }
+        return $timeSetting;
     }
 
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : lun. 18 juil. 2022 à 00:21
+-- Généré le : mer. 27 juil. 2022 à 20:00
 -- Version du serveur : 5.7.36
 -- Version de PHP : 7.4.26
 
@@ -37,13 +37,21 @@ CREATE TABLE IF NOT EXISTS `command` (
   `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `user_id` int(8) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=239 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=247 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `command`
 --
 
 INSERT INTO `command` (`id`, `title`, `label`, `type`, `payment`, `date`, `user_id`) VALUES
+(246, 'z', 'az', 'a-emporter', '[\"CB\"]', '2022-07-25 10:27:59', 58),
+(245, 'aa', 'a1', 'livraison', '[\"CHEQUES\"]', '2022-07-25 10:27:43', 58),
+(244, '21', '1', 'sur-place', '[\"CHEQUES\"]', '2022-07-25 10:27:30', 58),
+(243, '233', '3', 'livraison', '[\"ESPECES\"]', '2022-07-25 10:27:18', 58),
+(242, 'az', 'z', 'sur-place', '[\"ESPECES\",\"CHEQUES\"]', '2022-07-25 10:26:47', 58),
+(241, 'az', 'z', 'sur-place', '[\"ESPECES\",\"CHEQUES\"]', '2022-07-25 10:26:38', 58),
+(240, 'az', 'z', 'sur-place', '[\"ESPECES\",\"CHEQUES\"]', '2022-07-25 10:25:24', 58),
+(239, 'az', 'az', 'sur-place', '[\"ESPECES\"]', '2022-07-25 10:25:05', 58),
 (122, 'az', 'azaz', '', '', '2022-07-14 16:48:50', 58),
 (123, 'az', 'azaz', '', '', '2022-07-14 16:48:50', 58),
 (124, 'az', 'azaz', '', '', '2022-07-14 16:48:50', 58),
@@ -181,11 +189,11 @@ CREATE TABLE IF NOT EXISTS `log` (
 --
 
 INSERT INTO `log` (`log_id`, `user_id`, `date`) VALUES
-(1, 58, '2022-07-16 11:43:22'),
-(2, 58, '2022-07-16 11:44:39'),
-(3, 58, '2022-07-16 11:44:42'),
-(4, 58, '2022-07-16 11:44:44'),
-(5, 58, '2022-07-16 11:44:51');
+(1, 58, '2022-07-25 00:52:04'),
+(2, 58, '2022-07-25 00:52:04'),
+(3, 58, '2022-07-25 00:52:04'),
+(4, 58, '2022-07-25 00:52:04'),
+(5, 58, '2022-07-25 00:52:04');
 
 -- --------------------------------------------------------
 
@@ -200,18 +208,64 @@ CREATE TABLE IF NOT EXISTS `log_sms` (
   `code` int(5) NOT NULL,
   `state` int(8) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=73 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=97 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `log_sms`
 --
 
 INSERT INTO `log_sms` (`id`, `user_id`, `code`, `state`) VALUES
+(96, 58, 3456, 1),
+(95, 58, 3622, 1),
+(94, 60, 4850, 1),
+(93, 59, 2687, 1),
+(92, 58, 6184, 1),
+(91, 58, 8014, 1),
+(90, 58, 9200, 1),
+(89, 58, 5826, 1),
+(88, 58, 8813, 1),
+(87, 58, 8840, 1),
+(86, 58, 7645, 1),
+(85, 58, 9903, 1),
+(84, 58, 9315, 1),
+(83, 58, 7678, 1),
+(82, 58, 1161, 1),
+(81, 58, 2949, 1),
+(80, 58, 1711, 1),
+(79, 58, 6339, 1),
+(78, 58, 6617, 1),
+(77, 58, 9298, 1),
+(76, 58, 9310, 1),
+(75, 58, 8309, 1),
+(74, 58, 2902, 1),
+(73, 58, 3003, 1),
 (72, 58, 1372, 1),
 (71, 58, 9330, 1),
 (70, 58, 2015, 1),
 (69, 58, 4275, 1),
 (68, 58, 5702, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `newsletters`
+--
+
+DROP TABLE IF EXISTS `newsletters`;
+CREATE TABLE IF NOT EXISTS `newsletters` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `title` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tab_user` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` varchar(400) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `newsletters`
+--
+
+INSERT INTO `newsletters` (`id`, `title`, `tab_user`, `content`) VALUES
+(1, 'test', '[\"58\",\"58\",\"58\",\"59\",\"z@z.z\",\"z@z.z\",\"a@a.a\",\"a@a.a\",\"a@a.a\",\"a@a.a\",\"a@a.a\",\"a@a.a\",\"a@a.a\",\"a@a.a\",\"a@a.a\",\"a@a.a\",\"a@a.a\",\"a@a.a\",\"a@a.a\",\"a@a.a\",\"a@a.a\",\"a@a.a\",\"a@a.a\",\"a@a.a\",\"a@a.a\",\"a@a.a\",\"a@a.a\",\"a@a.a\",\"a@a.a\",\"a@a.a\",\"q@q.q\",\"a@a.a\"]', 'welcome');
 
 -- --------------------------------------------------------
 
@@ -227,25 +281,26 @@ CREATE TABLE IF NOT EXISTS `rdv` (
   `time_slot_id` int(8) NOT NULL,
   `booked_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `rdv`
 --
 
 INSERT INTO `rdv` (`id`, `expert_id`, `user_id`, `time_slot_id`, `booked_date`) VALUES
-(1, 134, 58, 2, '2022-07-16 02:45:20'),
-(2, 134, 58, 2, '2022-07-16 02:45:57'),
-(3, 134, 58, 2, '2022-07-16 02:46:32'),
-(4, 54, 58, 1, '2022-07-16 02:47:26'),
-(5, 54, 58, 1, '2022-07-16 02:48:10'),
-(6, 12, 58, 23, '2022-07-16 02:53:21'),
-(7, 12, 58, 23, '2022-07-16 02:54:45'),
-(8, 12, 58, 23, '2022-07-16 02:57:14'),
-(9, 1, 58, 2, '2022-07-16 03:01:55'),
-(10, 23, 58, 1, '2022-07-16 04:08:40'),
-(11, 2312, 58, 545, '2022-07-16 04:10:24'),
-(12, 12, 58, 2, '2022-07-16 11:52:44');
+(16, 12, 58, 1658815200, '2022-07-26 22:22:49'),
+(17, 121, 58, 1658851200, '2022-07-26 22:22:54'),
+(18, 1211, 58, 1658901600, '2022-07-26 22:23:16'),
+(19, 1211, 58, 1658937600, '2022-07-26 22:23:21'),
+(20, 123, 58, 1658923200, '2022-07-26 22:44:10'),
+(21, 23, 58, 1658988000, '2022-07-27 18:34:45'),
+(22, 23, 58, 1658936400, '2022-07-27 18:34:52'),
+(23, 23, 58, 1658914800, '2022-07-27 18:34:57'),
+(24, 23, 58, 1658902800, '2022-07-27 18:35:05'),
+(25, 23, 58, 1659024000, '2022-07-27 18:35:13'),
+(26, 23, 58, 1659022800, '2022-07-27 18:35:19'),
+(27, 23, 60, 1659160800, '2022-07-27 18:36:50'),
+(28, 21324, 58, 1658904000, '2022-07-27 19:57:41');
 
 -- --------------------------------------------------------
 
@@ -293,6 +348,30 @@ INSERT INTO `request` (`id`, `user_id`, `hash`, `state`) VALUES
 (41, 58, 'BfXxqTpN3OrhBoGoFjIAXSaBrXQ0Qc', 1),
 (42, 58, 'ttyyiS37v4euZl7qsLJMAhruPByZVn', 1),
 (43, 58, 'Du4y?U3q5vRVTxu3SqkaNIKmyZef0K', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `settings`
+--
+
+DROP TABLE IF EXISTS `settings`;
+CREATE TABLE IF NOT EXISTS `settings` (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `slot_interval` int(35) DEFAULT NULL,
+  `start_time_am` int(35) NOT NULL,
+  `end_time_am` int(35) DEFAULT NULL,
+  `start_time_pm` int(35) DEFAULT NULL,
+  `end_time_pm` int(35) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `settings`
+--
+
+INSERT INTO `settings` (`id`, `slot_interval`, `start_time_am`, `end_time_am`, `start_time_pm`, `end_time_pm`) VALUES
+(1, 1200, 28800, 43200, 50400, 64800);
 
 -- --------------------------------------------------------
 
@@ -384,14 +463,17 @@ CREATE TABLE IF NOT EXISTS `user` (
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `hash` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `user`
 --
 
 INSERT INTO `user` (`id`, `login`, `nom`, `prenom`, `type`, `password`, `pwdExp`, `created_date`, `hash`) VALUES
-(58, 'a@a.a', 's', 'a', 'emporter', '$2y$10$sihBa4PCgn4SNpQktD4J6eLhJ7H/cNzj91s.5.keYRZuhdzCfaO.6', '2022-07-18 00:00:00', '2022-07-11 20:12:41', '!BjyOz1DMl5D9pMtIiV6@QZfhmOPnJ');
+(58, 'a@a.a', 's', 'a', 'emporter', '$2y$10$zfEX3Uhi7iTc0T3vVqKmpuACNhsAFqktn/Ya3epvTZlL8ffmHTbGy', '2022-07-28 00:00:00', '2022-07-11 20:12:41', '!BjyOz1DMl5D9pMtIiV6@QZfhmOPnJ'),
+(59, 'z@z.z', 'z', 'z', 'sur-place', '$2y$10$1hqc09mDm4lMt7s8r79mX.edqC665K3fUyshDlO39qOlC3YTLzosi', '2022-07-26 00:00:00', '2022-07-25 11:55:08', 'ywhVL5x0mHB@ZG$hd4j$ykR4okLCNz'),
+(60, 'q@q.q', 'q', 'q', 'sur-place', '$2y$10$GrbH7i4Jbh7HpaqVFOliEe.TeP9GbWx9KzUCeHkKfZl7nxwmUjiGW', '2022-07-28 00:00:00', '2022-07-27 18:36:03', 'v2Dl1mhlRFx@F2MS2GWI#xS8VV699V'),
+(61, 'a@a.aa', 'aa', 'aa', 'sur-place', 'aa', NULL, '2022-07-27 19:32:53', 'aafzsdf53465');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
