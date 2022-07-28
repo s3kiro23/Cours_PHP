@@ -42,8 +42,8 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-12 mx-auto">
-            <form class=" flex gap-20 justify-content-center w-50 py-3 mt-4 mx-auto rounded shadow border border-gray-300 bg-indigo-100 bg-gradient"
+        <div class="col-6 mx-auto">
+            <form class="flex gap-20 justify-content-center w-50 py-3 mt-4 mx-auto rounded shadow border border-gray-300 bg-indigo-100 bg-gradient"
                   action="javascript:createNews();" method="POST">
                 <div class="flex-column justify-center align-items-center">
                     <div>
@@ -88,6 +88,29 @@
                     </div>
                 </div>
             </form>
+        </div>
+        <div class="col-6 mx-auto">
+            <div class="flex-column justify-content-center w-50 p-10 mt-4 mx-auto rounded shadow border border-gray-300 bg-indigo-100 bg-gradient">
+                <form id="uploadForm" action="javascript:uploadFile();" method="POST" class="flex-column">
+                    <input name=file type=file id="file" class="mb-3" />
+                    <input id="submitBtn" class="mb-3 btn bg-indigo-600 text-white" type="submit" value='Envoyer le fichier'/>
+                </form>
+                <progress></progress>
+            </div>
+        </div>
+        <div class="col-4 mx-auto">
+            <div class="justify-content-center w-50 py-4 mt-4 mx-auto rounded shadow border border-gray-300 bg-indigo-100 bg-gradient">
+                <div class="row">
+                    <div class="col-12">
+                        <div>
+                            <h2 class="text-center font-weight-bold mb-4">Fichiers de l'utilisateur</h2>
+                        </div>
+                        <div class="flex bg-white m-4">
+                            <span class="pl-2">fichier</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

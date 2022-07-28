@@ -1,11 +1,86 @@
 $(function () {
 
     load();
-
+    $("#file").on('change', checkType)
 
 });
 
- function dayCases (timestampID = null) {
+let load = function () {
+    login();
+    dayCases();
+    rdvCases(1);
+    /*
+        $("#rdvContainer").on('click', toggleSlide);
+    */
+    $("#logout").on('click', logout);
+    $("#to_profil").on('click', toProfil);
+    $("#to_home").on('click', toHome);
+    $("#to_beta").on('click', toBeta);
+
+}
+
+function checkUploadedFile() {
+
+
+
+}
+
+function checkType() {
+
+    var file = this.files[0];
+    var fileType = file.type;
+    var match = ['application/pdf', 'application/msword', 'application/vnd.ms-office', 'image/jpeg', 'image/png', 'image/jpg'];
+    if(!((fileType == match[0]) || (fileType == match[1]) || (fileType == match[2]) || (fileType == match[3]) || (fileType == match[4]) || (fileType == match[5]))){
+        alert('Sorry, only PDF, DOC, JPG, JPEG, & PNG files are allowed to upload.');
+        $("#file").val('');
+        return false;
+    }
+
+}
+
+function uploadFile() {
+
+    var data = new FormData($('form')[1]);
+    $.ajax({
+        url: '../src/Controller/appointmentalphaController.php', //script qui traitera l'envoi du fichier
+        type: 'POST',
+        dataType: 'JSON',
+        enctype: 'multipart/form-data',
+        data: data,
+        cache: false,
+        contentType: false,
+        processData: false,
+/*        beforeSend: function(){
+            $('#submitBtn').attr("disabled","disabled");
+            $('#fupForm').css("opacity",".5");
+        },*/
+
+        success: function (response) {
+            console.log('SuccesssUpload');
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: response['msg'],
+                showConfirmButton: false,
+                timer: 1500
+            });
+
+        },
+        error: function () {
+            console.log('errordayUpload');
+        }
+    });
+
+    function afficherAvancement(e) {
+        if (e.lengthComputable) {
+            $('progress').attr({value: e.loaded, max: e.total});
+        }
+    }
+
+
+}
+
+function dayCases(timestampID = null) {
     console.log(timestampID);
     $.ajax({
 
@@ -34,20 +109,6 @@ $(function () {
 console.log($idS);*/
 
 
-let load = function () {
-    login();
-    dayCases();
-    rdvCases(1);
-/*
-    $("#rdvContainer").on('click', toggleSlide);
-*/
-    $("#logout").on('click', logout);
-    $("#to_profil").on('click', toProfil);
-    $("#to_home").on('click', toHome);
-    $("#to_beta").on('click', toBeta);
-
-}
-
 
 /*let toggleSlide = function () {
     console.log('toggle');
@@ -59,7 +120,7 @@ let load = function () {
 
 }*/
 
-function changeDate(timestamp){
+function changeDate(timestamp) {
 
     dayCases(timestamp);
 

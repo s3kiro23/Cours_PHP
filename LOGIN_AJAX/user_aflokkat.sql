@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mer. 27 juil. 2022 à 20:00
+-- Généré le : jeu. 28 juil. 2022 à 21:09
 -- Version du serveur : 5.7.36
 -- Version de PHP : 7.4.26
 
@@ -364,7 +364,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `start_time_pm` int(35) DEFAULT NULL,
   `end_time_pm` int(35) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `settings`
@@ -448,6 +448,21 @@ INSERT INTO `time_slot` (`id`, `weekday`, `hour`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `upload`
+--
+
+DROP TABLE IF EXISTS `upload`;
+CREATE TABLE IF NOT EXISTS `upload` (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `file_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `submitted_on` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `user`
 --
 
@@ -470,7 +485,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`id`, `login`, `nom`, `prenom`, `type`, `password`, `pwdExp`, `created_date`, `hash`) VALUES
-(58, 'a@a.a', 's', 'a', 'emporter', '$2y$10$zfEX3Uhi7iTc0T3vVqKmpuACNhsAFqktn/Ya3epvTZlL8ffmHTbGy', '2022-07-28 00:00:00', '2022-07-11 20:12:41', '!BjyOz1DMl5D9pMtIiV6@QZfhmOPnJ'),
+(58, 'a@a.a', 's', 'a', 'emporter', '$2y$10$oyemUv5SKyTJXk52cIZnBuA/oU5xDdIZdslMKzdoiEKA9t1nGBILq', '2022-07-29 00:00:00', '2022-07-11 20:12:41', '!BjyOz1DMl5D9pMtIiV6@QZfhmOPnJ'),
 (59, 'z@z.z', 'z', 'z', 'sur-place', '$2y$10$1hqc09mDm4lMt7s8r79mX.edqC665K3fUyshDlO39qOlC3YTLzosi', '2022-07-26 00:00:00', '2022-07-25 11:55:08', 'ywhVL5x0mHB@ZG$hd4j$ykR4okLCNz'),
 (60, 'q@q.q', 'q', 'q', 'sur-place', '$2y$10$GrbH7i4Jbh7HpaqVFOliEe.TeP9GbWx9KzUCeHkKfZl7nxwmUjiGW', '2022-07-28 00:00:00', '2022-07-27 18:36:03', 'v2Dl1mhlRFx@F2MS2GWI#xS8VV699V'),
 (61, 'a@a.aa', 'aa', 'aa', 'sur-place', 'aa', NULL, '2022-07-27 19:32:53', 'aafzsdf53465');
