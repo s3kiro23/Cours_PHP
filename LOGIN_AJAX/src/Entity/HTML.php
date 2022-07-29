@@ -310,4 +310,28 @@ class HTML
 		";
     }
 
+    public static function displayFiles($uploadedFile, $fileID) {
+
+        return "
+
+            <div class='pl-2'><a target='_blank' href='../upload/$uploadedFile' class='text-blue-400 cursor-pointer text-decoration-none' ;'>$uploadedFile</a></div>
+            
+        ";
+
+    }
+
+    public static function showFileFrame($fileType, $uploadedFile){
+
+        $htmlType = "<img class='fit-picture' src='../upload/$uploadedFile' alt='img'>";
+
+        if ($fileType == 'pdf'){
+
+            $htmlType = "<iframe class='fit-picture' src='../upload/$uploadedFile'></iframe>";
+
+        }
+
+        return $htmlType;
+
+    }
+
 }

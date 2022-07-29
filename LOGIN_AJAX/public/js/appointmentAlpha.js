@@ -9,6 +9,7 @@ let load = function () {
     login();
     dayCases();
     rdvCases(1);
+    checkUserFiles();
     /*
         $("#rdvContainer").on('click', toggleSlide);
     */
@@ -19,10 +20,25 @@ let load = function () {
 
 }
 
-function checkUploadedFile() {
+function checkUserFiles() {
 
+    console.log('Files1');
+    $.ajax({
 
-
+        url: '../src/Controller/appointmentalphaController.php',
+        dataType: 'JSON',
+        type: 'POST',
+        data: {
+            request: 'checkUserFiles',
+        },
+        success: function (response) {
+            console.log('SuccesssdayCases');
+            $("#userFiles").html(response['html']);
+        },
+        error: function () {
+            console.log('errordayCases');
+        }
+    });
 }
 
 function checkType() {
@@ -30,7 +46,7 @@ function checkType() {
     var file = this.files[0];
     var fileType = file.type;
     var match = ['application/pdf', 'application/msword', 'application/vnd.ms-office', 'image/jpeg', 'image/png', 'image/jpg'];
-    if(!((fileType == match[0]) || (fileType == match[1]) || (fileType == match[2]) || (fileType == match[3]) || (fileType == match[4]) || (fileType == match[5]))){
+    if (!((fileType == match[0]) || (fileType == match[1]) || (fileType == match[2]) || (fileType == match[3]) || (fileType == match[4]) || (fileType == match[5]))) {
         alert('Sorry, only PDF, DOC, JPG, JPEG, & PNG files are allowed to upload.');
         $("#file").val('');
         return false;
@@ -42,7 +58,7 @@ function uploadFile() {
 
     var data = new FormData($('form')[1]);
     $.ajax({
-        url: '../src/Controller/appointmentalphaController.php', //script qui traitera l'envoi du fichier
+        url: '../src/Controller/uploadController.php', //script qui traitera l'envoi du fichier
         type: 'POST',
         dataType: 'JSON',
         enctype: 'multipart/form-data',
@@ -50,10 +66,10 @@ function uploadFile() {
         cache: false,
         contentType: false,
         processData: false,
-/*        beforeSend: function(){
-            $('#submitBtn').attr("disabled","disabled");
-            $('#fupForm').css("opacity",".5");
-        },*/
+        /*        beforeSend: function(){
+                    $('#submitBtn').attr("disabled","disabled");
+                    $('#fupForm').css("opacity",".5");
+                },*/
 
         success: function (response) {
             console.log('SuccesssUpload');
@@ -65,9 +81,12 @@ function uploadFile() {
                 timer: 1500
             });
 
+            checkUserFiles();
+
         },
         error: function () {
             console.log('errordayUpload');
+
         }
     });
 
@@ -76,8 +95,30 @@ function uploadFile() {
             $('progress').attr({value: e.loaded, max: e.total});
         }
     }
+}
 
+let showFile = function (id) {
 
+    console.log('shofile');
+    $.ajax({
+
+        url: '../src/Controller/appointmentalphaController.php',
+        dataType: 'JSON',
+        type: 'POST',
+        data: {
+            request: 'showFile',
+            fileID: id
+        },
+        success: function (response) {
+
+            $('#modalFile').modal('show');
+            $('#userFile').html(response['htmlType'])
+
+        },
+        error: function () {
+            console.log('errorShow');
+        }
+    });
 }
 
 function dayCases(timestampID = null) {
@@ -107,7 +148,6 @@ function dayCases(timestampID = null) {
     return this.id;
 }).get()];
 console.log($idS);*/
-
 
 
 /*let toggleSlide = function () {
@@ -171,8 +211,6 @@ let createNews = function () {
             console.log('errordayCases');
         }
     });
-
-
 }
 
 let rdvCases = function (page) {

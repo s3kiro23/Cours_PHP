@@ -159,6 +159,25 @@ class User
 
     }
 
+    public function checkUploadedFiles()
+    {
+        $filesChecked = "";
+
+        try {
+            $query = $GLOBALS['db']->prepare('SELECT * FROM `upload` WHERE user_id = :user_id');
+            $query->execute(array(
+                'user_id' => $this->id,
+            ));
+            $filesChecked = $query->fetchAll(PDO::FETCH_ASSOC);
+/*            error_log(json_encode($filesChecked));*/
+
+        } catch (PDOException $e) {
+            error_log("Erreur : " . $e->getMessage());
+        }
+
+        return $filesChecked;
+    }
+
     public function delete($ID)
     {
         error_log('deleteFct');

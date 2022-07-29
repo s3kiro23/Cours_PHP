@@ -95,16 +95,16 @@ class RDV
     static public function checkTimeSlotReserved($date)
     {
         $timeSlotCheck = false;
-        error_log($date);
+/*        error_log($date);*/
 
         try {
             $query = $GLOBALS['db']->prepare('SELECT time_slot_id FROM `rdv` WHERE time_slot_id BETWEEN :date + 28800 AND :date + 64800');
             $query->execute(array(
                 'date' => $date,
-                error_log($date)
+/*                error_log($date)*/
             ));
             $timeSlotCheck = $query->fetchAll(PDO::FETCH_ASSOC);
-            error_log(json_encode($timeSlotCheck));
+/*            error_log(json_encode($timeSlotCheck));*/
 
         } catch (PDOException $e) {
             error_log("Erreur : " . $e->getMessage());
@@ -118,7 +118,7 @@ class RDV
     {
         $rdvPerPages = false;
         try {
-            error_log($user_id);
+/*            error_log($user_id);*/
             $query = $GLOBALS['db']->prepare('SELECT * FROM `rdv` WHERE `user_id` = :user_id ORDER BY id DESC LIMIT 10 OFFSET :off7');
             $query->bindValue(':off7', $off7, PDO::PARAM_INT);
             $query->bindValue(':user_id', $user_id, PDO::PARAM_INT);

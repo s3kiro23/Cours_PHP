@@ -9,7 +9,7 @@ $GLOBALS['db'] = $db->checkDb();
 class Upload
 {
 
-    static public function uploadFile($file_name, $user_id)
+    public static function uploadFile($file_name, $user_id)
     {
 
         try {
@@ -33,6 +33,5 @@ class Upload
         return $GLOBALS['db']->lastInsertId();
 
     }
-
 
 }

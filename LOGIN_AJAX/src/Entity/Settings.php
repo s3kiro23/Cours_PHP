@@ -16,7 +16,7 @@ class Settings
             $query = $GLOBALS['db']->prepare('SELECT * FROM `settings`');
             $query->execute();
             $timeSetting = $query->fetch(PDO::FETCH_ASSOC);
-            error_log(json_encode($timeSetting));
+/*            error_log(json_encode($timeSetting));*/
 
         } catch (PDOException $e) {
             error_log("Erreur : " . $e->getMessage());
