@@ -3,6 +3,7 @@ $(function () {
     load();
     /*$("#formFile").on('change', checkType)*/
     $("#selectMarque").on('change', modelesLoad)
+    $(".form-control").on('change', checkField)
 
 });
 
@@ -10,6 +11,31 @@ let load = function () {
 
     marquesLoad();
     dayCases();
+
+}
+
+let checkField = function () {
+
+    $.ajax({
+
+        url: '../src/Controller/formClientController.php',
+        dataType: 'JSON',
+        type: 'POST',
+        data: {
+            request: 'checkField',
+        },
+        success: function (response) {
+
+            /*
+                        alert(response['msg'])
+            */
+
+        },
+        error: function () {
+            console.log('error');
+        }
+    });
+
 
 }
 
@@ -57,7 +83,7 @@ let modelesLoad = function () {
     });
 }
 
-let dayCases = function () {
+let dayCases = function (timestampID = null) {
 
     $.ajax({
 
@@ -66,19 +92,26 @@ let dayCases = function () {
         type: 'POST',
         data: {
             request: 'dayCases',
+            currentDate: timestampID,
         },
         success: function (response) {
-            console.log('SuccesssdayCases');
+            console.log('SuccessdayCases');
             $("#rdvContainer").html(response['html_day']);
             $("#panel").html(response['html_slot'])
-/*            $.each(response['tab_dateTS'], function (i, l){
-                $("." + l).html(response['htmlSlot'])
-            })*/
+            /*            $.each(response['tab_dateTS'], function (i, l){
+                            $("." + l).html(response['htmlSlot'])
+                        })*/
         },
         error: function () {
             console.log('errordayCases');
         }
     });
+}
+
+function changeDate(timestamp) {
+
+    dayCases(timestamp);
+
 }
 
 let newAppointment = function () {
@@ -120,8 +153,11 @@ let newAppointment = function () {
                     ville: $('#inputVille').val(),
                     immat: $('#inputImmat').val(),
                     marque: $('#selectMarque').val(),
-                    carburant: $('input[name=optionsCarbu]:checked').val(),
                     modele: $('#selectModele').val(),
+                    carburant: $('input[name=optionsCarbu]:checked').val(),
+                    annee: $('#inputAnnee').val(),
+                    newsletter: $('#newsletter').is(':checked'),
+                    creneau: $('input[name=timeSlot]:checked').attr('id'),
                 },
                 success: function (response) {
                     console.log('SuccessnewAppointment');

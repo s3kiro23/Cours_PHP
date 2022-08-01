@@ -15,8 +15,22 @@ switch ($_POST['request']) {
 
         $msg = 'Réservation de votre créneaux effectué avec succès !!';
         $status = 1;
+        error_log(json_encode($_POST));
+
+        $carID = Vehicule::newVehicule($_POST['marque'], $_POST['modele'], $_POST['immat'], $_POST['annee'], $_POST['carburant']);
+        ControleTech::newCT($_POST['creneau'], $carID, 0);
 
         echo json_encode(array("status" => $status, "msg" => $msg));
+
+        break;
+
+    case 'checkField':
+
+        $msg = "CheckField";
+
+
+
+        echo json_encode(array("msg" => $msg));
 
         break;
 
@@ -66,19 +80,22 @@ switch ($_POST['request']) {
         if (empty($_POST['currentDate'])) {
 
             $timeSettings = Settings::timeSetting();
-/*            error_log(json_encode($timeSettings));*/
+                        /*error_log(json_encode($timeSettings));*/
 
             /*Récupération des créneaux réservés en BDD*/
 
             $timeSlotCheck = ControleTech::checkTimeSlotReserved(strtotime($currentDate));
-            error_log(json_encode($timeSlotCheck));
+                        error_log(json_encode($timeSlotCheck));
+            /*            error_log(count($timeSlotCheck));*/
 
-            for ($a = 0; $a <= count($timeSlotCheck) - 1; $a++) {
-                if ((int)$timeSlotCheck[$a]['id_time_slot'] > strtotime($currentDate)) {
-                    $tab_reserved[] = (int)$timeSlotCheck[$a]['id_time_slot'];
+            if ($timeSlotCheck){
+                for ($a = 0; $a <= count($timeSlotCheck) - 1; $a++) {
+                    if ((int)$timeSlotCheck[$a]['id_time_slot'] > strtotime($currentDate)) {
+                        $tab_reserved[] = (int)$timeSlotCheck[$a]['id_time_slot'];
+                    }
                 }
+                error_log(json_encode($tab_reserved));
             }
-            /*            error_log(json_encode($tab_reserved));*/
 
             /*Génération du jour en cours*/
 
@@ -107,11 +124,13 @@ switch ($_POST['request']) {
             /*Récupération des créneaux réservés en BDD*/
 
             $timeSlotCheck = ControleTech::checkTimeSlotReserved($_POST['currentDate']);
-            /*            error_log(json_encode($timeSlotCheck));*/
+            /*            error_log('Update Date = ' . $timeSlotCheck['id_time_slot']);*/
 
-            for ($a = 0; $a <= count($timeSlotCheck) - 1; $a++) {
-                if ((int)$timeSlotCheck[$a]['time_slot_id'] > strtotime($currentDate)) {
-                    $tab_reserved[] = (int)$timeSlotCheck[$a]['time_slot_id'];
+            if ($timeSlotCheck) {
+                for ($a = 0; $a <= count($timeSlotCheck) - 1; $a++) {
+                    if ((int)$timeSlotCheck[$a]['id_time_slot'] > strtotime($currentDate)) {
+                        $tab_reserved[] = (int)$timeSlotCheck[$a]['id_time_slot'];
+                    }
                 }
             }
 
@@ -144,6 +163,5 @@ switch ($_POST['request']) {
         echo json_encode(array("html_day" => $html_day, "html_slot" => $html_slot));
 
         break;
-
 
 }

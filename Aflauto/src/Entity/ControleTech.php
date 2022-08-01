@@ -16,50 +16,34 @@ class ControleTech
     private $booked_date;
     private $state;
 
-    public function __construct($id_controle)
+    public function __construct($id)
     {
-        $this->id_controle = 0;
-
-        $GLOBALS['db']->beginTransaction();
-        $query = $GLOBALS['db']->prepare('SELECT * FROM `controle_tech` WHERE id=?');
-        $query->execute([$id_controle]);
-        error_log('ObjectCMD');
-
-        if ($ct = $query->fetch(PDO::FETCH_ASSOC)) {
-            error_log('ObjectAlreadyExist');
-            $this->id_controle = $ct['id'];
-            $this->id_tech = $ct['expert_id'];
-            $this->id_user = $ct['user_id'];
-            $this->id_vehicule = $ct['time_slot_id'];
-            $this->id_time_slot = $ct['time_slot_id'];
-            $this->booked_date = $ct['booked_date'];
-            $this->state = $ct['booked_date'];
+        $this->id_controle = $id;
+        if($this->id_controle != 0){
+            $this->checkData($id);
         }
     }
 
-    static public function newCT($expert_id, $user_id, $time_slot_id)
+    public function checkData($id){
+        $requete = "SELECT * FROM `controle_tech` WHERE `id_controle` = '".mysqli_real_escape_string($GLOBALS['Database'],$id) . "'";
+        $result = mysqli_query($GLOBALS['Database'], $requete) or die;
+        if ($data = mysqli_fetch_array($result)){
+            $this->id_tech = $data['id_tech'];
+            $this->id_user = $data['id_user'];
+            $this->id_vehicule = $data['id_vehicule'];
+            $this->id_time_slot = $data['id_time_slot'];
+            $this->booked_date = $data['booked_date'];
+            $this->state = $data['state'];
+        }
+    }
+
+    static public function newCT($id_time_slot, $id_vehicule, $state)
     {
 
-        try {
+        $requete = "INSERT INTO `controle_tech` (`id_time_slot`, `id_vehicule`, `state`) VALUES ('". mysqli_real_escape_string($GLOBALS['Database'],$id_time_slot) ."','". mysqli_real_escape_string($GLOBALS['Database'],$id_vehicule)."','". mysqli_real_escape_string($GLOBALS['Database'],$state)."')";
+        $result = mysqli_query($GLOBALS['Database'], $requete) or die;
 
-            $GLOBALS['db']->beginTransaction();
-            $query = $GLOBALS['db']->prepare('INSERT INTO control_tech (`expert_id`, `user_id`, `time_slot_id`)
-                VALUES (:expert_id, :user_id, :time_slot_id)');
-
-            $query->execute(array(
-                'expert_id' => $expert_id,
-                'user_id' => $user_id,
-                'time_slot_id' => $time_slot_id,
-            ));
-
-            $GLOBALS['db']->commit();
-
-        } catch (PDOException $e) {
-            error_log("Erreur : " . $e->getMessage());
-        }
-
-        error_log($GLOBALS['db']->lastInsertId());
-        return $GLOBALS['db']->lastInsertId();
+        return $GLOBALS['Database']->insert_id;
 
     }
 
@@ -68,13 +52,13 @@ class ControleTech
         $tab_available = [];
         $timeSettings = Settings::timeSetting();
 
-        for ($e = strtotime($currentDate) + $timeSettings['start_time_am']; $e <= strtotime($currentDate) + $timeSettings['end_time_am']; $e = $e + $timeSettings['slot_interval']) {
+        for ($e = strtotime($currentDate) + $timeSettings['start_time_am']; $e <= strtotime($currentDate) + $timeSettings['end_time_pm']; $e = $e + $timeSettings['slot_interval']) {
             $tab_available[] = $e;
         }
 
-        for ($i = strtotime($currentDate) + $timeSettings['start_time_pm']; $i <= strtotime($currentDate) + $timeSettings['end_time_pm']; $i = $i + $timeSettings['slot_interval']) {
+/*        for ($i = strtotime($currentDate) + $timeSettings['start_time_pm']; $i <= strtotime($currentDate) + $timeSettings['end_time_pm']; $i = $i + $timeSettings['slot_interval']) {
             $tab_available[] = $i;
-        }
+        }*/
 
         return $tab_available;
     }
@@ -84,13 +68,13 @@ class ControleTech
         $tab_available = [];
         $timeSettings = Settings::timeSetting();
 
-        for ($a = $updateDate + $timeSettings['start_time_am']; $a <= $updateDate + $timeSettings['end_time_am']; $a = $a + $timeSettings['slot_interval']) {
+        for ($a = $updateDate + $timeSettings['start_time_am']; $a <= $updateDate + $timeSettings['end_time_pm']; $a = $a + $timeSettings['slot_interval']) {
             $tab_available[] = $a;
         }
 
-        for ($u = $updateDate + $timeSettings['start_time_pm']; $u <= $updateDate + $timeSettings['end_time_pm']; $u = $u + $timeSettings['slot_interval']) {
+/*        for ($u = $updateDate + $timeSettings['start_time_pm']; $u <= $updateDate + $timeSettings['end_time_pm']; $u = $u + $timeSettings['slot_interval']) {
             $tab_available[] = $u;
-        }
+        }*/
 
         return $tab_available;
     }
@@ -99,17 +83,6 @@ class ControleTech
     {
 
         $timeSlotCheck = false;
-
-        /*try {
-            $query = $GLOBALS['db']->prepare('SELECT time_slot_id FROM `rdv` WHERE time_slot_id BETWEEN :date + 28800 AND :date + 64800');
-            $query->execute(array(
-                'date' => $date,
-            ));
-            $timeSlotCheck = $query->fetchAll(PDO::FETCH_ASSOC);
-
-        } catch (PDOException $e) {
-            error_log("Erreur : " . $e->getMessage());
-        }*/
 
         $requete = "SELECT * FROM `controle_tech`  WHERE `id_time_slot` BETWEEN $date + 28800 AND $date + 64800 ";
         error_log($requete);
@@ -120,6 +93,62 @@ class ControleTech
         error_log(json_encode($timeSlotCheck));
 
         return $timeSlotCheck;
+    }
+
+    public function getId_controle(){
+        return $this->id_controle;
+    }
+
+    public function setId_controle($id_controle){
+        $this->id_controle = $id_controle;
+    }
+
+    public function getId_tech(){
+        return $this->id_tech;
+    }
+
+    public function setId_tech($id_tech){
+        $this->id_tech = $id_tech;
+    }
+
+    public function getId_user(){
+        return $this->id_user;
+    }
+
+    public function setId_user($id_user){
+        $this->id_user = $id_user;
+    }
+
+    public function getId_vehicule(){
+        return $this->id_vehicule;
+    }
+
+    public function setId_vehicule($id_vehicule){
+        $this->id_vehicule = $id_vehicule;
+    }
+
+    public function getId_time_slot(){
+        return $this->id_time_slot;
+    }
+
+    public function setId_time_slot($id_time_slot){
+        $this->id_time_slot = $id_time_slot;
+    }
+
+    public function getBooked_date(){
+        return $this->booked_date;
+    }
+
+    public function setBooked_date($booked_date){
+        $this->booked_date = $booked_date;
+    }
+
+    public function getState(){
+        return $this->state;
+    }
+
+    public function setState($state){
+        $this->state = $state;
     }
 
 }

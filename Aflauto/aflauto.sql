@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : lun. 01 août 2022 à 17:15
+-- Généré le : lun. 01 août 2022 à 23:12
 -- Version du serveur : 5.7.36
 -- Version de PHP : 7.4.26
 
@@ -48,22 +48,24 @@ CREATE TABLE IF NOT EXISTS `clients` (
 DROP TABLE IF EXISTS `controle_tech`;
 CREATE TABLE IF NOT EXISTS `controle_tech` (
   `id_controle` int(11) NOT NULL AUTO_INCREMENT,
-  `id_tech` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
+  `id_tech` int(11) DEFAULT NULL,
+  `id_user` int(11) DEFAULT NULL,
   `id_vehicule` int(11) NOT NULL,
   `id_time_slot` int(11) NOT NULL,
   `booked_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `state` int(11) NOT NULL,
   PRIMARY KEY (`id_controle`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `controle_tech`
 --
 
 INSERT INTO `controle_tech` (`id_controle`, `id_tech`, `id_user`, `id_vehicule`, `id_time_slot`, `booked_date`, `state`) VALUES
-(1, 1, 23, 2, 1659365572, '2022-08-01 17:04:25', 0),
-(2, 2, 24, 3, 1656626400, '2022-06-01 17:04:25', 0);
+(10, NULL, NULL, 18, 1659333600, '2022-08-01 23:05:05', 0),
+(11, NULL, NULL, 19, 1659369600, '2022-08-01 23:05:08', 0),
+(12, NULL, NULL, 20, 1659430800, '2022-08-01 23:05:51', 0),
+(13, NULL, NULL, 21, 1659434400, '2022-08-01 23:05:53', 0);
 
 -- --------------------------------------------------------
 
@@ -203,12 +205,22 @@ CREATE TABLE IF NOT EXISTS `vehicules` (
   `id_vehicule` int(11) NOT NULL AUTO_INCREMENT,
   `id_marque` int(11) NOT NULL,
   `id_modele` int(11) NOT NULL,
-  `immat_vehicule` int(11) NOT NULL,
+  `immat_vehicule` varchar(11) NOT NULL,
   `annee_vehicule` int(4) NOT NULL,
   `carburant_vehicule` varchar(35) NOT NULL,
-  `infos_vehicule` longtext NOT NULL,
+  `infos_vehicule` longtext,
   PRIMARY KEY (`id_vehicule`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `vehicules`
+--
+
+INSERT INTO `vehicules` (`id_vehicule`, `id_marque`, `id_modele`, `immat_vehicule`, `annee_vehicule`, `carburant_vehicule`, `infos_vehicule`) VALUES
+(18, 5, 26, 'az-845-az', 2002, 'Essence', NULL),
+(19, 5, 26, 'az-845-az', 2002, 'Essence', NULL),
+(20, 7, 35, 'az-845-az', 2020, 'Diesel', NULL),
+(21, 7, 35, 'az-845-az', 2020, 'Diesel', NULL);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
