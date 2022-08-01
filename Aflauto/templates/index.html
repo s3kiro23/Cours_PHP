@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://bootswatch.com/5/slate/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css"
+          integrity="sha512-O03ntXoVqaGUTAeAmvQ2YSzkCvclZEcPQu1eqloPaHfJ5RuNGiS4l+3duaidD801P50J28EHyonCV06CUlTSag=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"
+            integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://kit.fontawesome.com/9414e04596.js" crossorigin="anonymous"></script>
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous">
+    </script>
+    <script src="../public/js/formClient.js"></script>
+    <title>Index</title>
+</head>
+
+<navbar-component></navbar-component>
+
+<body>
+
+<section class="my-5">
+
+    <div class="container">
+        <form action="javascript:newAppointment();" method="POST">
+            <fieldset>
+                <legend class="text-center mb-5">Création d'un nouveau formulaire d'intervention</legend>
+                <div class="row justify-content-center">
+                    <div class="col-5 bg-secondary rounded p-3">
+                    <h5 class="text-center text-light">Informations personnelles</h5>
+                        <fieldset class="flex">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="optionsCivilite" id="optionsRadios1"
+                                       value="option1">
+                                <label class="form-check-label text-white" for="optionsRadios1">
+                                    Mr.
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="optionsCivilite" id="optionsRadios2"
+                                       value="option2">
+                                <label class="form-check-label text-white" for="optionsRadios2">
+                                    Mme.
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="optionsCivilite" id="optionsRadios3"
+                                       value="option3">
+                                <label class="form-check-label text-white" for="optionsRadios3">
+                                    Mlle.
+                                </label>
+                            </div>
+                        </fieldset>
+                        <div class="form-group">
+                            <label for="inputNom" class="form-label mt-4 text-white">Nom</label>
+                            <input type="text" class="form-control" id="inputNom" aria-describedby="nomHelp"
+                                   placeholder="Entrez votre nom">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPrenom" class="form-label mt-4 text-white">Prenom</label>
+                            <input type="text" class="form-control" id="inputPrenom" aria-describedby="nomHelp"
+                                   placeholder="Entrez votre Prenom">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputTel" class="form-label mt-4 text-white">Téléphone</label>
+                            <input type="text" class="form-control" id="inputTel" placeholder="Entrez votre téléphone">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail" class="form-label mt-4 text-white">Email</label>
+                            <input type="email" class="form-control" id="inputEmail"
+                                   aria-describedby="emailHelp"
+                                   placeholder="Entrez votre adresse mail">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputAddr" class="form-label mt-4 text-white">Adresse</label>
+                            <input type="text" class="form-control" id="inputAddr"
+                                   placeholder="Entrez votre lieu de résidence">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputCP" class="form-label mt-4 text-white">Code postale</label>
+                            <input type="text" class="form-control" id="inputCP"
+                                   placeholder="Entrez le code postale de votre ville">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputVille" class="form-label mt-4 text-white">Ville</label>
+                            <input type="text" class="form-control" id="inputVille"
+                                   placeholder="Entrez la ville de votre résidence">
+                        </div>
+                    </div>
+                    <div class="col-5 bg-secondary rounded offset-1 p-3">
+                        <h5 class="text-center text-light">Informations de votre véhicule</h5>
+                        <div class="form-group">
+                            <label for="inputImmat" class="form-label mt-4 text-white">Immatriculation</label>
+                            <input type="text" class="form-control" id="inputImmat"
+                                   aria-describedby="textHelp"
+                                   placeholder="Entrez l'immatriculation de votre véhicule">
+                        </div>
+                        <div class="form-group">
+                            <label for="selectMarque" class="form-label mt-4 text-white">Sélectionner la
+                                marque</label>
+                            <select class="form-select" id="selectMarque">
+                                <option>-</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="selectModele" class="form-label mt-4 text-white">Sélectionner le
+                                modèle</label>
+                            <select class="form-select" id="selectModele">
+                                <option>-</option>
+                            </select>
+                        </div>
+                        <div class="form-group mt-4">
+                                <div class="mb-2">Type de carburant</div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="optionsCarbu" id="Essence"
+                                           value="Essence">
+                                    <label class="form-check-label text-white" for="Essence">
+                                        Essence
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="optionsCarbu" id="Diesel"
+                                           value="Diesel">
+                                    <label class="form-check-label text-white" for="Diesel">
+                                        Diesel
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="optionsCarbu" id="Electrique"
+                                           value="Electrique">
+                                    <label class="form-check-label text-white" for="Electrique">
+                                        Electrique
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="optionsCarbu" id="Hybride"
+                                           value="Hybride">
+                                    <label class="form-check-label text-white" for="Hybride">
+                                        Hybride
+                                    </label>
+                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputAnnee" class="form-label mt-4 text-white">Année de 1ère mise en
+                                circulation</label>
+                            <input type="text" class="form-control" id="inputAnnee"
+                                   placeholder="Entrez l'année ici">
+                        </div>
+                        <div class="form-group">
+                            <label for="formFile" class="form-label mt-4 text-white">Importer votre Carte
+                                grise</label>
+                            <input class="form-control" type="file" id="formFile">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="col-12 col-md-12 max-w-4xl px-6 py-4 mx-auto">
+                    <h5 class="mb-4 text-4xl font-semibold text-center text-gray-800 text-light">Créneaux disponibles</h5>
+                    <div id="rdvContainer" class="col-12 mt-2">
+
+                        <!--Contenu des créneaux ici, généré avec class HTML -->
+
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset class="form-group">
+                <legend class="mt-4">Newsletters</legend>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Inscrivez vous à la newsletter pour suivre vos prochains contrôles technique !</label>
+                </div>
+            </fieldset>
+            <button type="submit" class="btn btn-light mt-5">Réserver !</button>
+        </form>
+    </div>
+
+</section>
+
+<script src="../public/js/header.js"></script>
+</body>
+</html>
+
