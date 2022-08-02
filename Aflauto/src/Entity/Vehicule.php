@@ -50,59 +50,95 @@ class Vehicule
 
     }
 
-    public function getId_vehicule(){
+    static public function checkMarques()
+    {
+        $list_marque = [];
+        $result = mysqli_query($GLOBALS['Database'], "SELECT * FROM marques") or die;
+
+        while ($data = mysqli_fetch_array($result)) {
+            $list_marque[] = $data;
+        }
+        return $list_marque;
+    }
+
+    static public function checkModeles($idMarque)
+    {
+        $list_modele = [];
+        $requete = " SELECT * FROM modeles WHERE id_marque='" . mysqli_real_escape_string($GLOBALS['Database'], $idMarque) . "'";
+        $result = mysqli_query($GLOBALS['Database'], $requete) or die;
+        while ($data = mysqli_fetch_array($result)) {
+            $list_modele[] = $data;
+        }
+        return $list_modele;
+    }
+
+    public function getId_vehicule()
+    {
         return $this->id_vehicule;
     }
 
-    public function setId_vehicule($id_vehicule){
+    public function setId_vehicule($id_vehicule)
+    {
         $this->id_vehicule = $id_vehicule;
     }
 
-    public function getId_marque(){
+    public function getId_marque()
+    {
         return $this->id_marque;
     }
 
-    public function setId_marque($id_marque){
+    public function setId_marque($id_marque)
+    {
         $this->id_marque = $id_marque;
     }
 
-    public function getId_modele(){
+    public function getId_modele()
+    {
         return $this->id_modele;
     }
 
-    public function setId_modele($id_modele){
+    public function setId_modele($id_modele)
+    {
         $this->id_modele = $id_modele;
     }
 
-    public function getImmat_vehicule(){
+    public function getImmat_vehicule()
+    {
         return $this->immat_vehicule;
     }
 
-    public function setImmat_vehicule($immat_vehicule){
+    public function setImmat_vehicule($immat_vehicule)
+    {
         $this->immat_vehicule = $immat_vehicule;
     }
 
-    public function getAnnee_vehicule(){
+    public function getAnnee_vehicule()
+    {
         return $this->annee_vehicule;
     }
 
-    public function setAnnee_vehicule($annee_vehicule){
+    public function setAnnee_vehicule($annee_vehicule)
+    {
         $this->annee_vehicule = $annee_vehicule;
     }
 
-    public function getCarburant_vehicule(){
+    public function getCarburant_vehicule()
+    {
         return $this->carburant_vehicule;
     }
 
-    public function setCarburant_vehicule($carburant_vehicule){
+    public function setCarburant_vehicule($carburant_vehicule)
+    {
         $this->carburant_vehicule = $carburant_vehicule;
     }
 
-    public function getInfos_vehicule(){
+    public function getInfos_vehicule()
+    {
         return $this->infos_vehicule;
     }
 
-    public function setInfos_vehicule($infos_vehicule){
+    public function setInfos_vehicule($infos_vehicule)
+    {
         $this->infos_vehicule = $infos_vehicule;
     }
 

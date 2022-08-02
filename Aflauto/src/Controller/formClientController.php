@@ -27,22 +27,93 @@ switch ($_POST['request']) {
     case 'checkField':
 
         $msg = "CheckField";
+        $status = 1;
 
+        if (isset($_POST['field']) &&  $_POST['field'] == 'inputNom'){
 
+            if (empty($_POST['field'])){
 
-        echo json_encode(array("msg" => $msg));
+                $msg = "Veuillez renseigner votre nom!";
+                $status = 0;
+
+            }
+
+        }
+        if (isset($_POST['field']) &&  $_POST['field'] == 'inputPrenom'){
+
+            if (empty($_POST['field'])){
+
+                $msg = "Veuillez renseigner votre prénom!";
+                $status = 0;
+
+            }
+
+        }
+        if (isset($_POST['field']) &&  $_POST['field'] == 'inputTelephone'){
+
+            $regex =
+
+            if (empty($_POST['field'])){
+
+                $msg = "Veuillez renseigner votre nom!";
+                $status = 0;
+
+            }
+
+        }
+        if (isset($_POST['field']) &&  $_POST['field'] == 'inputEmail'){
+
+            if (empty($_POST['field'])){
+
+                $msg = "Veuillez renseigner votre nom!";
+                $status = 0;
+
+            }
+
+        }
+        if (isset($_POST['field']) &&  $_POST['field'] == 'inputAddr'){
+
+            if (empty($_POST['field'])){
+
+                $msg = "Veuillez renseigner votre nom!";
+                $status = 0;
+
+            }
+
+        }
+        if (isset($_POST['field']) &&  $_POST['field'] == 'inputCP'){
+
+            if (empty($_POST['field'])){
+
+                $msg = "Veuillez renseigner votre nom!";
+                $status = 0;
+
+            }
+
+        }
+        if (isset($_POST['field']) &&  $_POST['field'] == 'inputVille'){
+
+            if (empty($_POST['field'])){
+
+                $msg = "Veuillez renseigner votre nom!";
+                $status = 0;
+
+            }
+
+        }
+
+        error_log(json_encode($_POST));
+
+        echo json_encode(array("status" => $status, "msg" => $msg));
 
         break;
 
     case 'marquesLoad':
 
-        $list_marque = array();
-        $result = mysqli_query($GLOBALS['Database'], "SELECT * FROM marques") or die;
         $html_marque = '<option>-</option>';
-        while ($data = mysqli_fetch_array($result)) {
-            $list_marque[] = $data;
-        }
-        error_log(json_encode($list_marque));
+
+        $list_marque = Vehicule::checkMarques();
+
         foreach ($list_marque as $marque) {
             $html_marque .= '<option class="" value="' . $marque['id_marque'] . '">' . $marque['nom_marque'] . '</option>';
         }
@@ -53,15 +124,10 @@ switch ($_POST['request']) {
 
     case 'modelesLoad':
 
-        error_log($_POST['marque']);
-        $list_modele = array();
-        $idMarque = $_POST['marque'];
-        $requete2 = " SELECT * FROM modeles WHERE id_marque='" . mysqli_real_escape_string($GLOBALS['Database'], $idMarque) . "'";
-        $result2 = mysqli_query($GLOBALS['Database'], $requete2) or die;
         $html_model = '<option class="border border-y-slate-700">-</option>';
-        while ($data2 = mysqli_fetch_array($result2)) {
-            $list_modele[] = $data2;
-        }
+
+        $list_modele = Vehicule::checkModeles($_POST['marque']);
+
         foreach ($list_modele as $modele) {
             $html_model .= '<option value="' . $modele['id_modele'] . '">' . $modele['nom_modele'] . '</option>';
             $status = 1;
@@ -80,15 +146,15 @@ switch ($_POST['request']) {
         if (empty($_POST['currentDate'])) {
 
             $timeSettings = Settings::timeSetting();
-                        /*error_log(json_encode($timeSettings));*/
+            /*error_log(json_encode($timeSettings));*/
 
             /*Récupération des créneaux réservés en BDD*/
 
             $timeSlotCheck = ControleTech::checkTimeSlotReserved(strtotime($currentDate));
-                        error_log(json_encode($timeSlotCheck));
+            error_log(json_encode($timeSlotCheck));
             /*            error_log(count($timeSlotCheck));*/
 
-            if ($timeSlotCheck){
+            if ($timeSlotCheck) {
                 for ($a = 0; $a <= count($timeSlotCheck) - 1; $a++) {
                     if ((int)$timeSlotCheck[$a]['id_time_slot'] > strtotime($currentDate)) {
                         $tab_reserved[] = (int)$timeSlotCheck[$a]['id_time_slot'];

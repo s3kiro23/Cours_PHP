@@ -18,8 +18,10 @@ class HTML
                 <span id='$timeStampDate' class='currentDate mx-5'>$date</span>              
                 <a type='button' class='text-decoration-none' onClick='changeDate($nextDate);' >&raquo;</a>
             </div>
-            <div id='panel' class='$timeStampDate bg-light p-3 text-center rounded-bottom'>
-                <!--Génération des créneaux disponible ici--> 
+            <div id='panel' class='$timeStampDate bg-dark p-3 text-center rounded-bottom border border-secondary'>
+            
+                <!--Génération des créneaux disponible ici-->
+          
             </div>";
 
         return $dayCase;
@@ -30,10 +32,8 @@ class HTML
     {
         /*<button id='$timeStampID' class='p-2 my-2 slot rounded bg-indigo-100 border-1'>$slotInterval</button>*/
         return "
-            <label class='btn btn-success border-success my-2 text-center' for='$timeStampID'>
-                <input type='radio' class='btn-check' name='timeSlot' id='$timeStampID' autocomplete='off'>
-                    $slotInterval
-            </label>                
+            <input type='radio' class='btn-check' name='timeSlot' id='$timeStampID' autocomplete='off'>
+            <label class='btn btn-outline-success border-success my-2 text-center' for='$timeStampID'>$slotInterval</label>                
 		";
     }
 

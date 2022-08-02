@@ -16,6 +16,8 @@ let load = function () {
 
 let checkField = function () {
 
+    let $field = this.id;
+
     $.ajax({
 
         url: '../src/Controller/formClientController.php',
@@ -23,12 +25,19 @@ let checkField = function () {
         type: 'POST',
         data: {
             request: 'checkField',
+            field: $field,
         },
         success: function (response) {
 
-            /*
-                        alert(response['msg'])
-            */
+            if (response['status'] === 1) {
+
+                $('#' + $field).addClass('is-valid')
+
+            } else {
+
+                $('#' + $field).addClass('is-invalid')
+
+            }
 
         },
         error: function () {
