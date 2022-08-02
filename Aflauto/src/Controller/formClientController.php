@@ -1,6 +1,6 @@
 <?php session_start();
 
-/*require_once '../Controller/shared.php';*/
+require_once '../Controller/shared.php';
 
 spl_autoload_register(function ($classe) {
     require '../Entity/' . $classe . '.php';
@@ -13,35 +13,48 @@ switch ($_POST['request']) {
 
     case 'newAppointment' :
 
-        $msg = 'Réservation de votre créneaux effectué avec succès !!';
+        $msg = 'Réservation de votre créneau effectué avec succès !!';
         $status = 1;
         error_log(json_encode($_POST));
 
-        $carID = Vehicule::newVehicule($_POST['marque'], $_POST['modele'], $_POST['immat'], $_POST['annee'], $_POST['carburant']);
-        ControleTech::newCT($_POST['creneau'], $carID, 0);
+        if (!isset($_POST['creneau'])){
+
+            $msg = 'Veuillez sélectionner un créneau horaire';
+            $status = 0;
+
+        } else {
+
+            $carID = Vehicule::newVehicule($_POST['marque'], $_POST['modele'], $_POST['immat'], $_POST['annee'], $_POST['carburant']);
+            error_log($_POST['creneau']);
+            ControleTech::newCT($_POST['creneau'], $carID, 0);
+
+        }
+
 
         echo json_encode(array("status" => $status, "msg" => $msg));
 
         break;
 
     case 'checkField':
+        error_log($_POST['fieldVal']);
 
-        $msg = "CheckField";
+        $msg = "";
         $status = 1;
 
-        if (isset($_POST['field']) &&  $_POST['field'] == 'inputNom'){
+        if (isset($_POST['field']) && $_POST['field'] == 'inputNom') {
+            error_log('NomErr1');
 
-            if (empty($_POST['field'])){
+            if (empty($_POST['fieldVal'])) {
+                error_log('NomErr2');
 
                 $msg = "Veuillez renseigner votre nom!";
                 $status = 0;
 
             }
 
-        }
-        if (isset($_POST['field']) &&  $_POST['field'] == 'inputPrenom'){
+        } else if (isset($_POST['field']) && $_POST['field'] == 'inputPrenom') {
 
-            if (empty($_POST['field'])){
+            if (empty($_POST['fieldVal'])) {
 
                 $msg = "Veuillez renseigner votre prénom!";
                 $status = 0;
@@ -49,53 +62,70 @@ switch ($_POST['request']) {
             }
 
         }
-        if (isset($_POST['field']) &&  $_POST['field'] == 'inputTelephone'){
+        if (isset($_POST['field']) && $_POST['field'] == 'inputTel') {
 
-            $regex =
+            if (empty($_POST['fieldVal'])) {
 
-            if (empty($_POST['field'])){
+                $msg = "Le champ téléphone ne peut être vide!";
+                $status = 0;
 
-                $msg = "Veuillez renseigner votre nom!";
+            }
+            error_log(checkTel($_POST['fieldVal']));
+            if (!checkTel($_POST['fieldVal'])) {
+                error_log('Tel12');
+
+                $msg = "Veuillez renseigner un numéro de téléphone conforme!";
                 $status = 0;
 
             }
 
         }
-        if (isset($_POST['field']) &&  $_POST['field'] == 'inputEmail'){
+        if (isset($_POST['field']) && $_POST['field'] == 'inputEmail') {
 
-            if (empty($_POST['field'])){
+            if (!checkMail($_POST['fieldVal'])) {
+                error_log('mail');
 
-                $msg = "Veuillez renseigner votre nom!";
+                $msg = "Veuillez renseigner un mail conforme!";
+                $status = 0;
+
+            } else if (empty($_POST['fieldVal'])) {
+
+                $msg = "Le champ email est vide!";
                 $status = 0;
 
             }
 
         }
-        if (isset($_POST['field']) &&  $_POST['field'] == 'inputAddr'){
+        if (isset($_POST['field']) && $_POST['field'] == 'inputAddr') {
 
-            if (empty($_POST['field'])){
+            if (empty($_POST['fieldVal'])) {
 
-                $msg = "Veuillez renseigner votre nom!";
+                $msg = "Le champ adresse est vide!";
                 $status = 0;
 
             }
 
         }
-        if (isset($_POST['field']) &&  $_POST['field'] == 'inputCP'){
+        if (isset($_POST['field']) && $_POST['field'] == 'inputCP') {
 
-            if (empty($_POST['field'])){
+            if (empty($_POST['fieldVal'])) {
 
-                $msg = "Veuillez renseigner votre nom!";
+                $msg = "Le champ code postal est vide!";
+                $status = 0;
+
+            } else if (!checkCP($_POST['fieldVal'])) {
+
+                $msg = "Veuillez renseigner un code postal valide!";
                 $status = 0;
 
             }
 
         }
-        if (isset($_POST['field']) &&  $_POST['field'] == 'inputVille'){
+        if (isset($_POST['field']) && $_POST['field'] == 'inputVille') {
 
-            if (empty($_POST['field'])){
+            if (empty($_POST['fieldVal'])) {
 
-                $msg = "Veuillez renseigner votre nom!";
+                $msg = "Le champ ville est vide!";
                 $status = 0;
 
             }

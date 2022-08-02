@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css"
+          integrity="sha512-O03ntXoVqaGUTAeAmvQ2YSzkCvclZEcPQu1eqloPaHfJ5RuNGiS4l+3duaidD801P50J28EHyonCV06CUlTSag=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="https://bootswatch.com/5/slate/bootstrap.min.css">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous">
+    </script>
+    <script src="https://kit.fontawesome.com/9414e04596.js" crossorigin="anonymous"></script>
+    <script src="../public/js/formClient.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"
+            integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>Inscription</title>
+</head>
+
+<body class="bg-[url('../assets/img/signIn_pic.jpg')] bg-cover bg-no-repeat align-items-center">
+
+<div class="mh-100 d-flex align-items-center justify-content-center py-5 px-4">
+    <div class="d-flex flex-column mw-100 py-4 px-4 bg-light bg-opacity-50 rounded">
+        <div>
+            <img class="mx-auto h-12 w-auto" src="" alt="Workflow">
+            <h2 class="mt-6 mb-3 text-center font-extrabold">Création de votre compte</h2>
+        </div>
+        <form class="d-flex justify-content-center mt-8 space-y-6" action="javascript:signIn();" method="POST">
+            <fieldset class="rounded p-2">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="optionsCivilite"
+                           id="optionsRadios1"
+                           value="Mr">
+                    <label class="form-check-label text-white" for="optionsRadios1">
+                        Mr.
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="optionsCivilite"
+                           id="optionsRadios2"
+                           value="Mme">
+                    <label class="form-check-label text-white" for="optionsRadios2">
+                        Mme.
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="optionsCivilite"
+                           id="optionsRadios3"
+                           value="Mlle">
+                    <label class="form-check-label text-white" for="optionsRadios3">
+                        Mlle.
+                    </label>
+                </div>
+                <div>
+                    <label for="inputPrenom" class="sr-only">Prénom</label>
+
+                    <input
+                            id="inputPrenom"
+                            name="prenom"
+                            type="text"
+                            class="field appearance-none d-block w-100 rounded-top px-3 py-2 border border-gray-300 text-secondary focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
+                            placeholder="Prénom"
+                    />
+                </div>
+                <div>
+                    <label for="inputNom" class="sr-only">Nom</label>
+
+                    <input
+                            id="inputNom"
+                            name="nom"
+                            type="text"
+                            class="appearance-none rounded-none d-block w-100 px-3 py-2 border border-gray-300 text-secondary focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
+                            placeholder="Nom"
+                    />
+                </div>
+                <div>
+                    <label for="inputEmail" class="sr-only">Login</label>
+
+                    <input
+                            id="inputEmail"
+                            name="inputEmail"
+                            type="email"
+                            class="field appearance-none rounded-none d-block w-100 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                            placeholder="Login (Adresse Email)"
+                    />
+                </div>
+                <div>
+                    <label for="inputTel" class="sr-only">Téléphone</label>
+
+                    <input
+                            id="inputTel"
+                            name="inputTel"
+                            type="text"
+                            class="field appearance-none rounded-none relative d-block w-100 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                            placeholder="Téléphone"
+                    />
+                </div>
+                <div>
+                    <label for="inputPassword" class="sr-only">Password</label>
+
+                    <input
+                            id="inputPassword"
+                            name="inputPassword"
+                            type="password"
+                            class="field appearance-none rounded-none relative d-block w-100 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                            placeholder="Mot de passe"
+                    />
+                </div>
+
+                <div>
+                    <label for="inputPassword2" class="sr-only">Password2</label>
+
+                    <input
+                            id="inputPassword2"
+                            name="inputPassword2"
+                            type="password"
+                            class="field appearance-none rounded-none relative d-block w-100 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                            placeholder="Confirmez mot de passe"
+                    />
+                </div>
+                <div>
+                    <label for="type-select" class="sr-only">Type</label>
+
+                    <select name="type" id="type-select"
+                            class="field appearance-none rounded-bottom relative d-block w-100 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                    >
+                        <option value="">-- Choisissez le type de compte --</option>
+                        <option value="technicien">Technicien</option>
+                        <option value="client">Client</option>
+                    </select>
+                </div>
+                <div class="rounded-md py-3">
+                    <div class="px-3 py-2 rounded-top bg-success text-white">
+                        <span>Captcha :</span>
+                        <span id="captcha"></span>
+                    </div>
+                    <div>
+                        <label for="captcha_verif" class="sr-only">Captcha_verif</label>
+                        <input
+                                id="captcha_verif"
+                                name="captcha_verif"
+                                type="text"
+                                class="field appearance-none rounded-bottom relative d-block w-100 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                placeholder="Entrez le code captcha."
+                        />
+                    </div>
+                </div>
+                <div>
+                    <button
+                            type="submit"
+                            id='signIn'
+                            class="group relative w-100 d-flex justify-content-center py-2 px-4 border border-success text-sm font-medium rounded text-white bg-success hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                        <span class="absolute left-0 inset-y-0 d-flex align-items-center pl-3">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 class="h-5 w-5 text-success group-hover:text-amber-500"
+                                 fill="none"
+                                 viewBox="0 0 24 24"
+                                 stroke="currentColor"
+                                 stroke-width="2">
+                                <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                                />
+                            </svg>
+                        </span>
+                        S'incrire !
+                    </button>
+                </div>
+            </fieldset>
+        </form>
+        <span class="d-flex justify-content-center text-white mt-2">ou</span>
+        <a id="to_logIn" class="cursor-pointer d-flex justify-content-center text-indigo-600 hover:text-white font-medium">retour
+            à la page connexion.
+        </a>
+    </div>
+</div>
+
+<script src="../public/js/signIn.js"></script>
+
+</body>
+</html>

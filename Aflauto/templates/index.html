@@ -26,12 +26,12 @@
     </script>
     <script src="https://kit.fontawesome.com/9414e04596.js" crossorigin="anonymous"></script>
     <script src="../public/js/formClient.js"></script>
-    <title>Index</title>
+    <title>Formulaire d'intervention</title>
 </head>
 
 <navbar-component></navbar-component>
 
-<body>
+<body class="bg-light">
 
 <section class="my-5">
     <form action="javascript:newAppointment();" method="POST">
@@ -48,8 +48,8 @@
                 </h2>
                 <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
                      data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                        <fieldset class="bg-secondary rounded p-2">
+                    <div class="accordion-body bg-secondary">
+                        <fieldset class="rounded p-2">
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="optionsCivilite"
                                        id="optionsRadios1"
@@ -74,51 +74,52 @@
                                     Mlle.
                                 </label>
                             </div>
-                            <div class="form-group has-success">
-                                <label class="form-label mt-4" for="inputValid">Valid input</label>
-                                <input type="text" value="correct value" class="form-control is-valid" id="inputValid">
-                                <div class="valid-feedback">Success! You've done it.</div>
-                            </div>
-                            <div class="form-group has-danger">
-                                <label class="form-label mt-4" for="inputInvalid">Invalid input</label>
-                                <input type="text" value="wrong value" class="form-control is-invalid" id="inputInvalid">
-                                <div class="invalid-feedback">Sorry, that username's taken. Try another?</div>
-                            </div>
                             <div class="form-group">
                                 <label for="inputNom" class="form-label mt-4 text-white">Nom</label>
                                 <input type="text" class="form-control" id="inputNom" aria-describedby="nomHelp"
                                        placeholder="Entrez votre nom">
+                                <div class="invalid-feedback"></div>
                             </div>
                             <div class="form-group">
                                 <label for="inputPrenom" class="form-label mt-4 text-white">Prenom</label>
                                 <input type="text" class="form-control" id="inputPrenom" aria-describedby="nomHelp"
                                        placeholder="Entrez votre Prenom">
+                                <div class="invalid-feedback"></div>
+
                             </div>
                             <div class="form-group">
                                 <label for="inputTel" class="form-label mt-4 text-white">Téléphone</label>
                                 <input type="text" class="form-control" id="inputTel"
                                        placeholder="Entrez votre téléphone">
+                                <div class="invalid-feedback"></div>
                             </div>
                             <div class="form-group">
                                 <label for="inputEmail" class="form-label mt-4 text-white">Email</label>
                                 <input type="email" class="form-control" id="inputEmail"
                                        aria-describedby="emailHelp"
                                        placeholder="Entrez votre adresse mail">
+                                <div class="invalid-feedback"></div>
+
                             </div>
                             <div class="form-group">
                                 <label for="inputAddr" class="form-label mt-4 text-white">Adresse</label>
                                 <input type="text" class="form-control" id="inputAddr"
                                        placeholder="Entrez votre lieu de résidence">
+                                <div class="invalid-feedback"></div>
+
                             </div>
                             <div class="form-group">
                                 <label for="inputCP" class="form-label mt-4 text-white">Code postale</label>
                                 <input type="text" class="form-control" id="inputCP"
                                        placeholder="Entrez le code postale de votre ville">
+                                <div class="invalid-feedback"></div>
+
                             </div>
                             <div class="form-group">
                                 <label for="inputVille" class="form-label mt-4 text-white">Ville</label>
                                 <input type="text" class="form-control" id="inputVille"
                                        placeholder="Entrez la ville de votre résidence">
+                                <div class="invalid-feedback"></div>
                             </div>
                         </fieldset>
                     </div>
@@ -139,7 +140,8 @@
                                 <label for="inputImmat" class="form-label mt-4 text-white">Immatriculation</label>
                                 <input type="text" class="form-control" id="inputImmat"
                                        aria-describedby="textHelp"
-                                       placeholder="Entrez l'immatriculation de votre véhicule">
+                                       placeholder="Entrez l'immatriculation de votre véhicule"
+                                       pattern="^[A-Z]{2} ?- ?\d{3} ?- ?[A-Z]{2}$">
                             </div>
                             <div class="form-group">
                                 <label for="selectMarque" class="form-label mt-4 text-white">Sélectionner la
@@ -147,6 +149,8 @@
                                 <select class="form-select" id="selectMarque">
                                     <option>-</option>
                                 </select>
+                                <div class="invalid-feedback"></div>
+
                             </div>
                             <div class="form-group">
                                 <label for="selectModele" class="form-label mt-4 text-white">Sélectionner le
@@ -154,6 +158,8 @@
                                 <select class="form-select" id="selectModele">
                                     <option>-</option>
                                 </select>
+                                <div class="invalid-feedback"></div>
+
                             </div>
                             <div class="form-group mt-4">
                                 <div class="mb-2 text-white">Type de carburant</div>
@@ -191,6 +197,7 @@
                                     circulation</label>
                                 <input type="text" class="form-control" id="inputAnnee"
                                        placeholder="Entrez l'année ici">
+                                <div class="invalid-feedback"></div>
                             </div>
                         </div>
                     </div>
@@ -205,7 +212,7 @@
                 </h2>
                 <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
                      data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
+                    <div class="accordion-body bg-secondary">
                         <fieldset class="mt-5">
                             <div class="col-6 col-md-8 max-w-4xl mx-auto">
                                 <div id="rdvContainer" class="mt-2">

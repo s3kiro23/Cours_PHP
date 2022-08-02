@@ -5,7 +5,32 @@ $(function () {
     $("#selectMarque").on('change', modelesLoad)
     $(".form-control").on('change', checkField)
 
+    var oldvalue = '';
+    $('#inputImmat').keyup(function () {
+        if (!check(this.value)) {
+            this.value = oldvalue;
+        } else {
+            oldvalue = this.value = this.value.toUpperCase();
+        }
+    });
+
 });
+
+function check(s) {
+    var toks = s.split('-');
+    //console.log(toks);
+    switch (toks.length) {
+        case 3:
+            if (!/^[A-Za-z]{0,2}$/.test(toks[2].trim())) return false;
+        case 2:
+            if (!/^\d{0,3}$/.test(toks[1].trim())) return false;
+        case 1:
+            return /^[A-Za-z]{0,2}$/.test(toks[0].trim());
+        default:
+            return false;
+    }
+}
+
 
 let load = function () {
 
@@ -17,6 +42,8 @@ let load = function () {
 let checkField = function () {
 
     let $field = this.id;
+    let $fieldVal = $("#" + $field).val();
+    console.log($fieldVal)
 
     $.ajax({
 
@@ -26,16 +53,24 @@ let checkField = function () {
         data: {
             request: 'checkField',
             field: $field,
+            fieldVal: $fieldVal
         },
         success: function (response) {
 
             if (response['status'] === 1) {
 
-                $('#' + $field).addClass('is-valid')
+                if ($('#' + $field).hasClass('is-invalid')) {
+
+                    $('#' + $field).removeClass('is-invalid')
+
+                }
+                $('#' + $field).addClass('is-valid');
+
 
             } else {
 
                 $('#' + $field).addClass('is-invalid')
+                $('#' + $field).next().html(response['msg']);
 
             }
 
