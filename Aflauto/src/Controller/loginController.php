@@ -19,15 +19,10 @@ switch ($_POST['request']) {
 
         try {
 
-            $user = Clients::checkUser($_POST['login']);
-            error_log(json_encode($user));
-            error_log(json_encode($_POST));
-            error_log($user[0]['password_user']);
-            error_log(password_verify($_POST['password'], $user[0]['password_user']));
+            $user = User::checkUser($_POST['login']);
 
             if ($user && password_verify($_POST['password'], $user[0]['password_user'])) {
                 $log = Log::checkLog($user[0]['id_user']);
-                error_log($log);
 
                 if ($log <= 5) {
 
@@ -38,7 +33,7 @@ switch ($_POST['request']) {
                         $status = 3;
                         $msg = 'A2F activée !';
                         $_SESSION['id'] = encrypt($user[0]['id_user']);
-                        Clients::sms(decrypt($_SESSION['id']));
+                        User::sms(decrypt($_SESSION['id']));
                         $contentPwdLogin = HTML::secondAuth();
                         write_logs(($_POST['login']), 1);
 
@@ -81,8 +76,8 @@ switch ($_POST['request']) {
         $status = 1;
         $msg = "Mise à jour réussi, Enjoy :D !";
         $currenPwdExp = date("Y-m-d H:i:s", mktime(0, 0, 0, date("m"), date("d") + 1, date("Y")));
-        $user = Clients::checkUser($_POST['user']);
-        $currentUser = new Clients($user['id']);
+        $user = User::checkUser($_POST['user']);
+        $currentUser = new User($user['id']);
 
         /*        if (!checkPasswdLenght($_POST['password'])){
                     $status = 0;
@@ -105,15 +100,18 @@ switch ($_POST['request']) {
 
         $status = 0;
         $msg = "Echec de la double authentification!";
-        $smsCheck = Clients::checkSmsCode(decrypt($_SESSION['id']), $_POST['sms_verif']);
+        $smsCheck = User::checkSmsCode(decrypt($_SESSION['id']), $_POST['sms_verif']);
+        error_log(json_encode($smsCheck));
+        $user = new User(decrypt($_SESSION['id']));
 
         if ($smsCheck) {
             $status = 1;
             $msg = "A2F validée, Enjoy :D !";
-            Clients::updateSMS(decrypt($_SESSION['id']));
+            User::updateSMS(decrypt($_SESSION['id']));
         }
+        error_log($_SESSION['id']);
 
-        echo json_encode(array("status" => $status, "msg" => $msg));
+        echo json_encode(array("status" => $status, "msg" => $msg, "type" => $user->getType()));
 
         break;
 
@@ -124,6 +122,15 @@ switch ($_POST['request']) {
         echo json_encode(array("msg" => $msg));
 
         break;
+
+    case 'to_clientForm' :
+
+        $msg = "Redirection vers la page du formulaire en cours!";
+
+        echo json_encode(array("msg" => $msg));
+
+        break;
+
 
     case 'captcha' :
 

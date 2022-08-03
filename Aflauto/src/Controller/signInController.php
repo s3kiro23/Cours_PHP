@@ -32,7 +32,7 @@ switch ($_POST['request']) {
 
         $status = 1;
         $msg = "Création de votre compte réussi, Enjoy :D !";
-        $user = Clients::checkUser($_POST['email']);
+        $user = User::checkUser($_POST['email']);
         error_log(json_encode($user));
 
         if (checkField()) {
@@ -67,8 +67,8 @@ switch ($_POST['request']) {
             $currenPwdExp = date("Y-m-d H:i:s", mktime(0, 0, 0, date("m"), date("d") + 1, date("Y")));
             error_log($currenPwdExp);
             error_log(json_encode($_POST));
-            $client = Clients::create($_POST['civilite'], $_POST['prenom'], $_POST['nom'], $_POST['email'],
-                                        $_POST['tel'], $_POST['passwd'], $_POST['type'], $currenPwdExp, date("Y-m-d H:i:s"), Clients::random_hash());
+            $client = User::create($_POST['civilite'], $_POST['prenom'], $_POST['nom'], $_POST['email'],
+                                        $_POST['tel'], $_POST['passwd'], $_POST['type'], $currenPwdExp, User::random_hash());
             error_log($client);
             $_SESSION['id'] = encrypt($client);
 

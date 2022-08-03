@@ -4,6 +4,7 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Interface Client</title>
     <link rel="stylesheet" href="https://bootswatch.com/5/slate/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css"
           integrity="sha512-O03ntXoVqaGUTAeAmvQ2YSzkCvclZEcPQu1eqloPaHfJ5RuNGiS4l+3duaidD801P50J28EHyonCV06CUlTSag=="
@@ -24,9 +25,8 @@
             crossorigin="anonymous">
     </script>
     <script src="https://kit.fontawesome.com/9414e04596.js" crossorigin="anonymous"></script>
-    <title>Interface Techniciens</title>
     <script src="../public/js/header.js"></script>
-    <script src="../public/js/backoffice.js"></script>
+    <script src="../public/js/clientDashboard.js"></script>
 </head>
 <header>
     <navbar-component></navbar-component>
@@ -38,30 +38,25 @@
             <!-- 1er TABLEAU VEHICULES EN ATTENTE -->
             <div class="col-5 mt-3">
             <span class="d-flex justify-content-between mt-3">
-              <h2>Vehicules en attente</h2>
+              <h2>Récap' de mes véhicules</h2>
              </span>
-                <div class="rdvContainer">
-
-
-                </div>
                 <table class="table border text-dark bg-white rounded-3 mt-3">
                     <thead>
                     <tr class="">
-                        <th class="col-1 fs-5">N°Inter</th>
                         <th class="col-3 fs-5">Marque</th>
                         <th class="col-3 fs-5">Modele</th>
                         <th class="col-2 fs-5">Immatriculation</th>
                         <th class="col-1"></th>
                     </tr>
                     </thead>
-                    <tbody id="vehiculeAttente"></tbody>
+                    <tbody id="mycars"></tbody>
                 </table>
                 <span id="noAttente"></span>
             </div>
             <!-- 2eme TABLEAU INTERVENTIONS EN COURS -->
             <div class="col-6 offset-1 mt-3">
             <span class="d-flex justify-content-between mt-3">
-              <h2>Interventions en Cours</h2>
+              <h2>Mes prochains rendez-vous</h2>
               </span>
                 <table class="table border text-dark bg-white rounded-3 mt-3">
                     <thead>
@@ -73,7 +68,7 @@
                         <th class="col-1"></th>
                     </tr>
                     </thead>
-                    <tbody id="interventionTab"></tbody>
+                    <tbody id="myrdv"></tbody>
                 </table>
                 <span id="noInterv"></span>
             </div>
@@ -82,7 +77,7 @@
         <div class="row">
             <div class="col-12 mt-3">
                 <span class="d-flex justify-content-between mt-3">
-                  <h2>Vehicules terminés</h2>
+                  <h2>Historique</h2>
                 </span>
                 <table class="table border text-dark bg-white rounded-3 mt-3">
                     <thead>
@@ -94,7 +89,7 @@
                         <th class="col-1"></th>
                     </tr>
                     </thead>
-                    <tbody id="interventionTab"></tbody>
+                    <tbody id="myhistory"></tbody>
                 </table>
             </div>
         </div>

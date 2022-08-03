@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://bootswatch.com/5/slate/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css"
+          integrity="sha512-O03ntXoVqaGUTAeAmvQ2YSzkCvclZEcPQu1eqloPaHfJ5RuNGiS4l+3duaidD801P50J28EHyonCV06CUlTSag=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"
+            integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous">
+    </script>
+    <script src="https://kit.fontawesome.com/9414e04596.js" crossorigin="anonymous"></script>
+    <script src="../public/js/clientForm.js"></script>
+    <title>Formulaire d'intervention</title>
+</head>
+
+<body class="bg-light">
+
+<section class="my-5">
+    <form action="javascript:newAppointment();" method="POST">
+        <div class="text-center mb-3">
+            <h1 class="text-success">Formulaire de réservation en ligne</h1>
+        </div>
+        <div class="text-center mb-5">
+            <a type="button" id="to_login">annulez ma demande d'intervention</a>
+        </div>
+        <div class="container accordion col-6" id="accordionExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne"
+                            aria-expanded="true" aria-controls="collapseOne">
+                        Renseignement de vos informations personnelles
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                     data-bs-parent="#accordionExample">
+                    <div class="accordion-body bg-secondary">
+                        <fieldset class="rounded p-2">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="optionsCivilite"
+                                       id="optionsRadios1"
+                                       value="Mr">
+                                <label class="form-check-label text-white" for="optionsRadios1">
+                                    Mr.
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="optionsCivilite"
+                                       id="optionsRadios2"
+                                       value="Mme">
+                                <label class="form-check-label text-white" for="optionsRadios2">
+                                    Mme.
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="optionsCivilite"
+                                       id="optionsRadios3"
+                                       value="Mlle">
+                                <label class="form-check-label text-white" for="optionsRadios3">
+                                    Mlle.
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputNom" class="form-label mt-4 text-white">Nom</label>
+                                <input type="text" class="form-control" id="inputNom" aria-describedby="nomHelp"
+                                       placeholder="Entrez votre nom">
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPrenom" class="form-label mt-4 text-white">Prenom</label>
+                                <input type="text" class="form-control" id="inputPrenom" aria-describedby="nomHelp"
+                                       placeholder="Entrez votre Prenom">
+                                <div class="invalid-feedback"></div>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="inputTel" class="form-label mt-4 text-white">Téléphone</label>
+                                <input type="text" class="form-control" id="inputTel"
+                                       placeholder="Entrez votre téléphone">
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail" class="form-label mt-4 text-white">Email</label>
+                                <input type="email" class="form-control" id="inputEmail"
+                                       aria-describedby="emailHelp"
+                                       placeholder="Entrez votre adresse mail">
+                                <div class="invalid-feedback"></div>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="inputAddr" class="form-label mt-4 text-white">Adresse</label>
+                                <input type="text" class="form-control" id="inputAddr"
+                                       placeholder="Entrez votre lieu de résidence">
+                                <div class="invalid-feedback"></div>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="inputCP" class="form-label mt-4 text-white">Code postale</label>
+                                <input type="text" class="form-control" id="inputCP"
+                                       placeholder="Entrez le code postale de votre ville">
+                                <div class="invalid-feedback"></div>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="inputVille" class="form-label mt-4 text-white">Ville</label>
+                                <input type="text" class="form-control" id="inputVille"
+                                       placeholder="Entrez la ville de votre résidence">
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Informations sur votre véhicule
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                     data-bs-parent="#accordionExample">
+                    <div class="accordion-body bg-secondary">
+                        <div class="rounded p-3">
+                            <div class="form-group">
+                                <label for="inputImmat" class="form-label mt-4 text-white">Immatriculation</label>
+                                <input type="text" class="form-control" id="inputImmat"
+                                       aria-describedby="textHelp"
+                                       placeholder="Entrez l'immatriculation de votre véhicule"
+                                       pattern="^[A-Z]{2} ?- ?\d{3} ?- ?[A-Z]{2}$">
+                            </div>
+                            <div class="form-group">
+                                <label for="selectMarque" class="form-label mt-4 text-white">Sélectionner la
+                                    marque</label>
+                                <select class="form-select" id="selectMarque">
+                                    <option>-</option>
+                                </select>
+                                <div class="invalid-feedback"></div>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="selectModele" class="form-label mt-4 text-white">Sélectionner le
+                                    modèle</label>
+                                <select class="form-select" id="selectModele">
+                                    <option>-</option>
+                                </select>
+                                <div class="invalid-feedback"></div>
+
+                            </div>
+                            <div class="form-group mt-4">
+                                <div class="mb-2 text-white">Type de carburant</div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="optionsCarbu" id="Essence"
+                                           value="Essence">
+                                    <label class="form-check-label text-white" for="Essence">
+                                        Essence
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="optionsCarbu" id="Diesel"
+                                           value="Diesel">
+                                    <label class="form-check-label text-white" for="Diesel">
+                                        Diesel
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="optionsCarbu" id="Electrique"
+                                           value="Electrique">
+                                    <label class="form-check-label text-white" for="Electrique">
+                                        Electrique
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="optionsCarbu" id="Hybride"
+                                           value="Hybride">
+                                    <label class="form-check-label text-white" for="Hybride">
+                                        Hybride
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputAnnee" class="form-label mt-4 text-white">Année de 1ère mise en
+                                    circulation</label>
+                                <input type="text" class="form-control" id="inputAnnee"
+                                       placeholder="Entrez l'année ici">
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Sélection d'un créneau disponible
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                     data-bs-parent="#accordionExample">
+                    <div class="accordion-body bg-secondary d-flex flex-column">
+                        <fieldset class="mt-5">
+                            <div class="col-6 col-md-8 max-w-4xl mx-auto">
+                                <div id="rdvContainer" class="mt-2">
+
+                                    <!--Contenu des créneaux ici, généré avec class HTML -->
+
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <legend class="mt-4">Newsletters</legend>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="newsletter">
+                                <label class="form-check-label" for="newsletter">Inscrivez vous à la newsletter
+                                    pour suivre vos prochains contrôles technique !</label>
+                            </div>
+                        </fieldset>
+                        <button type="submit" class="btn btn-success p-2 mt-5">Réserver !</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+
+</body>
+</html>
+

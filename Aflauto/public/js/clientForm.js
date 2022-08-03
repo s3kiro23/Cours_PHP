@@ -4,6 +4,8 @@ $(function () {
     /*$("#formFile").on('change', checkType)*/
     $("#selectMarque").on('change', modelesLoad)
     $(".form-control").on('change', checkField)
+    $("#to_login").on('click', toLogin);
+
 
     var oldvalue = '';
     $('#inputImmat').keyup(function () {
@@ -158,6 +160,27 @@ function changeDate(timestamp) {
 
 }
 
+let toLogin = function () {
+
+    $.ajax({
+        url: '../src/Controller/formClientController.php',
+        dataType: 'JSON',
+        type: 'POST',
+        data: {
+            request: 'to_login',
+        },
+        success: function (response) {
+            console.log('to_login');
+            window.location.replace('index.html')
+        },
+
+        error: function () {
+            console.log('errhome')
+        }
+    });
+
+}
+
 let newAppointment = function () {
 
     /*    let checkboxes_value = false;
@@ -216,6 +239,9 @@ let newAppointment = function () {
                             position: 'topRight',
 
                         });
+                        setTimeout(() => {
+                            window.location.replace('index.html')
+                        }, 2000);
 
                     } else {
 

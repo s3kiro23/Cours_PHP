@@ -19,15 +19,16 @@ class ControleTech
     public function __construct($id)
     {
         $this->id_controle = $id;
-        if($this->id_controle != 0){
+        if ($this->id_controle != 0) {
             $this->checkData($id);
         }
     }
 
-    public function checkData($id){
-        $requete = "SELECT * FROM `controle_tech` WHERE `id_controle` = '".mysqli_real_escape_string($GLOBALS['Database'],$id) . "'";
+    public function checkData($id)
+    {
+        $requete = "SELECT * FROM `controle_tech` WHERE `id_controle` = '" . mysqli_real_escape_string($GLOBALS['Database'], $id) . "'";
         $result = mysqli_query($GLOBALS['Database'], $requete) or die;
-        if ($data = mysqli_fetch_array($result)){
+        if ($data = mysqli_fetch_array($result)) {
             $this->id_tech = $data['id_tech'];
             $this->id_user = $data['id_user'];
             $this->id_vehicule = $data['id_vehicule'];
@@ -37,10 +38,12 @@ class ControleTech
         }
     }
 
-    static public function newCT($id_time_slot, $id_vehicule, $state)
+    static public function newCT($id_user, $id_time_slot, $id_vehicule, $state)
     {
 
-        $requete = "INSERT INTO `controle_tech` (`id_time_slot`, `id_vehicule`, `state`) VALUES ('". mysqli_real_escape_string($GLOBALS['Database'],$id_time_slot) ."','". mysqli_real_escape_string($GLOBALS['Database'],$id_vehicule)."','". mysqli_real_escape_string($GLOBALS['Database'],$state)."')";
+        $requete = "INSERT INTO `controle_tech` (`id_user`, `id_time_slot`, `id_vehicule`, `state`) 
+                    VALUES ('" . mysqli_real_escape_string($GLOBALS['Database'], $id_user) . "','" . mysqli_real_escape_string($GLOBALS['Database'], $id_time_slot) . "',
+                    '" . mysqli_real_escape_string($GLOBALS['Database'], $id_vehicule) . "','" . mysqli_real_escape_string($GLOBALS['Database'], $state) . "')";
         $result = mysqli_query($GLOBALS['Database'], $requete) or die;
 
         return $GLOBALS['Database']->insert_id;
@@ -56,9 +59,9 @@ class ControleTech
             $tab_available[] = $e;
         }
 
-/*        for ($i = strtotime($currentDate) + $timeSettings['start_time_pm']; $i <= strtotime($currentDate) + $timeSettings['end_time_pm']; $i = $i + $timeSettings['slot_interval']) {
-            $tab_available[] = $i;
-        }*/
+        /*        for ($i = strtotime($currentDate) + $timeSettings['start_time_pm']; $i <= strtotime($currentDate) + $timeSettings['end_time_pm']; $i = $i + $timeSettings['slot_interval']) {
+                    $tab_available[] = $i;
+                }*/
 
         return $tab_available;
     }
@@ -72,9 +75,9 @@ class ControleTech
             $tab_available[] = $a;
         }
 
-/*        for ($u = $updateDate + $timeSettings['start_time_pm']; $u <= $updateDate + $timeSettings['end_time_pm']; $u = $u + $timeSettings['slot_interval']) {
-            $tab_available[] = $u;
-        }*/
+        /*        for ($u = $updateDate + $timeSettings['start_time_pm']; $u <= $updateDate + $timeSettings['end_time_pm']; $u = $u + $timeSettings['slot_interval']) {
+                    $tab_available[] = $u;
+                }*/
 
         return $tab_available;
     }
@@ -95,59 +98,73 @@ class ControleTech
         return $timeSlotCheck;
     }
 
-    public function getId_controle(){
+    public function getId_controle()
+    {
         return $this->id_controle;
     }
 
-    public function setId_controle($id_controle){
+    public function setId_controle($id_controle)
+    {
         $this->id_controle = $id_controle;
     }
 
-    public function getId_tech(){
+    public function getId_tech()
+    {
         return $this->id_tech;
     }
 
-    public function setId_tech($id_tech){
+    public function setId_tech($id_tech)
+    {
         $this->id_tech = $id_tech;
     }
 
-    public function getId_user(){
+    public function getId_user()
+    {
         return $this->id_user;
     }
 
-    public function setId_user($id_user){
+    public function setId_user($id_user)
+    {
         $this->id_user = $id_user;
     }
 
-    public function getId_vehicule(){
+    public function getId_vehicule()
+    {
         return $this->id_vehicule;
     }
 
-    public function setId_vehicule($id_vehicule){
+    public function setId_vehicule($id_vehicule)
+    {
         $this->id_vehicule = $id_vehicule;
     }
 
-    public function getId_time_slot(){
+    public function getId_time_slot()
+    {
         return $this->id_time_slot;
     }
 
-    public function setId_time_slot($id_time_slot){
+    public function setId_time_slot($id_time_slot)
+    {
         $this->id_time_slot = $id_time_slot;
     }
 
-    public function getBooked_date(){
+    public function getBooked_date()
+    {
         return $this->booked_date;
     }
 
-    public function setBooked_date($booked_date){
+    public function setBooked_date($booked_date)
+    {
         $this->booked_date = $booked_date;
     }
 
-    public function getState(){
+    public function getState()
+    {
         return $this->state;
     }
 
-    public function setState($state){
+    public function setState($state)
+    {
         $this->state = $state;
     }
 

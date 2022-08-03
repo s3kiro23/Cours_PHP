@@ -5,7 +5,7 @@ require_once '../Entity/Database.php';
 $db = new Database();
 $GLOBALS['Database'] = $db->connexion();
 
-class Clients
+class User
 {
 
     private $id_user;
@@ -23,8 +23,8 @@ class Clients
     public function __construct($id)
     {
 
-        $this->id_vehicule = $id;
-        if ($this->id_vehicule != 0) {
+        $this->id_user = $id;
+        if ($this->id_user != 0) {
             $this->checkData($id);
         }
 
@@ -33,8 +33,9 @@ class Clients
     public function checkData($id)
     {
         $requete = "SELECT * FROM `clients` WHERE `id_user` = '" . mysqli_real_escape_string($GLOBALS['Database'], $id) . "'";
+        error_log($requete);
         $result = mysqli_query($GLOBALS['Database'], $requete) or die;
-        if ($data = mysqli_fetch_array($result)) {
+        if ($data = mysqli_fetch_assoc($result)) {
             $this->id_user = $data['id_user'];
             $this->civilite_user = $data['civilite_user'];
             $this->nom_user = $data['nom_user'];
@@ -49,16 +50,16 @@ class Clients
         }
     }
 
-    static public function create($civilite_user, $prenom_user, $nom_user, $email_user, $telephone_user, $password_user, $type, $pwdExp_user, $created_date, $hash)
+    static public function create($civilite_user, $prenom_user, $nom_user, $email_user, $telephone_user, $password_user, $type, $pwdExp_user, $hash)
     {
         error_log('newUser1');
         $requete = "INSERT INTO `clients` (`civilite_user`, `prenom_user`, `nom_user`, `email_user`, `telephone_user`, 
-                     `password_user`, `type`, `pwdExp_user`, `created_date`, `hash`) 
+                     `password_user`, `type`, `pwdExp_user`, `hash`) 
                     VALUES ('" . mysqli_real_escape_string($GLOBALS['Database'], $civilite_user) . "','" . mysqli_real_escape_string($GLOBALS['Database'], $prenom_user) . "',
                     '" . mysqli_real_escape_string($GLOBALS['Database'], $nom_user) . "','" . mysqli_real_escape_string($GLOBALS['Database'], $email_user) . "',
                     '" . mysqli_real_escape_string($GLOBALS['Database'], $telephone_user) . "','" . mysqli_real_escape_string($GLOBALS['Database'], password_hash($password_user, PASSWORD_BCRYPT)) . "',
                     '" . mysqli_real_escape_string($GLOBALS['Database'], $type) . "','" . mysqli_real_escape_string($GLOBALS['Database'], $pwdExp_user) . "',
-                    '" . mysqli_real_escape_string($GLOBALS['Database'], $created_date) . "','" . mysqli_real_escape_string($GLOBALS['Database'], $hash) . "')";
+                    '" . mysqli_real_escape_string($GLOBALS['Database'], $hash) . "')";
         error_log($requete);
         $result = mysqli_query($GLOBALS['Database'], $requete) or die;
 
@@ -82,21 +83,12 @@ class Clients
     public function update()
     {
 
-        try {
-            $query = $GLOBALS['db']->prepare('UPDATE `user` SET nom=:nom, prenom=:prenom, login=:login, password=:password, pwdExp=:pwdExp WHERE id=:id');
-
-            $query->bindValue(':id', $this->id);
-            $query->bindValue(':nom', $this->nom);
-            $query->bindValue(':prenom', $this->prenom);
-            $query->bindValue(':login', $this->login);
-            $query->bindValue(':password', $this->password);
-            $query->bindValue(':pwdExp', $this->pwdExp);
-            $query->execute();
-            $GLOBALS['db']->commit();
-
-        } catch (PDOException $e) {
-            // echo "Erreur : ".$e->getMessage();
-        }
+        $requete = "UPDATE `clients` SET `nom_user`='" . mysqli_real_escape_string($GLOBALS['Database'], $this->nom_user) . "', `prenom_user`='" . mysqli_real_escape_string($GLOBALS['Database'], $this->prenom_user) . "',
+        `email_user`='" . mysqli_real_escape_string($GLOBALS['Database'], $this->email_user) . "', `telephone_user`='" . mysqli_real_escape_string($GLOBALS['Database'], $this->telephone_user) . "',
+        `adresse_user`='" . mysqli_real_escape_string($GLOBALS['Database'], $this->adresse_user) . "'
+        WHERE `id_user` ='" . mysqli_real_escape_string($GLOBALS['Database'], $this->id_user) . "'";
+        /*        error_log($requete);*/
+        mysqli_query($GLOBALS['Database'], $requete) or die;
 
     }
 
@@ -137,6 +129,58 @@ class Clients
 
     }
 
+    static public function checkCars($id_user)
+    {
+
+        $tab_cars = [];
+
+        $requete = "SELECT * FROM `vehicules` 
+                    INNER JOIN `marques` ON `vehicules`.`id_marque` = `marques`.`id_marque`  
+                    INNER JOIN `modeles` ON `vehicules`.`id_modele` = `modeles`.`id_modele`
+                    WHERE `id_user` = '" . mysqli_real_escape_string($GLOBALS['Database'], $id_user) . "'";
+        $result = mysqli_query($GLOBALS['Database'], $requete) or die;
+        while ($data = mysqli_fetch_assoc($result)) {
+            $tab_cars[] = $data;
+        }
+        return $tab_cars;
+    }
+
+    static public function checkRdv($id_user)
+    {
+
+        $tab_rdv = [];
+
+        $requete = "SELECT * FROM `controle_tech` 
+                    INNER JOIN `vehicules` ON `controle_tech`.`id_vehicule` = `vehicules`.`id_vehicule`
+                    INNER JOIN `marques` ON `vehicules`.`id_marque` = `marques`.`id_marque`  
+                    INNER JOIN `modeles` ON `vehicules`.`id_modele` = `modeles`.`id_modele`
+                    WHERE `controle_tech`.`id_user` = '" . mysqli_real_escape_string($GLOBALS['Database'], $id_user) . "' AND `state` != '" . mysqli_real_escape_string($GLOBALS['Database'], 3) . "'";
+        $result = mysqli_query($GLOBALS['Database'], $requete) or die;
+        while ($data = mysqli_fetch_assoc($result)) {
+            $tab_rdv[] = $data;
+        }
+        return $tab_rdv;
+    }
+
+    static public function checkHistory($id_user)
+    {
+
+        $tab_history = [];
+
+        $requete = "SELECT * FROM `controle_tech` 
+                    INNER JOIN `vehicules` ON `controle_tech`.`id_vehicule` = `vehicules`.`id_vehicule`
+                    INNER JOIN `marques` ON `vehicules`.`id_marque` = `marques`.`id_marque`  
+                    INNER JOIN `modeles` ON `vehicules`.`id_modele` = `modeles`.`id_modele`
+                    WHERE `controle_tech`.`id_user` = '" . mysqli_real_escape_string($GLOBALS['Database'], $id_user) . "' AND `state` = '" . mysqli_real_escape_string($GLOBALS['Database'], 3) . "'";
+        error_log($requete);
+        $result = mysqli_query($GLOBALS['Database'], $requete) or die;
+        while ($data = mysqli_fetch_assoc($result)) {
+            $tab_history[] = $data;
+        }
+        return $tab_history;
+    }
+
+
     static public function sms($id_user)
     {
 
@@ -157,25 +201,18 @@ class Clients
         $requete = "SELECT * FROM `sms` WHERE `id_user` = '" . mysqli_real_escape_string($GLOBALS['Database'], $id_user) . "' 
                     AND `code` = '" . mysqli_real_escape_string($GLOBALS['Database'], $input) . "' 
                     AND `state` = 0";
-        error_log($requete);
         $result = mysqli_query($GLOBALS['Database'], $requete) or die;
-
+        if ($data = mysqli_fetch_assoc($result)) {
+            $smsCheck = $data;
+        }
         return $smsCheck;
-
     }
 
-    static public function updateSMS($user_id)
+    static public function updateSMS($id_user)
     {
-        try {
-            $query = $GLOBALS['db']->prepare('UPDATE `log_sms` SET state=:state WHERE user_id=:user_id');
-            $query->bindValue(':state', 1);
-            $query->bindValue(':user_id', $user_id);
-            $query->execute();
-            $GLOBALS['db']->commit();
 
-        } catch (PDOException $e) {
-            // echo "Erreur : ".$e->getMessage();
-        }
+        $requete = "UPDATE `sms` SET `state`='" . mysqli_real_escape_string($GLOBALS['Database'], 1) . "' WHERE `id_user` ='" . mysqli_real_escape_string($GLOBALS['Database'], $id_user) . "'";
+        mysqli_query($GLOBALS['Database'], $requete) or die;
 
     }
 

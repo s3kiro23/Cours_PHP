@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link
+            rel="stylesheet"
+            href="https://bootswatch.com/5/slate/bootstrap.min.css"
+    />
+    <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"
+    ></script>
+    <script src="../public/js/header.js"></script>
+
+    <title>check-list controle technique</title>
+</head>
+
+<header>
+    <navbar-component></navbar-component>
+</header>
+
+<body class="bg-light text-black">
+
+
+<section class="container mt-5">
+    <h1 class="d-flex justify-content-center">Checklist du véhicule</h1>
+
+    <br><br>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="text-decoration-underline"><h5>Freinage</h5></div>
+
+
+                <div class="form-check fs ">
+                    <input class="form-check-input " type="checkbox" value="" id="freinService">
+                    <label class="form-check-label" for="freinService">
+                        Frein de service
+                    </label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="freinStationnement">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Frein de stationnement
+                    </label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="pedaleFrein">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Pedale de frein de service
+                    </label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="disqueFrein">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Disque de frein
+                    </label>
+                </div>
+            </div>
+            <br>
+            <div class="col">
+                <div class="text-decoration-underline"><h5>Direction</h5></div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="volantDirection">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Volant de direction
+                    </label>
+                </div>
+
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="colonneDirection">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Colonne de direction
+                    </label>
+                </div>
+
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="pompe">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Pompe , verin
+                    </label>
+                </div>
+            </div>
+            <br>
+            <div class="col">
+                <div><h5 class="text-decoration-underline">Visibilité</h5></div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="pareBrise">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Pare-brise
+                    </label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="retro">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Retroviseur
+                    </label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="essuieGlace">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Essuie glace
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <br><br>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div><h5 class="text-decoration-underline">Eclairage</h5></div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="feuRoute">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Feu de route
+                    </label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="feuCroisement">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Feu de croisement
+                    </label>
+                </div>
+
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="signaleDetresse">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Signale de detresse
+                    </label>
+                </div>
+            </div>
+            <br><br>
+            <div class="col">
+                <div><h5 class="text-decoration-underline">Structure</h5></div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="plancher">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Plancher
+                    </label>
+                </div>
+
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="coque">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Coque
+                    </label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="chassis">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        chassis
+                    </label>
+                </div>
+
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="aile">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Aile
+                    </label>
+                </div>
+            </div>
+            <br>
+            <div class="col">
+                <div><h5 class="text-decoration-underline">Organe mecanique</h5></div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="moteur">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Moteur
+                    </label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="boiteVitesse">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        boite a vitesse
+                    </label>
+                </div>
+
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="transmission">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        transmission
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+    <br><br>
+    <button onclick="ctOk()" class="rounded">controle technique ok</button>
+    <input type="text" class="form-control" id="text1" placeholder="commentaire">
+    <button onclick="ctNotOk()" class="rounded">controle technique incomplet</button>
+    <input type="text" class="form-control" id="text2" placeholder="commentaire"></section>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="../public/js/checkList.js"></script>
+</body>
+</html>

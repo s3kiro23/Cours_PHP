@@ -112,16 +112,16 @@ class HTML
             <div>
                 <img
                     class='mx-auto h-12 w-auto'
-                    src='https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg'
+                    src=''
                     alt='Workflow'
                 />
-                <h2 class='mt-6 text-center text-3xl font-extrabold text-gray-900'>
+                <h2 class='mt-6 mb-4 text-center font-extrabold text-success'>
                     Renseignez le code SMS
                 </h2>
             </div>
-        <form action='javascript:smsVerif();' class='mt-8 space-y-6' method='POST'>
-            <div class='rounded-md'>
-                <div class='px-3 py-2 rounded-t-md bg-indigo-500 text-white'>
+        <form action='javascript:smsVerif();' class='d-flex flex-column justify-content-center mt-8 space-y-6' method='POST'>
+            <div class='rounded p-2 mb-4'>
+                <div class='px-3 py-2 rounded-top bg-success text-white'>
                         <span>Code :</span>
                         <span id='sms'></span>
                 </div>
@@ -131,15 +131,15 @@ class HTML
                             id='sms_verif'
                             name='sms_verif'
                             type='text'
-                            class='field appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
+                            class='field appearance-none rounded-bottom relative d-block w-100 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
                             placeholder='Entrez le code sms reçu.'
                     />
                 </div>
             </div>
-            <div>
+            <div class='d-flex justify-content-center'>
                 <button
                     type='submit'
-                    class='group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+                    class='group d-flex justify-content-center rounded relative py-2 px-4 border border-success text-sm text-white bg-success'
                     id='sub_sms'
                 >
                   <span class='absolute left-0 inset-y-0 flex items-center pl-3'>
@@ -247,5 +247,93 @@ class HTML
         ";
     }
 
+    public static function loadInterventions($interv, $marque, $modele, $immat)
+    {
+        return '<tr> 
+       <th class="col-1 text-center align-middle py-2">' . $interv . '</th>
+       <th class="col-3 text-center align-middle py-2">' . $marque . '</th>
+       <th class="col-3 text-center align-middle py-2">' . $modele . '</th>
+       <th class="col-2 text-center align-middle py-2">' . $immat . '</th>
+       <th class="col-1 text-center align-middle py-2"><button onclick="priseEnCharge(' . $interv . ')" type="button" class="btn btn-primary btn-sm">Prise en charge</button></th>
+   </tr>';
+    }
+
+    public static function loadInterventionsEnCours($interv, $idTech, $marque, $immat)
+    {
+        return '<tr> 
+       <th class="col-1 text-center align-middle py-2">' . $interv . '</th>
+       <th class="col-3 text-center align-middle py-2">' . $idTech . '</th>
+       <th class="col-3 text-center align-middle py-2">' . $marque . '</th>
+       <th class="col-2 text-center align-middle py-2">' . $immat . '</th>
+       
+   </tr>';
+    }
+
+    public static function loadCarsRecap($marque, $modele, $immat)
+    {
+        return '<tr> 
+       <th class="col-3 text-center align-middle py-2">' . $modele . '</th>
+       <th class="col-3 text-center align-middle py-2">' . $marque . '</th>
+       <th class="col-2 text-center align-middle py-2">' . $immat . '</th>
+      
+   </tr>';
+    }
+
+    public static function loadRdvRecap($interv, $idTech, $marque, $immat)
+    {
+        return '<tr> 
+       <th class="col-1 text-center align-middle py-2">' . $interv . '</th>
+       <th class="col-3 text-center align-middle py-2">' . $idTech . '</th>
+       <th class="col-3 text-center align-middle py-2">' . $marque . '</th>
+       <th class="col-2 text-center align-middle py-2">' . $immat . '</th>
+       
+   </tr>';
+    }
+
+    public static function loadHistory($interv, $idTech, $marque, $immat)
+    {
+        return '<tr> 
+       <th class="col-1 text-center align-middle py-2">' . $interv . '</th>
+       <th class="col-3 text-center align-middle py-2">' . $idTech . '</th>
+       <th class="col-3 text-center align-middle py-2">' . $marque . '</th>
+       <th class="col-2 text-center align-middle py-2">' . $immat . '</th>
+       
+   </tr>';
+    }
+
+    public static function listeVideUser()
+    {
+        return '<p class="col-4 fs-3 text-secondary">Aucun véhicule</p>';
+    }
+
+    public static function rdvVide()
+    {
+        return "<p class='col text-center py-2 fs-3 text-secondary'>Pas de rendez-vous programmés</p>";
+    }
+
+    public static function listeVide()
+    {
+        return '<p class="col py-2 fs-3 text-secondary">Aucun véhicule en attente</p>';
+    }
+
+    public static function intervVide()
+    {
+        return "<p class='col text-center py-2 fs-3 text-secondary'>Pas d'interventions en cours</p>";
+    }
+
+    public static function cardCar($id_vehicule, $marque, $modele, $annee, $immat, $carburant, $infos)
+    {
+
+        return "
+        <div id='$id_vehicule' class='card border-success mb-3' style='max-width: 20rem;'>
+            <div class='card-header'>Header</div>
+            <div class='card-body'>
+              <h4 class='card-title'>Success card title</h4>
+              <p class='card-text'>Some quick example text to build on the card title and make up the bulk of the card's
+                content.</p>
+            </div>
+        </div>
+        ";
+    }
 
 }

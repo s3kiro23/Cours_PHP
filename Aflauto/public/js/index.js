@@ -7,10 +7,33 @@ $(function () {
 function load() {
 
     $('#to_signIn').on('click', signIn);
+    $('#to_clientForm').on('click', toClientForm);
     $('#toRequestMail').on('click', toRequestMail);
     $('#tokenLink').on('click', tokenLink);
 
 }
+
+let toClientForm = function (){
+
+    $.ajax({
+        url: '../src/Controller/loginController.php',
+        dataType: 'JSON',
+        type: 'POST',
+        data: {
+            request: 'to_clientForm',
+        },
+        success: function (response) {
+            console.log('to_home');
+            window.location.replace('clientForm.html')
+        },
+
+        error: function () {
+            console.log('errhome')
+        }
+    });
+
+}
+
 
 let connect = function () {
 
@@ -74,9 +97,9 @@ let connect = function () {
                 });
                 console.log('Success');
 
-/*                setTimeout(() => {
-                    window.location.replace("commands.php");
-                }, 2300);*/
+                /*                setTimeout(() => {
+                                    window.location.replace("commands.php");
+                                }, 2300);*/
 
             }
 
@@ -258,9 +281,16 @@ let smsVerif = function () {
                     timer: 1500
                 });
                 console.log('Success');
-                setTimeout(() => {
-                    window.location.replace('commands.php')
-                }, 1500);
+                if (response['type'] === 'technicien') {
+                    setTimeout(() => {
+                        window.location.replace('backOffice.html')
+                    }, 1500);
+                } else {
+                    setTimeout(() => {
+                        window.location.replace('clientDashboard.html')
+                    }, 1500);
+                }
+
             } else {
                 Swal.fire({
                     title: 'Erreur',
@@ -316,7 +346,7 @@ let signIn = function () {
             })
 
             setTimeout(() => {
-                window.location.replace('signIn.php')
+                window.location.replace('signIn.html')
             }, 1500);
 
         },

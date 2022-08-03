@@ -17,16 +17,24 @@ switch ($_POST['request']) {
         $status = 1;
         error_log(json_encode($_POST));
 
-        if (!isset($_POST['creneau'])){
+        if (!isset($_POST['creneau'])) {
 
             $msg = 'Veuillez sélectionner un créneau horaire';
             $status = 0;
 
         } else {
 
+            $currenPwdExp = date("Y-m-d H:i:s", mktime(0, 0, 0, date("m"), date("d") + 1, date("Y")));
+            $client_tmp = User::create($_POST['civilite'], $_POST['prenom'], $_POST['nom'], $_POST['email'],
+                $_POST['tel'], NULL, 'temp', $currenPwdExp, NULL);
+            error_log($client_tmp);
+
             $carID = Vehicule::newVehicule($_POST['marque'], $_POST['modele'], $_POST['immat'], $_POST['annee'], $_POST['carburant']);
+
             error_log($_POST['creneau']);
-            ControleTech::newCT($_POST['creneau'], $carID, 0);
+            ControleTech::newCT($client_tmp, $_POST['creneau'], $carID, 0);
+            error_log(json_encode($_POST));
+
 
         }
 
@@ -259,5 +267,14 @@ switch ($_POST['request']) {
         echo json_encode(array("html_day" => $html_day, "html_slot" => $html_slot));
 
         break;
+
+    case 'to_login' :
+
+        $msg = "Redirection vers la page de login!";
+
+        echo json_encode(array("msg" => $msg));
+
+        break;
+
 
 }

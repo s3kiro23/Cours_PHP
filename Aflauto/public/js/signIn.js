@@ -52,9 +52,9 @@ let signIn = function () {
                 });
                 console.log('Success');
 
-/*                setTimeout(() => {
-                    window.location.replace("index.php");
-                }, 1600);*/
+                setTimeout(() => {
+                    window.location.replace("index.html");
+                }, 1600);
 
             }
 
@@ -126,7 +126,7 @@ let to_logIn = function () {
             })
 
             setTimeout(() => {
-                window.location.replace('index.php')
+                window.location.replace('index.html')
             }, 1500);
 
         },

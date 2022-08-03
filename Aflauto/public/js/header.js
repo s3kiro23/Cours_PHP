@@ -16,36 +16,24 @@ class Header extends HTMLElement {
                     <div class="collapse navbar-collapse" id="navbarColor01">
                         <ul class="navbar-nav me-auto">
                             <li class="nav-item">
-                                <a class="nav-link active" href="#">Home
-                                    <span class="visually-hidden">(current)</span>
-                                </a>
+                                <a id="to_home" type="button" class="nav-link active">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Features</a>
+                                <a id="to_profil" type="button" class="nav-link">Mon profil</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Pricing</a>
+                                <a id="to_cars" type="button" class="nav-link">Mes véhicules</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">About</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                                   aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Separated link</a>
-                                </div>
+                                <a id="logout" type="button" class="nav-link">Logout</a>
                             </li>
                         </ul>
-                        <form class="d-flex">
-                            <input class="form-control me-sm-2" type="text" placeholder="Search">
-                                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-                        </form>
                     </div>
+                </div>
+                <div class="text-white">
+                    <a id="to_profil">
+                        <span class='user_login cursor-pointer fw-bold me-5'></span>
+                    </a>
                 </div>
             </nav>
         </header>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 02 août 2022 à 17:10
+-- Généré le : mer. 03 août 2022 à 02:02
 -- Version du serveur : 5.7.36
 -- Version de PHP : 7.4.26
 
@@ -40,16 +40,23 @@ CREATE TABLE IF NOT EXISTS `clients` (
   `type` varchar(15) NOT NULL,
   `pwdExp_user` datetime DEFAULT NULL,
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `hash` varchar(40) NOT NULL,
+  `hash` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `clients`
 --
 
 INSERT INTO `clients` (`id_user`, `civilite_user`, `nom_user`, `prenom_user`, `telephone_user`, `email_user`, `adresse_user`, `password_user`, `type`, `pwdExp_user`, `created_date`, `hash`) VALUES
-(3, 'Mr', 'a', 'a', 6, 'a@a.a', NULL, '$2y$10$KvTNiwBVeMtF7LJjKWrfnei/YhGYTOqJCz24.YX57bja52U4Wmtx2', 'technicien', '2022-08-03 00:00:00', '2022-08-02 14:51:04', 'T4iFmLl3PH0$tGx#elyCj#Z!bwvClp');
+(3, 'Mr', 'a', 'a', 6, 'a@a.a', NULL, '$2y$10$KvTNiwBVeMtF7LJjKWrfnei/YhGYTOqJCz24.YX57bja52U4Wmtx2', 'technicien', '2022-08-03 00:00:00', '2022-08-02 14:51:04', 'T4iFmLl3PH0$tGx#elyCj#Z!bwvClp'),
+(4, '', 'a', 'a', 645656585, 'q@q.qq', 'Resd', '$2y$10$RRY41g7RB1GQIbgTz1NKBuiC8VfmTKqjn6U0hLYb63bqfgEBtFMxe', 'client', '2022-08-04 00:00:00', '2022-08-02 19:06:32', '$gbhxXbRS6e8ZOmey%?gmm0Uugih4q'),
+(5, 'Mr', 'z', 'z', 6, 'a@a.aaz', NULL, '$2y$10$FABwgJuv1jZdZokwFinkJ.lCw1xSnmROcZ6jO9ImsdG4nX9sGCPii', 'client', '2022-08-03 00:00:00', '2022-08-02 19:06:56', '1wNZfe9d6XksqwSvj5LAHDXb89I$K$'),
+(6, 'option2', 'Geronimi', 'Jean Marie', 616506212, 'a@a.aa', NULL, '$2y$10$FB2svga/MK.mYOe/2cQSQ.6tdqKPY6JdOTlQatiu7/KiddO9ieZtG', 'temp', NULL, '2022-08-02 23:52:48', ''),
+(7, 'Mr', 'Geronimi', 'Jean Marie', 616506212, 'a@a.aa', NULL, '$2y$10$iota1P8Dq5so1X6BE1al2eMavYCgDS62bp4whmxqO5htyuwM0cTIe', 'temp', '2022-08-03 00:00:00', '2022-08-02 23:58:06', ''),
+(8, 'Mme', 'Geronimi', 'Jean Marie', 616506212, 'a@a.aa', NULL, '$2y$10$.vb5vhVGuz1XnkrPTcoIpOV/RM82BmgBnusKhUDdcfhTk.hELvAAy', 'temp', '2022-08-04 00:00:00', '2022-08-03 00:08:44', ''),
+(9, 'Mlle', 'Geronimi', 'Jean Marie', 616506212, 'q@q.qq', NULL, '$2y$10$QqCYZjXQ8Cvh3XW3ImEgU.WTztt6XuTX96dhFIg0qSuBSFe6GC0zS', 'temp', '2022-08-04 00:00:00', '2022-08-03 00:15:36', ''),
+(10, 'Mme', 'e', 'e', 645, 'e@e.e', NULL, '$2y$10$Vv0lwit31Jnh1EuqaM7RG.IuBXaP34eAk11so/7Bpl9JzWeRGSPM.', 'client', '2022-08-04 00:00:00', '2022-08-03 01:53:44', 'hVyX6xiYV2va5mV0VEOhOoHDccQoTV');
 
 -- --------------------------------------------------------
 
@@ -68,17 +75,15 @@ CREATE TABLE IF NOT EXISTS `controle_tech` (
   `state` int(11) NOT NULL,
   `compte_rendu` longtext,
   PRIMARY KEY (`id_controle`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `controle_tech`
 --
 
 INSERT INTO `controle_tech` (`id_controle`, `id_tech`, `id_user`, `id_vehicule`, `id_time_slot`, `booked_date`, `state`, `compte_rendu`) VALUES
-(14, NULL, NULL, 33, 1659420000, '2022-08-02 10:57:05', 0, NULL),
-(15, NULL, NULL, 34, 1659456000, '2022-08-02 11:00:02', 0, NULL),
-(16, NULL, NULL, 35, 1659430800, '2022-08-02 12:11:16', 0, NULL),
-(17, NULL, NULL, 36, 1659423600, '2022-08-02 16:56:29', 0, NULL);
+(30, 12, 10, 49, 1659506400, '2022-08-03 00:08:44', 3, NULL),
+(31, NULL, 10, 50, 1659510000, '2022-08-03 00:15:36', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -92,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `error` (
   `id_user` int(15) NOT NULL,
   `date` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `error`
@@ -102,7 +107,9 @@ INSERT INTO `error` (`id`, `id_user`, `date`) VALUES
 (13, 3, '2022-08-02 15:42:30'),
 (14, 3, '2022-08-02 15:42:31'),
 (15, 3, '2022-08-02 15:42:32'),
-(16, 3, '2022-08-02 15:45:18');
+(16, 3, '2022-08-02 15:45:18'),
+(17, 4, '2022-08-02 22:04:12'),
+(18, 5, '2022-08-03 01:50:21');
 
 -- --------------------------------------------------------
 
@@ -230,17 +237,32 @@ CREATE TABLE IF NOT EXISTS `sms` (
   `code` int(5) NOT NULL,
   `state` int(8) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `sms`
 --
 
 INSERT INTO `sms` (`id`, `id_user`, `code`, `state`) VALUES
-(1, 3, 3370, 0),
-(2, 3, 8383, 0),
-(3, 3, 9104, 0),
-(4, 3, 3463, 0);
+(31, 4, 9855, 1),
+(32, 4, 3891, 1),
+(33, 4, 2485, 1),
+(34, 3, 4950, 1),
+(36, 3, 4720, 1),
+(37, 3, 6788, 1),
+(38, 4, 8513, 1),
+(39, 3, 9257, 1),
+(40, 3, 8070, 1),
+(41, 3, 1604, 1),
+(42, 3, 1510, 1),
+(43, 3, 1405, 1),
+(44, 3, 8063, 1),
+(45, 3, 3916, 1),
+(46, 3, 9310, 1),
+(47, 4, 3983, 1),
+(48, 10, 4443, 1),
+(49, 4, 2258, 1),
+(50, 10, 8635, 1);
 
 -- --------------------------------------------------------
 
@@ -280,6 +302,7 @@ CREATE TABLE IF NOT EXISTS `uploads` (
 DROP TABLE IF EXISTS `vehicules`;
 CREATE TABLE IF NOT EXISTS `vehicules` (
   `id_vehicule` int(11) NOT NULL AUTO_INCREMENT,
+  `id_user` int(8) DEFAULT NULL,
   `id_marque` int(11) NOT NULL,
   `id_modele` int(11) NOT NULL,
   `immat_vehicule` varchar(11) NOT NULL,
@@ -287,22 +310,36 @@ CREATE TABLE IF NOT EXISTS `vehicules` (
   `carburant_vehicule` varchar(35) NOT NULL,
   `infos_vehicule` longtext,
   PRIMARY KEY (`id_vehicule`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `vehicules`
 --
 
-INSERT INTO `vehicules` (`id_vehicule`, `id_marque`, `id_modele`, `immat_vehicule`, `annee_vehicule`, `carburant_vehicule`, `infos_vehicule`) VALUES
-(28, 7, 35, 'AZ-123-AZ', 2442, 'Essence', NULL),
-(29, 7, 35, 'AZ-123-AZ', 2442, 'Essence', NULL),
-(30, 5, 27, 'AZ-123-AZ', 2022, 'Essence', NULL),
-(31, 5, 27, 'AZ-123-AZ', 2022, 'Essence', NULL),
-(32, 5, 27, 'AZ-123-AZ', 2022, 'Essence', NULL),
-(33, 5, 27, 'AZ-123-AZ', 2022, 'Essence', NULL),
-(34, 6, 31, 'FD-123-DG', 2332, 'Essence', NULL),
-(35, 5, 26, 'ZA-123-AZ', 2022, 'Diesel', NULL),
-(36, 6, 31, 'ET-345-ER', 2333, 'Diesel', NULL);
+INSERT INTO `vehicules` (`id_vehicule`, `id_user`, `id_marque`, `id_modele`, `immat_vehicule`, `annee_vehicule`, `carburant_vehicule`, `infos_vehicule`) VALUES
+(28, 4, 7, 35, 'AZ-123-AZ', 2442, 'Essence', NULL),
+(29, 4, 7, 35, 'AZ-123-AZ', 2442, 'Essence', NULL),
+(30, 4, 5, 27, 'AZ-123-AZ', 2022, 'Essence', NULL),
+(31, 10, 5, 27, 'AZ-123-AZ', 2022, 'Essence', NULL),
+(32, 10, 5, 27, 'AZ-123-AZ', 2022, 'Essence', NULL),
+(33, 10, 5, 27, 'AZ-123-AZ', 2022, 'Essence', NULL),
+(34, NULL, 6, 31, 'FD-123-DG', 2332, 'Essence', NULL),
+(35, NULL, 5, 26, 'ZA-123-AZ', 2022, 'Diesel', NULL),
+(36, NULL, 6, 31, 'ET-345-ER', 2333, 'Diesel', NULL),
+(37, NULL, 5, 29, 'ER-789-ER', 2001, 'Essence', NULL),
+(38, NULL, 6, 31, 'ER-789-ER', 2001, 'Essence', NULL),
+(39, NULL, 5, 26, 'ER-789-ER', 2001, 'Essence', NULL),
+(40, NULL, 7, 36, 'ER-789-ER', 2012, 'Essence', NULL),
+(41, NULL, 7, 35, 'ER-789-ER', 2012, 'Diesel', NULL),
+(42, NULL, 8, 40, 'ER-789-ER', 1452, 'Electrique', NULL),
+(43, NULL, 8, 40, 'ER-789-ER', 1452, 'Electrique', NULL),
+(44, NULL, 8, 40, 'ER-789-ER', 1452, 'Electrique', NULL),
+(45, NULL, 8, 40, 'ER-789-ER', 1452, 'Electrique', NULL),
+(46, NULL, 8, 40, 'ER-789-ER', 2012, 'Essence', NULL),
+(47, NULL, 8, 40, 'ER-789-ER', 2012, 'Essence', NULL),
+(48, NULL, 8, 40, 'ER-789-ER', 2012, 'Essence', NULL),
+(49, NULL, 8, 39, 'ER-789-ER', 2022, 'Essence', NULL),
+(50, NULL, 7, 36, 'AZ-845-AZ', 2012, 'Diesel', NULL);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
